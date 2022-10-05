@@ -32,8 +32,15 @@ class _RegisterPageState extends State<RegisterPage> {
       key: _formstate,
       child: ListView(
         children: <Widget>[
-          buildEmailField(),
-          buildPasswordField(),
+          SizedBox(height: 50),
+          Container(
+            margin: const EdgeInsets.all(20),
+            child: buildEmailField()
+            ),
+            SizedBox(height: 10),
+          Container(
+             margin: const EdgeInsets.all(20),
+             child: buildPasswordField()),
           buildRegisterButton(),
         ],
       ),
@@ -79,8 +86,11 @@ class _RegisterPageState extends State<RegisterPage> {
       obscureText: true,
       keyboardType: TextInputType.text,
       decoration: const InputDecoration(
+         border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(22.0)),
+        ),
+        prefixIcon: Icon(Icons.lock),
         labelText: 'Password',
-        icon: Icon(Icons.lock),
       ),
     );
   }
@@ -97,8 +107,11 @@ class _RegisterPageState extends State<RegisterPage> {
       keyboardType: TextInputType.emailAddress,
       textInputAction: TextInputAction.next,
       decoration: const InputDecoration(
+         border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(22.0)),
+        ),
+        prefixIcon: Icon(Icons.email),
         labelText: 'E-mail',
-        icon: Icon(Icons.email),
         hintText: 'email@x.com',
       ),
     );
