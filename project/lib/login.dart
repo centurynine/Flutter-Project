@@ -235,6 +235,7 @@ IconButton logoutButton(BuildContext context) {
                   statusLogin();
                   ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text("Login Pass")));
+                      Navigator.pushNamed(context, '/');
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text("Please verify email")));
@@ -368,6 +369,7 @@ IconButton logoutButton(BuildContext context) {
     print('Logout');
   } else {
     print('Logout Fail');
+    print('Status $status');
   }
 ////////
 }

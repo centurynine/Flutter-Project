@@ -16,6 +16,7 @@ class NavBar extends StatelessWidget {
             accountEmail: Text(userEmail),
             )
         ],
+        
       )
       
 
