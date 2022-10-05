@@ -17,18 +17,19 @@ class Body extends StatelessWidget {
                 .textTheme
                 .headline5
                 ?.copyWith(fontWeight: FontWeight.bold),
-                ),
-                
+                ),  
           ),
-          Padding(
-                padding: const EdgeInsets.only(top: 30.0),
-                child: SizedBox(
-                  height: 300,
-                  child: Image.network(
-                      "https://i.ytimg.com/vi/q4bVLN2Y6h0/hqdefault.jpg"),
-                ),
-              ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              ElevatedButton(onPressed: () {},
+               child: const Text('ถ่ายรูป')),
+               ElevatedButton(onPressed: () {},
+               child: const Text('Enabled'))
+            ],
+          ),
       ],
+      
     );
   }
 }
