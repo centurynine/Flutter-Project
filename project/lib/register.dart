@@ -48,7 +48,7 @@ class _RegisterPageState extends State<RegisterPage> {
       child: const Text('Register'),
       onPressed: ()  async{
         print('Register');
-        if (_formstate.currentState!.validate())
+        if (_formstate.currentState!.validate()){
         print(email.text);
         print(password.text);
         final _user = await auth.createUserWithEmailAndPassword(
@@ -59,7 +59,10 @@ class _RegisterPageState extends State<RegisterPage> {
         Navigator.pushAndRemoveUntil(
            context,
            MaterialPageRoute(builder: (context) => const LoginPage()),
-           ModalRoute.withName('/'));
+           ModalRoute.withName('/'));}
+           else {
+            print('Invalid Form');
+           }
       },
     );
   }
