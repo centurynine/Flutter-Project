@@ -109,7 +109,6 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Container(
                   margin: const EdgeInsets.only(left: 100.0, right: 100.0),
-                  
                   child: registerButton(context)
                   ),
               
@@ -277,7 +276,7 @@ IconButton logoutButton(BuildContext context) {
         ),
         hintText: 'รหัสผ่าน',
         labelText: 'Password',
-        icon: Icon(Icons.lock),
+        prefixIcon: Icon(Icons.lock),
       ),
     );
   }
@@ -302,7 +301,7 @@ IconButton logoutButton(BuildContext context) {
         
         ),
         labelText: 'E-mail',
-        icon: Icon(Icons.email),
+        prefixIcon: Icon(Icons.email),
         hintText: 'email@example.com',
       ),
     );
