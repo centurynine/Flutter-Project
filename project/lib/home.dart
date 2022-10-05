@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/body.dart';
 import 'package:project/login.dart';
 
 void main(){
@@ -39,9 +40,9 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.redAccent,
+        backgroundColor: Colors.black,
         title: const Text(
-          " App",
+          " Apple Store",
           style: TextStyle(color: Colors.white),
         ),
         actions: <Widget>[
@@ -60,12 +61,20 @@ class _HomepageState extends State<Homepage> {
           ),
         ],
       ),
+      body: Body(),
       drawer: Drawer(
         child: ListView(
           children: <Widget>[
             Container(
               height: 30.0
             ),
+            const UserAccountsDrawerHeader(
+              accountName: Text("accountName"), 
+              accountEmail: Text("accountEmail"),
+              currentAccountPicture: FlutterLogo(
+                size: 42.0,
+              ),
+              ),
             ListTile(
               title: Text('My Files'),
               leading: Icon(Icons.folder),
