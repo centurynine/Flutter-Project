@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/body.dart';
-
 class forgotPassword extends StatefulWidget {
   const forgotPassword({super.key});
-
   @override
   State<forgotPassword> createState() => _forgotPasswordState();
 }
-
 class _forgotPasswordState extends State<forgotPassword> {
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
@@ -144,7 +141,6 @@ class _forgotPasswordState extends State<forgotPassword> {
     return (!regex.hasMatch(value)) ? false : true;
   }
 
-
   GestureDetector registerButton(BuildContext context) {
     return GestureDetector(
       child: Container(
@@ -163,6 +159,5 @@ class _forgotPasswordState extends State<forgotPassword> {
       },
     );
   }
-
 
 }

@@ -7,16 +7,13 @@ import 'package:http/http.dart' as http;
 import 'package:project/home.dart';
 import 'package:project/login.dart';
 
-
 class FacebookLogin extends StatefulWidget {
   const FacebookLogin({Key? key}) : super(key: key);
-
   @override
   _FacebookLoginState createState() => _FacebookLoginState();
 }
 
 class _FacebookLoginState extends State<FacebookLogin> {
-
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -26,11 +23,41 @@ class _FacebookLoginState extends State<FacebookLogin> {
             style: TextStyle(color: Colors.white),
           ),
         ),
-        body: Center(
-          child:   _displayLoginButton(),
-        ),
+        body:Column(
+      children: <Widget>[
+        
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+            "TEST", 
+            style: Theme.of(context)
+                .textTheme
+                .headline5
+                ?.copyWith(fontWeight: FontWeight.bold),
+                ),  
+          ),
+            Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+             _displayLoginButton(),
+             logoutFB(),
+            ],
+          ),
+          Text(userName),
+      ],
+    ),
     );
   }
+
+ElevatedButton logoutFB() {
+    return ElevatedButton(
+      onPressed: () {
+        signOut();
+      },
+      child: const Text('Logout FB'),
+    );
+  }
+
 
   _displayLoginButton() {
     return GestureDetector(
@@ -46,7 +73,6 @@ class _FacebookLoginState extends State<FacebookLogin> {
             borderRadius: BorderRadius.circular(10),
             color: Colors.blue
         ),
-
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -65,6 +91,42 @@ class _FacebookLoginState extends State<FacebookLogin> {
       ),
     );
   }
+
+  _fbLogoutButton() {
+    return GestureDetector(
+      onTap: (){
+        signOut();
+      },
+      child: Container(
+        width: 300,
+        decoration: BoxDecoration(
+            border: Border.all(
+              color: Colors.blue,
+            ),
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.blue
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SignInButton(
+              Buttons.Facebook,
+              text: "Logout",
+              mini: true,
+              onPressed: () {
+                signInWithFacebook();
+              },
+            ),
+
+            const Text("  Logout ",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white,fontSize: 20),),
+          ],
+        ),
+      ),
+    );
+  }
+
+
   void signInWithFacebook() async {
     try {
       final LoginResult result = await FacebookAuth.instance.login(permissions: (['email', 'public_profile']));
@@ -91,8 +153,7 @@ class _FacebookLoginState extends State<FacebookLogin> {
           context,
           MaterialPageRoute(builder: (context) => Homepage()),
         );
-      }catch(e)
-    {
+      } catch(e){
       final snackBar = SnackBar(
         margin: const EdgeInsets.all(20),
         behavior: SnackBarBehavior.floating,
@@ -100,23 +161,55 @@ class _FacebookLoginState extends State<FacebookLogin> {
         backgroundColor: (Colors.redAccent),
         action: SnackBarAction(
           label: 'dismiss',
-          onPressed: () {
-          },
+          onPressed: () {},
         ),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
-
     } catch (e) {
       print("error occurred");
       print(e.toString());
     }
   }
 
-// Future<void> signOut() async {
-//     await _facebookLogin.logOut();
-//     await _auth.signOut();
-//     _user = null;
-//   }
+Future<void> signOut() async {
+    await FacebookAuth.instance.logOut();
+    print(_FacebookLoginState());
+    showSuccess("Logout");
+    // await _auth.signOut();
+    // _user = null;
+  }
+
+Future<void> checkFB() async {
+    print(_FacebookLoginState());
+    // await _auth.signOut();
+    // _user = null;
+  }
+
+
+  void showSuccess(String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Success!"),
+          content: Text(message),
+          actions: <Widget>[
+            Center(
+              child: new TextButton(
+                
+                child: const Text("OK",
+                textAlign: TextAlign.center,
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
 }
