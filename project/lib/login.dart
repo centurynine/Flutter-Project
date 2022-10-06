@@ -47,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: SizedBox(
                   height: 100,
                   child: Image.network(
-                      "https://cdn-icons-png.flaticon.com/512/2250/2250222.png"),
+                      "https://cdn-icons-png.flaticon.com/512/1728/1728853.png"),
                 ),
               ),
               Padding(
@@ -184,7 +184,8 @@ class _LoginPageState extends State<LoginPage> {
 
   IconButton loginfbButton(BuildContext context) {
     return IconButton(
-      icon: const Icon(Icons.facebook),
+      icon: const Icon(Icons.facebook), 
+      iconSize: 50.0,
       color: Colors.black,
       onPressed: () {
         Navigator.pushNamed(context, '/fb');

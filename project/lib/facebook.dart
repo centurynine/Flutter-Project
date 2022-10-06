@@ -176,8 +176,11 @@ Future<void> signOut() async {
     await FacebookAuth.instance.logOut();
     print(_FacebookLoginState());
     showSuccess("Logout");
-    // await _auth.signOut();
-    // _user = null;
+    // await _auth.signOut()
+    setState(() {
+      status = 0;
+      userName = 'No Name';
+    });
   }
 
 Future<void> checkFB() async {
