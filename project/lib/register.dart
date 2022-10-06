@@ -95,6 +95,7 @@ class _RegisterPageState extends State<RegisterPage> {
         if (_formstate.currentState!.validate()) {
           print(email.text);
           print(password.text);
+          
           final _user = await auth.createUserWithEmailAndPassword(
               email: email.text.trim(), password: password.text.trim());
           _user.user!.sendEmailVerification();
