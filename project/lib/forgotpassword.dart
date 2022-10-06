@@ -28,6 +28,7 @@ class _forgotPasswordState extends State<forgotPassword> {
       ),
       body: Form(
         child: ListView(children: <Widget>[
+          
           Padding(
             padding: const EdgeInsets.only(top: 30.0),
             child: SizedBox(
@@ -48,7 +49,20 @@ class _forgotPasswordState extends State<forgotPassword> {
                         fontSize: 14,
                         color: Colors.black,
                       ),
+                      
+                      
           ),
+          // Container(
+          //   margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
+          //                     decoration: BoxDecoration(
+          //                       border: Border(
+          //                         bottom: BorderSide(
+          //                           color: Colors.black,
+          //                           width: 0.5,
+          //                         ),
+          //                       ),
+          //                     ),
+          //                   ),
           Padding(
             padding: const EdgeInsets.only(top: 20.0),
             child: Container(

@@ -5,7 +5,6 @@ import 'package:project/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 String userEmail = 'No email';
 
-
 void main(){
   runApp(MyApp());
 }
@@ -39,13 +38,16 @@ class _MyAppState extends State<MyApp> {
 
 
 class Homepage extends StatefulWidget {
+  
   @override
   _HomepageState createState() => _HomepageState();
 }
 
 class _HomepageState extends State<Homepage> {
+  
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 126, 174, 255),
@@ -78,7 +80,7 @@ class _HomepageState extends State<Homepage> {
             ),
             const UserAccountsDrawerHeader(
               accountName: Text("accountName"), 
-              accountEmail: Text("userEmail"),
+              accountEmail: Text("accountEmail"),
               currentAccountPicture: FlutterLogo(
                 size: 42.0,
               ),
