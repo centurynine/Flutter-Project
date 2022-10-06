@@ -57,7 +57,8 @@ class _HomepageState extends State<Homepage> {
             icon: Icon(Icons.search),
             onPressed: () {},
           ),
-          IconButton(
+          status == 0
+          ? IconButton(
             icon: Icon(Icons.login),
             onPressed: () {
               Navigator.push(
@@ -65,7 +66,13 @@ class _HomepageState extends State<Homepage> {
                 MaterialPageRoute(builder: (context) => LoginPage()),
               );
             },
-          ),
+          )
+          : IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              _signOut();
+            },
+          )
         ],
       ),
       body: Body(),
@@ -164,7 +171,7 @@ class _HomepageState extends State<Homepage> {
               height: 200,
             ),
             Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               ElevatedButton(
                 onPressed: () {
@@ -182,9 +189,9 @@ class _HomepageState extends State<Homepage> {
   Future<LoginPage> _signOut() async {
     await FirebaseAuth.instance.signOut();
     if (status == 1) {
-      status = 0;
-      statusText = 'Loged out';
       setState(() {
+        status = 0;
+        statusText = 'Loged out';
         userEmail = 'กรุณาเข้าสู่ระบบ';
         showAlertDialog(context);
         gotoHomepage(context);
