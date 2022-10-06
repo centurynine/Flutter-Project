@@ -37,11 +37,7 @@ class _LoginPageState extends State<LoginPage> {
          
           
           actions: <Widget>[
-          Text("Status: $statusText",
-          style: TextStyle(color: Colors.black,fontFamily: 'josefinSans'
-          ),
-          ),
-          status == 1 ? logoutButton(context) : Container(),
+        //  status == 1 ? logoutButton(context) : Container(),
         ],
         ),
         body: Form(
@@ -111,11 +107,11 @@ class _LoginPageState extends State<LoginPage> {
                   child: registerButton(context)
                   ),
               
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: logoutText(context),
-              ),
-              Text(userEmail),
+              // Padding(
+              //   padding: const EdgeInsets.all(20.0),
+              //   child: logoutText(context),
+              // ),
+              // Text(userEmail),
             ],
             
           ),
@@ -357,8 +353,9 @@ IconButton logoutButton(BuildContext context) {
     Future <LoginPage> _signOut()  async{
     await FirebaseAuth.instance.signOut();
     if(status == 1){
+      setState(() {
       status = 0;
-      statusText = 'Loged out';
+      statusText = 'Loged out';});
       statusLogout();} 
       else {
       print('คุณออกจากระบบอยู่แล้ว');

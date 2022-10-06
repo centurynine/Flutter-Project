@@ -110,18 +110,22 @@ class _HomepageState extends State<Homepage> {
                             ],
                           ),
                         ),
+                        
                       ],
                     
                   ),),
+                  
                 ],
                 
               ),
             ),
+            if(status == 0)
             ListTile(
-              title: Text('Shared with me'),
-              leading: Icon(Icons.people),
+              title: Text('เข้าสู่ระบบ'),
+              leading: Icon(Icons.login),
               onTap: () {
-                print("Clicked");
+                print("เข้าสู่ระบบ");
+                gotoLoginpage(context);
               },
             ),
             ListTile(
@@ -159,6 +163,7 @@ class _HomepageState extends State<Homepage> {
                 print("Clicked");
               },
             ),
+            if (status == 1)
             ListTile(
               title: Text('Logout'),
               leading: Icon(Icons.logout),
@@ -166,7 +171,8 @@ class _HomepageState extends State<Homepage> {
                 print("Clicked Signout");
                 _signOut();
               },
-            ),
+            
+              ),
             const SizedBox(
               height: 200,
             ),
@@ -245,3 +251,10 @@ class _HomepageState extends State<Homepage> {
       MaterialPageRoute(builder: (context) => Homepage()),
     );
   }
+
+  gotoLoginpage(BuildContext context) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
+    }
