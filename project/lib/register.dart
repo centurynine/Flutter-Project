@@ -92,23 +92,39 @@ class _RegisterPageState extends State<RegisterPage> {
       child: const Text('Register'),
       onPressed: () async {
         print('Register');
-        if (_formstate.currentState!.validate()) {
-          print(email.text);
-          print(password.text);
-          
-          final _user = await auth.createUserWithEmailAndPassword(
-              email: email.text.trim(), password: password.text.trim());
-          _user.user!.sendEmailVerification();
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const LoginPage()),
-              ModalRoute.withName('/'));
-        } else {
-          print('Invalid Form');
-        }
+        registerWithEmailPassword();
       },
     );
   }
+
+
+ Future<void> registerWithEmailPassword() async {
+    //Email şifre kayıt
+    try {
+      // var userCredential =
+      final _user = await auth.createUserWithEmailAndPassword(
+          email: email.text.trim(), 
+          password: password.text.trim()
+          );
+          _user.user!.sendEmailVerification();
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if ( e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+         ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("อีเมลล์ถูกใช้งานแล้ว")));
+      } else if (e.code == 'operation-not-allowed') {
+        print('There is a problem with auth service config :/');
+      } else if (e.code == 'weak-password') {
+        print('Please type stronger password');
+      } else {
+        print('auth error ' + e.toString());
+        print(e);
+      }
+    }
+  }
+
 
   TextFormField buildPasswordField() {
     return TextFormField(
@@ -152,6 +168,8 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
   }
+
+
 
 
   TextFormField buildEmailField() {

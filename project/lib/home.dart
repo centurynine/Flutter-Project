@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:project/body.dart';
 import 'package:project/login.dart';
 import 'package:firebase_core/firebase_core.dart';
+
 bool fullScreen = false;
 String screenText = 'Full Screen';
 String showEmail = userEmail.toString();
@@ -36,10 +37,12 @@ class _MyAppState extends State<MyApp> {
         ),
       );
 }
+
 class Homepage extends StatefulWidget {
   @override
   _HomepageState createState() => _HomepageState();
 }
+
 class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
@@ -56,21 +59,21 @@ class _HomepageState extends State<Homepage> {
             onPressed: () {},
           ),
           status == 0
-          ? IconButton(
-            icon: Icon(Icons.login),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => LoginPage()),
-              );
-            },
-          )
-          : IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () {
-              _signOut();
-            },
-          )
+              ? IconButton(
+                  icon: Icon(Icons.login),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginPage()),
+                    );
+                  },
+                )
+              : IconButton(
+                  icon: Icon(Icons.logout),
+                  onPressed: () {
+                    _signOut();
+                  },
+                )
         ],
       ),
       body: Body(),
@@ -100,7 +103,7 @@ class _HomepageState extends State<Homepage> {
                                 child: Text(
                                   userEmail.toString(),
                                   style: GoogleFonts.kanit(
-                                    fontSize: 20,
+                                    fontSize: 14,
                                     color: Colors.white,
                                   ),
                                 ),
@@ -108,24 +111,24 @@ class _HomepageState extends State<Homepage> {
                             ],
                           ),
                         ),
-                        
+
                       ],
+                      
+                    ),
                     
-                  ),),
-                  
+                  ),
                 ],
-                
               ),
             ),
-            if(status == 0)
-            ListTile(
-              title: Text('เข้าสู่ระบบ'),
-              leading: Icon(Icons.login),
-              onTap: () {
-                print("เข้าสู่ระบบ");
-                gotoLoginpage(context);
-              },
-            ),
+            if (status == 0)
+              ListTile(
+                title: Text('เข้าสู่ระบบ'),
+                leading: Icon(Icons.login),
+                onTap: () {
+                  print("เข้าสู่ระบบ");
+                  gotoLoginpage(context);
+                },
+              ),
             ListTile(
               title: Text('Starred'),
               leading: Icon(Icons.star),
@@ -162,28 +165,27 @@ class _HomepageState extends State<Homepage> {
               },
             ),
             if (status == 1)
-            ListTile(
-              title: Text('Logout'),
-              leading: Icon(Icons.logout),
-              onTap: () {
-                print("Clicked Signout");
-                _signOut();
-              },
-            
+              ListTile(
+                title: Text('Logout'),
+                leading: Icon(Icons.logout),
+                onTap: () {
+                  print("Clicked Signout");
+                  _signOut();
+                },
               ),
             const SizedBox(
               height: 200,
             ),
             Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              ElevatedButton(
-                onPressed: () {
-                screen();
-              },
-               child: Text(screenText)),
-            ],
-          ),
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                ElevatedButton(
+                    onPressed: () {
+                      screen();
+                    },
+                    child: Text(screenText)),
+              ],
+            ),
           ],
         ),
       ),
@@ -206,53 +208,52 @@ class _HomepageState extends State<Homepage> {
     return new LoginPage();
   }
 
-  screen(){
-    if (fullScreen == false){
+  screen() {
+    if (fullScreen == false) {
       fullScreen = true;
       setState(() {
         screenText = 'Normal Screen';
       });
       SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
-      }
-    else {
+    } else {
       fullScreen = false;
       setState(() {
-      screenText = 'Full Screen';
+        screenText = 'Full Screen';
       });
       SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     }
   }
-  }
+}
 
-  showAlertDialog(BuildContext context) {
-    AlertDialog alert = AlertDialog(
-      content: Row(
-        children: [
-          const CircularProgressIndicator(),
-          Container(
-              margin: EdgeInsets.only(left: 5), child: Text("กำลังออกจากระบบ")),
-        ],
-      ),
-    );
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
+showAlertDialog(BuildContext context) {
+  AlertDialog alert = AlertDialog(
+    content: Row(
+      children: [
+        const CircularProgressIndicator(),
+        Container(
+            margin: EdgeInsets.only(left: 5), child: Text("กำลังออกจากระบบ")),
+      ],
+    ),
+  );
+  showDialog(
+    barrierDismissible: false,
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
 
-  gotoHomepage(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => Homepage()),
-    );
-  }
+gotoHomepage(BuildContext context) {
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => Homepage()),
+  );
+}
 
-  gotoLoginpage(BuildContext context) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => LoginPage()),
-      );
-    }
+gotoLoginpage(BuildContext context) {
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => LoginPage()),
+  );
+}

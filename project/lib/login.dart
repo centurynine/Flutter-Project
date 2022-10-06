@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 int status = 0;
 String statusText = "Not Logged In";
 bool logoutBt = false;
 String userEmail = "No Email";
-
+String userName = "No Name";
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -23,22 +24,18 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          
           title: const Text('Login'),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             color: Colors.black,
             onPressed: () {
-           //   Navigator.pop(context);
+              //   Navigator.pop(context);
               Navigator.pushNamed(context, '/');
             },
           ),
-
-         
-          
           actions: <Widget>[
-        //  status == 1 ? logoutButton(context) : Container(),
-        ],
+            //  status == 1 ? logoutButton(context) : Container(),
+          ],
         ),
         body: Form(
           autovalidateMode: AutovalidateMode.always,
@@ -58,12 +55,12 @@ class _LoginPageState extends State<LoginPage> {
                 child: Container(
                   alignment: Alignment.topLeft,
                   child: Text(
-                      "    เข้าสู่ระบบ",
-                      style: GoogleFonts.kanit(
-                        fontSize: 20,
-                        color: Colors.black,
-                      ),
+                    "    เข้าสู่ระบบ",
+                    style: GoogleFonts.kanit(
+                      fontSize: 20,
+                      color: Colors.black,
                     ),
+                  ),
                 ),
               ),
               Container(
@@ -104,16 +101,17 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Container(
                   margin: const EdgeInsets.only(left: 100.0, right: 100.0),
-                  child: registerButton(context)
-                  ),
-              
+                  child: registerButton(context)),
+              Container(
+                child: loginfbButton(context),
+                margin: const EdgeInsets.only(left: 20.0, right: 10.0),
+              ),
               // Padding(
               //   padding: const EdgeInsets.all(20.0),
               //   child: logoutText(context),
               // ),
               // Text(userEmail),
             ],
-            
           ),
         ));
   }
@@ -137,7 +135,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-
   GestureDetector forgetButton(BuildContext context) {
     return GestureDetector(
       child: Container(
@@ -157,8 +154,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-
-GestureDetector logoutText(BuildContext context) {
+  GestureDetector logoutText(BuildContext context) {
     return GestureDetector(
       child: Container(
         alignment: Alignment.center,
@@ -171,13 +167,12 @@ GestureDetector logoutText(BuildContext context) {
         ),
       ),
       onTap: () {
-         _signOut();
+        _signOut();
       },
-      
     );
   }
 
-IconButton logoutButton(BuildContext context) {
+  IconButton logoutButton(BuildContext context) {
     return IconButton(
       icon: const Icon(Icons.logout),
       color: Colors.black,
@@ -185,9 +180,17 @@ IconButton logoutButton(BuildContext context) {
         _signOut();
       },
     );
-      
   }
 
+  IconButton loginfbButton(BuildContext context) {
+    return IconButton(
+      icon: const Icon(Icons.facebook),
+      color: Colors.black,
+      onPressed: () {
+        Navigator.pushNamed(context, '/fb');
+      },
+    );
+  }
 
   ElevatedButton loginButton() {
     return ElevatedButton(
@@ -213,7 +216,7 @@ IconButton logoutButton(BuildContext context) {
                   statusLogin();
                   ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text("Login Pass")));
-                      Navigator.pushNamed(context, '/');
+                  Navigator.pushNamed(context, '/');
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text("Please verify email")));
@@ -276,7 +279,6 @@ IconButton logoutButton(BuildContext context) {
       decoration: const InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(22.0)),
-        
         ),
         labelText: 'E-mail',
         prefixIcon: Icon(Icons.email),
@@ -284,7 +286,6 @@ IconButton logoutButton(BuildContext context) {
       ),
     );
   }
-
 
   bool validateEmail(String value) {
     RegExp regex = RegExp(
@@ -328,47 +329,52 @@ IconButton logoutButton(BuildContext context) {
       },
     );
   }
-  void statusLogin() {
-  if (status == 1) {
-    setState(() {
-    statusText = 'Loged in';});
-    print('Login = $status');
-  } else {
-    print('Login Fail');
-  }
-}
-  void statusLogout() {
-  if (status == 0) {
-    setState(() {
-    statusText = 'Loged out';});
-    userEmail = "No Email";
-    print('Logout');
-  } else {
-    print('Logout Fail');
-    print('Status $status');
-  }
-////////
-}
 
-    Future <LoginPage> _signOut()  async{
-    await FirebaseAuth.instance.signOut();
-    if(status == 1){
+  void statusLogin() {
+    if (status == 1) {
       setState(() {
-      status = 0;
-      statusText = 'Loged out';});
-      statusLogout();} 
-      else {
+        statusText = 'Loged in';
+      });
+      print('Login = $status');
+    } else {
+      print('Login Fail');
+    }
+  }
+
+  void statusLogout() {
+    if (status == 0) {
+      setState(() {
+        statusText = 'Loged out';
+      });
+      userEmail = "No Email";
+      print('Logout');
+    } else {
+      print('Logout Fail');
+      print('Status $status');
+    }
+////////
+  }
+
+  Future<LoginPage> _signOut() async {
+    await FirebaseAuth.instance.signOut();
+    if (status == 1) {
+      setState(() {
+        status = 0;
+        statusText = 'Loged out';
+      });
+      statusLogout();
+    } else {
       print('คุณออกจากระบบอยู่แล้ว');
     }
     return new LoginPage();
-}
+  }
 
   // Future signIn() async{
   //   await FirebaseAuth.instance.signInWithEmailAndPassword(
   //     email: email!,
   //     password: password!);
   // }
-  
+
 }
 
 
@@ -386,4 +392,3 @@ IconButton logoutButton(BuildContext context) {
 //     }
 // }
 // }
-

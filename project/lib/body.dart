@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:project/login.dart';
 
+
 class Body extends StatelessWidget {
   const Body({super.key});
 
@@ -29,6 +30,7 @@ class Body extends StatelessWidget {
                child: const Text('Enabled'))
             ],
           ),
+          Text(userName),
       ],
       
     );
