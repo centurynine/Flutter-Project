@@ -72,24 +72,42 @@ class _HomepageState extends State<Homepage> {
       drawer: Drawer(
         child: ListView(
           children: <Widget>[
-            Container(height: 30.0),
             Container(
-              child: Text(
-                "Menu",
-                style: GoogleFonts.kanit(
-                  fontSize: 15,
-                  color: Colors.blue,
-                ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 20.0),
-              child: Text(
-                userEmail.toString(),
-                style: GoogleFonts.kanit(
-                  fontSize: 15,
-                  color: Colors.blue,
-                ),
+              color: Colors.blue,
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(left: 10),
+                          child: Image.network(
+                            "https://cdn-icons-png.flaticon.com/512/2397/2397697.png",
+                            width: 50,
+                            height: 100,
+                          ),
+                        ),
+                        Container(
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.only(left: 10),
+                                child: Text(
+                                  userEmail.toString(),
+                                  style: GoogleFonts.kanit(
+                                    fontSize: 20,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    
+                  ),),
+                ],
+                
               ),
             ),
             ListTile(
