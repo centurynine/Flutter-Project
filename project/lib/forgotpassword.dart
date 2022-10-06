@@ -37,9 +37,15 @@ class _forgotPasswordState extends State<forgotPassword> {
             ),
           ),
           SizedBox(height: 80),
-          Text("           Password Reset",
+          Text("       Password Reset",
            style: GoogleFonts.kanit(
                         fontSize: 20,
+                        color: Colors.black,
+                      ),
+          ),
+           Text("              กรอกอีเมลล์ของคุณเพื่อรีเซ็ตรหัสผ่าน",
+           style: GoogleFonts.kanit(
+                        fontSize: 14,
                         color: Colors.black,
                       ),
           ),
@@ -74,7 +80,7 @@ class _forgotPasswordState extends State<forgotPassword> {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
         ),
-        labelText: 'Enter Email Address',
+        labelText: 'Email Address',
         labelStyle: GoogleFonts.kanit(
           fontSize: 15,
         ),

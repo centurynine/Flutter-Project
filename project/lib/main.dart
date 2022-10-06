@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         textTheme: 
           GoogleFonts.josefinSansTextTheme(),
           appBarTheme: const AppBarTheme(
-          color: Color.fromARGB(255, 242, 86, 86),
+          color: Colors.blue,
           elevation: 0,
         ),
          visualDensity: VisualDensity.adaptivePlatformDensity,
