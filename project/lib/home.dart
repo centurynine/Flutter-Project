@@ -1,17 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/body.dart';
 import 'package:project/login.dart';
 import 'package:firebase_core/firebase_core.dart';
+bool fullScreen = false;
+String screenText = 'Full Screen';
 String showEmail = userEmail.toString();
-void main(){
+void main() {
   runApp(MyApp());
 }
 
 /// App Widget
 class MyApp extends StatefulWidget {
-
   /// Initialize app
   MyApp();
   @override
@@ -22,22 +24,20 @@ class _MyAppState extends State<MyApp> {
   /// Widget
   @override
   Widget build(BuildContext context) => Scaffold(
-    body: StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return LoginPage();
-        } else {
-          return LoginPage();
-        }
-      },
-    ),
-  ); 
+        body: StreamBuilder<User?>(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return LoginPage();
+            } else {
+              return LoginPage();
+            }
+          },
+        ),
+      );
 }
 
-
 class Homepage extends StatefulWidget {
-  
   @override
   _HomepageState createState() => _HomepageState();
 }
@@ -45,10 +45,9 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 126, 174, 255),
+        backgroundColor: Colors.blue,
         title: const Text(
           " Apple Store",
           style: TextStyle(color: Colors.white),
@@ -73,23 +72,25 @@ class _HomepageState extends State<Homepage> {
       drawer: Drawer(
         child: ListView(
           children: <Widget>[
+            Container(height: 30.0),
             Container(
-              height: 30.0
-            ),
-            Container(
-              child: Text("Menu",
-          style: GoogleFonts.kanit(
-            fontSize: 15,
-            color: Colors.blue,
-          ),),
+              child: Text(
+                "Menu",
+                style: GoogleFonts.kanit(
+                  fontSize: 15,
+                  color: Colors.blue,
+                ),
+              ),
             ),
             Container(
               margin: EdgeInsets.only(left: 20.0),
-              child: Text(userEmail.toString(),
-          style: GoogleFonts.kanit(
-            fontSize: 15,
-            color: Colors.blue,
-          ),),
+              child: Text(
+                userEmail.toString(),
+                style: GoogleFonts.kanit(
+                  fontSize: 15,
+                  color: Colors.blue,
+                ),
+              ),
             ),
             ListTile(
               title: Text('Shared with me'),
@@ -141,15 +142,28 @@ class _HomepageState extends State<Homepage> {
                 _signOut();
               },
             ),
+            const SizedBox(
+              height: 200,
+            ),
+            Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              ElevatedButton(
+                onPressed: () {
+                screen();
+              },
+               child: Text(screenText)),
+            ],
+          ),
           ],
         ),
       ),
     );
   }
 
-    Future <LoginPage> _signOut()  async{
-     await FirebaseAuth.instance.signOut();
-    if(status == 1){
+  Future<LoginPage> _signOut() async {
+    await FirebaseAuth.instance.signOut();
+    if (status == 1) {
       status = 0;
       statusText = 'Loged out';
       setState(() {
@@ -157,36 +171,52 @@ class _HomepageState extends State<Homepage> {
         showAlertDialog(context);
         gotoHomepage(context);
       });
-      ;
-      } 
-      else {
+    } else {
       print('คุณออกจากระบบอยู่แล้ว');
     }
     return new LoginPage();
-}
+  }
 
-
- showAlertDialog(BuildContext context){
-      AlertDialog alert=AlertDialog(
-        content: Row(
-            children: [
-               CircularProgressIndicator(),
-               Container(margin: EdgeInsets.only(left: 5),child:Text("กำลังออกจากระบบ" )),
-            ],),
-      );
-      showDialog(barrierDismissible: false,
-        context:context,
-        builder:(BuildContext context){
-          return alert;
-        },
-      );
+  screen(){
+    if (fullScreen == false){
+      fullScreen = true;
+      setState(() {
+        screenText = 'Normal Screen';
+      });
+      SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+      }
+    else {
+      fullScreen = false;
+      setState(() {
+      screenText = 'Full Screen';
+      });
+      SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     }
+  }
+  }
 
-gotoHomepage(BuildContext context){
+  showAlertDialog(BuildContext context) {
+    AlertDialog alert = AlertDialog(
+      content: Row(
+        children: [
+          const CircularProgressIndicator(),
+          Container(
+              margin: EdgeInsets.only(left: 5), child: Text("กำลังออกจากระบบ")),
+        ],
+      ),
+    );
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  gotoHomepage(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => Homepage()),
     );
   }
-
-}

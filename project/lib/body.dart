@@ -20,15 +20,7 @@ class Body extends StatelessWidget {
                 ?.copyWith(fontWeight: FontWeight.bold),
                 ),  
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              ElevatedButton(onPressed: () {},
-               child: const Text('ถ่ายรูป')),
-               ElevatedButton(onPressed: () {},
-               child: const Text('Enabled'))
-            ],
-          ),
+          
       ],
       
     );
