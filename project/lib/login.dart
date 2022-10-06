@@ -360,19 +360,19 @@ IconButton logoutButton(BuildContext context) {
     if(status == 1){
       status = 0;
       statusText = 'Loged out';
-      statusLogout();
-    } else {
-      print('Logout Fail');
+      statusLogout();} 
+      else {
+      print('คุณออกจากระบบอยู่แล้ว');
     }
-    
     return new LoginPage();
 }
 
-  Future signIn() async{
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: email!,
-      password: password!);
-  }
+  // Future signIn() async{
+  //   await FirebaseAuth.instance.signInWithEmailAndPassword(
+  //     email: email!,
+  //     password: password!);
+  // }
+  
 }
 
 
