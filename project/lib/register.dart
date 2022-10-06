@@ -14,6 +14,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final _formstate = GlobalKey<FormState>();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+  TextEditingController confirmPassword = TextEditingController();
 
   final auth = FirebaseAuth.instance;
   @override
@@ -50,6 +51,14 @@ class _RegisterPageState extends State<RegisterPage> {
                         color: Colors.black,
                       ),  
               )),
+              Text("              กรอกข้อมูลเพื่อทำการลงทะเบียน",
+           style: GoogleFonts.kanit(
+                        fontSize: 14,
+                        color: Colors.black,
+                      ),
+                      
+                      
+          ),
               SizedBox(height: 20),
               Container(
                   margin: const EdgeInsets.only(left: 40.0, right: 40.0),
@@ -58,10 +67,15 @@ class _RegisterPageState extends State<RegisterPage> {
               Container(
                   margin: const EdgeInsets.only(left: 40.0, right: 40.0),
                   child: buildPasswordField()),
+              SizedBox(height: 10),
+              Container(
+                  margin: const EdgeInsets.only(left: 40.0, right: 40.0),
+                  child: buildConfirmPasswordField()),
               SizedBox(height: 30),
               Container(
                   margin: const EdgeInsets.only(left: 100.0, right: 100.0),
                   child: buildRegisterButton()),
+            
             ],
           ),
         ));
@@ -116,12 +130,35 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
+  TextFormField buildConfirmPasswordField() {
+    return TextFormField(
+      controller: confirmPassword,
+      validator: (value) {
+        if(value!.isEmpty)
+           return 'กรุณากรอกรหัสผ่านอีกครั้ง';
+         if(value != password.text)
+           return 'รหัสผ่านไม่ตรงกัน';
+         return null;
+      },
+      obscureText: true,
+      keyboardType: TextInputType.text,
+      decoration: const InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(22.0)),
+        ),
+        prefixIcon: Icon(Icons.lock),
+        labelText: 'Confirm Password',
+      ),
+    );
+  }
+
+
   TextFormField buildEmailField() {
     return TextFormField(
       controller: email,
       validator: (value) {
         if (value!.isEmpty)
-          return 'Please fill in E-mail field';
+          return 'กรุณากรอกอีเมล';
         else
           return null;
       },
@@ -133,7 +170,7 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
         prefixIcon: Icon(Icons.email),
         labelText: 'E-mail',
-        hintText: 'email@x.com',
+        hintText: 'email@example.com',
       ),
     );
   }
