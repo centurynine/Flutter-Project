@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:project/alertdialog.dart';
+import 'package:project/forgotpassword.dart';
 import 'package:project/home.dart';
 import 'package:project/login.dart';
 import 'package:project/register.dart';
@@ -42,6 +42,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => Homepage(),
         '/register': (context) => RegisterPage(),
         '/login': (context) => LoginPage(),
+        '/forgotpassword': (context) => forgotPassword(),
       },
     );
   }

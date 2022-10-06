@@ -1,6 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project/body.dart';
 import 'package:project/login.dart';
+import 'package:firebase_core/firebase_core.dart';
+String userEmail = 'No email';
+
 
 void main(){
   runApp(MyApp());
@@ -19,14 +23,18 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   /// Widget
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-
-      /// Home
-      home: Homepage(),
-    );
-  }
+  Widget build(BuildContext context) => Scaffold(
+    body: StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return LoginPage();
+        } else {
+          return LoginPage();
+        }
+      },
+    ),
+  ); 
 }
 
 
@@ -40,7 +48,7 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Color.fromARGB(255, 126, 174, 255),
         title: const Text(
           " Apple Store",
           style: TextStyle(color: Colors.white),
@@ -70,7 +78,7 @@ class _HomepageState extends State<Homepage> {
             ),
             const UserAccountsDrawerHeader(
               accountName: Text("accountName"), 
-              accountEmail: Text("accountEmail"),
+              accountEmail: Text("userEmail"),
               currentAccountPicture: FlutterLogo(
                 size: 42.0,
               ),

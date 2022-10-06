@@ -123,23 +123,6 @@ class _LoginPageState extends State<LoginPage> {
         ));
   }
 
-  // ElevatedButton registerButton(BuildContext context) {
-  //   return ElevatedButton(
-  //     // ignore: prefer_const_constructors
-  //     child: Text('Register new account'),
-  //               style: ElevatedButton.styleFrom(
-  //                 primary: Colors.blue,
-  //                 onPrimary: Colors.white,
-  //             shape: RoundedRectangleBorder(
-  //                 borderRadius: BorderRadius.circular(15.0)),
-  //               ),
-  //     onPressed: () {
-  //       print('Goto  Regis pagge');
-  //       Navigator.pushNamed(context, '/register');
-  //     },
-  //   );
-  // }
-
   GestureDetector registerButton(BuildContext context) {
     return GestureDetector(
       child: Container(
@@ -174,7 +157,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
       onTap: () {
         print('Goto  Regis pagge');
-        Navigator.pushNamed(context, '/register');
+        Navigator.pushNamed(context, '/forgotpassword');
       },
     );
   }
@@ -284,7 +267,6 @@ IconButton logoutButton(BuildContext context) {
 
   TextFormField emailTextFormField() {
     return TextFormField(
-
       onSaved: (value) {
         email = value!.trim();
       },
@@ -312,7 +294,6 @@ IconButton logoutButton(BuildContext context) {
   bool validateEmail(String value) {
     RegExp regex = RegExp(
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
-
     return (!regex.hasMatch(value)) ? false : true;
   }
 
@@ -386,6 +367,12 @@ IconButton logoutButton(BuildContext context) {
     
     return new LoginPage();
 }
+
+  Future signIn() async{
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: email!,
+      password: password!);
+  }
 }
 
 
