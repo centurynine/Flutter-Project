@@ -15,7 +15,7 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: <Widget>[
+      children: [
         
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -38,7 +38,53 @@ class _BodyState extends State<Body> {
                child: const Text('Logout FB')),
             ],
           ),
-          Text(userName),
+          
+          status == 1
+          ? Column(
+            children: [
+              Text("Login Success"),
+            ],
+          )
+          : Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              ElevatedButton(
+                child: const Text('เข้าสู่ระบบ'),
+                onPressed: () {
+                Navigator.pushNamed(context, '/login');
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.white60,
+                  onPrimary: Colors.blue[700],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(32.0),
+                  ),
+                  fixedSize: Size(150, 70),
+                  elevation: 15,
+                  shadowColor: Colors.white,
+                  side: BorderSide(color: Colors.black26, width: 2),
+                ),
+               ),
+
+               ElevatedButton(
+                child: const Text('สมัครสมาชิก'),
+                onPressed: () {
+                Navigator.pushNamed(context, '/register');
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.white60,
+                  onPrimary: Colors.blue[700],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(32.0),
+                  ),
+                  fixedSize: Size(150, 70),
+                  elevation: 15,
+                  shadowColor: Colors.white,
+                  side: BorderSide(color: Colors.black26, width: 2),
+                ),
+               ),
+            ],
+          ),
       ],
       
     );
