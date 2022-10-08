@@ -158,10 +158,11 @@ class _HomepageState extends State<Homepage> {
               },
             ),
             ListTile(
-              title: Text('Backups'),
-              leading: Icon(Icons.backup),
+              title: Text('Setting'),
+              leading: Icon(Icons.settings),
               onTap: () {
                 print("Clicked");
+                Navigator.pushNamed(context, '/setting');
               },
             ),
             if (status == 1)
@@ -181,7 +182,7 @@ class _HomepageState extends State<Homepage> {
               children: <Widget>[
                 ElevatedButton(
                     onPressed: () {
-                      screen();
+                      
                     },
                     child: Text(screenText)),
               ],
@@ -208,22 +209,6 @@ class _HomepageState extends State<Homepage> {
     return new LoginPage();
   }
 
-  screen() {
-    if (fullScreen == false) {
-      fullScreen = true;
-      setState(() {
-        screenText = 'Normal Screen';
-      });
-      SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
-    } else {
-      fullScreen = false;
-      setState(() {
-        screenText = 'Full Screen';
-      });
-      SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
-    }
-  }
-}
 
 showAlertDialog(BuildContext context) {
   AlertDialog alert = AlertDialog(
@@ -256,4 +241,5 @@ gotoLoginpage(BuildContext context) {
     context,
     MaterialPageRoute(builder: (context) => LoginPage()),
   );
+}
 }

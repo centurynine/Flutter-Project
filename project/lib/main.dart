@@ -8,6 +8,7 @@ import 'package:project/home.dart';
 import 'package:project/login.dart';
 import 'package:project/register.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:project/setting.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginPage(),
         '/forgotpassword': (context) => forgotPassword(),
         '/fb': (context) => FacebookLogin(),
+        '/setting': (context) => Setting(),
       },
     );
   }
