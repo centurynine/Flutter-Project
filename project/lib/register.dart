@@ -18,7 +18,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController confirmPassword = TextEditingController();
   TextEditingController name = TextEditingController();
   TextEditingController userName = TextEditingController();
-  dynamic idToken;
+
   final auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
@@ -273,4 +273,6 @@ class _RegisterPageState extends State<RegisterPage> {
           }
           );
   }
+
+  
 }

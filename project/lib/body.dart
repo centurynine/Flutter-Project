@@ -1,3 +1,5 @@
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +14,76 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+
+
+  String? name = '';
+  String? userName = '';
+  String? userEmail = '';
+
+  // Future _getDataFromDatabaseTWO() async {
+  //   await FirebaseFirestore.instance.collection('users')
+  //     .doc(FirebaseAuth.instance.currentUser!.uid)
+  //     .get()
+  //     .then((snapshot) async
+  //     {
+  //       if(snapshot.exists)
+  //       {
+  //         print(snapshot.exists);
+  //         setState(() { 
+  //           name = snapshot.data()!['name'];
+  //           userName = snapshot.data()!['username'];
+  //           userEmail = snapshot.data()!['email'];
+  //         });
+  //       }
+  //     });
+  // }
+  Future _getDataFromDatabase() async {
+    await FirebaseFirestore.instance.collection('users')
+      .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
+      .get()
+      .then((QuerySnapshot snapshot) => {
+        snapshot.docs.forEach((doc) {
+          print("documentID---- " + doc.id);
+          print("documentID---- " + doc.data().toString());
+         setState(() {
+            // name = doc.data()
+            //  userName = snapshot.data()!['username'];
+            //  userEmail = snapshot.data()!['email'];
+         });
+        }),
+      },
+    );
+      
+  }
+  // Future _getDataFromDatabase() async {
+  //   await FirebaseFirestore.instance.collection('users')
+  //     .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
+  //     .get
+  //     .then(
+  //     (QuerySnapshot snapshot) => {
+  //       snapshot.documents.forEach((f) {
+        
+  //         print("documentID---- " + f.reference.documentID);
+         
+  //       }),
+  //     },
+  //   );
+      
+  // }
+
+
+  // Future _getDataFromDatabase() async {
+  //   await FirebaseFirestore.instance.collection('users').get().then((value) {
+  //     value.docs.forEach((element) {
+  //       setState(() {
+  //         name = element['name'];
+  //         userName = element['username'];
+  //         userEmail = element['email'];
+  //       });
+  //     });
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -70,6 +142,31 @@ class _BodyState extends State<Body> {
                 child: const Text('สมัครสมาชิก'),
                 onPressed: () {
                 Navigator.pushNamed(context, '/register');
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.white60,
+                  onPrimary: Colors.blue[700],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  fixedSize: Size(150, 70),
+                  elevation: 15,
+                  shadowColor: Colors.white,
+                  side: BorderSide(color: Colors.blue, width: 2),
+                ),
+               ),
+            ],
+            
+          ),
+          Column(
+            children: [
+              Text("Name: $name"),
+              Text("Username: $userName"),
+              Text("Email: $userEmail"),
+              ElevatedButton(
+                child: const Text('Get User Data'),
+                onPressed: () {
+                _getDataFromDatabase();
                 },
                 style: ElevatedButton.styleFrom(
                   primary: Colors.white60,
