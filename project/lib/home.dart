@@ -25,16 +25,7 @@ class _MyAppState extends State<MyApp> {
   /// Widget
   @override
   Widget build(BuildContext context) => Scaffold(
-        body: StreamBuilder<User?>(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return LoginPage();
-            } else {
-              return LoginPage();
-            }
-          },
-        ),
+      
       );
 }
 
@@ -195,17 +186,6 @@ class _HomepageState extends State<Homepage> {
 
   Future<LoginPage> _signOut() async {
     await FirebaseAuth.instance.signOut();
-    if (status == 1) {
-      setState(() {
-        status = 0;
-        statusText = 'Loged out';
-        userEmail = 'กรุณาเข้าสู่ระบบ';
-        showAlertDialog(context);
-        gotoHomepage(context);
-      });
-    } else {
-      print('คุณออกจากระบบอยู่แล้ว');
-    }
     return new LoginPage();
   }
 
