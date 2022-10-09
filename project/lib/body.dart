@@ -1,4 +1,7 @@
 
+import 'dart:convert';
+
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -6,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:project/login.dart';
 import 'package:project/facebook.dart';
+
 class Body extends StatefulWidget {
   const Body({super.key});
 
@@ -43,18 +47,21 @@ class _BodyState extends State<Body> {
       .get()
       .then((QuerySnapshot snapshot) => {
         snapshot.docs.forEach((doc) {
+           final getProfile = 
+             json.decode(json.encode(doc.data()) as String) as Map<String, dynamic>;
+          print(doc.data());
           print("documentID---- " + doc.id);
           print("documentID---- " + doc.data().toString());
          setState(() {
-            // name = doc.data()
-            //  userName = snapshot.data()!['username'];
-            //  userEmail = snapshot.data()!['email'];
+                      userName = getProfile["username"];
+                      name = getProfile["name"];
+                      userEmail = getProfile["email"];
          });
         }),
       },
     );
-      
   }
+  // }
   // Future _getDataFromDatabase() async {
   //   await FirebaseFirestore.instance.collection('users')
   //     .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
@@ -163,10 +170,28 @@ class _BodyState extends State<Body> {
               Text("Name: $name"),
               Text("Username: $userName"),
               Text("Email: $userEmail"),
+              SizedBox(height: 20),
               ElevatedButton(
                 child: const Text('Get User Data'),
                 onPressed: () {
                 _getDataFromDatabase();
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.white60,
+                  onPrimary: Colors.blue[700],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  fixedSize: Size(150, 70),
+                  elevation: 15,
+                  shadowColor: Colors.white,
+                  side: BorderSide(color: Colors.blue, width: 2),
+                ),
+               ),
+               ElevatedButton(
+                child: const Text('Logout'),
+                onPressed: () {
+                signOut();
                 },
                 style: ElevatedButton.styleFrom(
                   primary: Colors.white60,
@@ -199,5 +224,7 @@ class _BodyState extends State<Body> {
     }
     return new LoginPage();
   }
+
+
 
 }
