@@ -18,7 +18,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController confirmPassword = TextEditingController();
   TextEditingController name = TextEditingController();
   TextEditingController userName = TextEditingController();
-
+  dynamic idToken;
   final auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
@@ -116,9 +116,11 @@ class _RegisterPageState extends State<RegisterPage> {
     try {
       // var userCredential =
       final _user = await auth.createUserWithEmailAndPassword(
+           
           email: email.text.trim(), 
           password: password.text.trim(),
           );
+           print(_user.user!.uid);
           uploadUser();
           _user.user!.sendEmailVerification();
     } on FirebaseAuthException catch (e) {
@@ -264,6 +266,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
           await FirebaseFirestore.instance.collection("users").add(
         {
+          "uid": auth.currentUser!.uid,
           "email": email.text,
           "username": userName.text,
           "name": name.text
