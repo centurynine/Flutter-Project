@@ -195,7 +195,7 @@ class _RegisterPageState extends State<RegisterPage> {
         else
           return null;
       },
-      keyboardType: TextInputType.name,
+      keyboardType: TextInputType.text,
       textInputAction: TextInputAction.next,
       decoration: const InputDecoration(
         border: OutlineInputBorder(
