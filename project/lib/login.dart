@@ -370,26 +370,6 @@ class _LoginPageState extends State<LoginPage> {
     return new LoginPage();
   }
 
-  // Future signIn() async{
-  //   await FirebaseAuth.instance.signInWithEmailAndPassword(
-  //     email: email!,
-  //     password: password!);
-  // }
+ 
 
 }
-
-
-
-//     Future <LoginPage> _signOut()  async{
-//     await FirebaseAuth.instance.signOut();
-//     if(status == 1){
-//       status = 0;
-//       statusText = 'Loged out';
-//       statusLogout();
-//       return new LoginPage();
-//     }
-//     else {
-//       print('Logout Fail');
-//     }
-// }
-// }

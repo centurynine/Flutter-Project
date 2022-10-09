@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/login.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,8 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController confirmPassword = TextEditingController();
+  TextEditingController name = TextEditingController();
+  TextEditingController userName = TextEditingController();
 
   final auth = FirebaseAuth.instance;
   @override
@@ -62,6 +65,14 @@ class _RegisterPageState extends State<RegisterPage> {
               SizedBox(height: 20),
               Container(
                   margin: const EdgeInsets.only(left: 40.0, right: 40.0),
+                  child: buildNameField()),
+                  SizedBox(height: 10),
+              Container(
+                  margin: const EdgeInsets.only(left: 40.0, right: 40.0),
+                  child: buildUserNameField()),
+              SizedBox(height: 10),
+              Container(
+                  margin: const EdgeInsets.only(left: 40.0, right: 40.0),
                   child: buildEmailField()),
               SizedBox(height: 10),
               Container(
@@ -80,6 +91,8 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
         ));
   }
+
+
 
   ElevatedButton buildRegisterButton() {
     return ElevatedButton(
@@ -104,8 +117,9 @@ class _RegisterPageState extends State<RegisterPage> {
       // var userCredential =
       final _user = await auth.createUserWithEmailAndPassword(
           email: email.text.trim(), 
-          password: password.text.trim()
+          password: password.text.trim(),
           );
+          uploadUser();
           _user.user!.sendEmailVerification();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -170,6 +184,49 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
 
+  TextFormField buildUserNameField() {
+    return TextFormField(
+      controller: userName,
+      validator: (value) {
+        if (value!.isEmpty)
+          return 'Username is required';
+        else
+          return null;
+      },
+      keyboardType: TextInputType.name,
+      textInputAction: TextInputAction.next,
+      decoration: const InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(22.0)),
+        ),
+        prefixIcon: Icon(Icons.person),
+        labelText: 'User Name',
+        hintText: 'Bunhee',
+      ),
+    );
+  }
+
+  TextFormField buildNameField() {
+    return TextFormField(
+      controller: name,
+      validator: (value) {
+        if (value!.isEmpty)
+          return 'กรุณากรอกชื่อ';
+        else
+          return null;
+      },
+      keyboardType: TextInputType.name,
+      textInputAction: TextInputAction.next,
+      decoration: const InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(22.0)),
+        ),
+        prefixIcon: Icon(Icons.person),
+        labelText: 'Name',
+        hintText: 'Sivagon ganjanaburi',
+      ),
+    );
+  }
 
 
   TextFormField buildEmailField() {
@@ -192,5 +249,25 @@ class _RegisterPageState extends State<RegisterPage> {
         hintText: 'email@example.com',
       ),
     );
+  }
+
+  Future<bool> isUserLogged() async {
+    var user = await auth.currentUser;
+    if (user != null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void uploadUser() async {
+
+          await FirebaseFirestore.instance.collection("users").add(
+        {
+          "email": email.text,
+          "username": userName.text,
+          "name": name.text
+          }
+          );
   }
 }
