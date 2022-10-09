@@ -42,6 +42,7 @@ class _BodyState extends State<Body> {
   //     });
   // }
   Future _getDataFromDatabase() async {
+    if (FirebaseAuth.instance.currentUser != null) {
     await FirebaseFirestore.instance.collection('users')
       .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
       .get()
@@ -49,17 +50,18 @@ class _BodyState extends State<Body> {
         snapshot.docs.forEach((doc) {
            final getProfile = 
              json.decode(json.encode(doc.data()) as String) as Map<String, dynamic>;
-          print(doc.data());
-          print("documentID---- " + doc.id);
           print("documentID---- " + doc.data().toString());
          setState(() {
-                      userName = getProfile["username"];
-                      name = getProfile["name"];
-                      userEmail = getProfile["email"];
+             userName = getProfile["username"];
+             name = getProfile["name"];
+             userEmail = getProfile["email"];
          });
         }),
       },
-    );
+    );}
+    else {
+      print('No user logged in');
+    }
   }
   // }
   // Future _getDataFromDatabase() async {
@@ -118,7 +120,7 @@ class _BodyState extends State<Body> {
             ],
           ),
           
-          status == 1
+          FirebaseAuth.instance.currentUser != null
           ? Column(
             children: [
               Text("Login Success"),

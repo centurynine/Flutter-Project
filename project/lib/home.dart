@@ -58,7 +58,7 @@ class _HomepageState extends State<Homepage> {
             icon: Icon(Icons.search),
             onPressed: () {},
           ),
-          status == 0
+          FirebaseAuth.instance.currentUser == null
               ? IconButton(
                   icon: Icon(Icons.login),
                   onPressed: () {
