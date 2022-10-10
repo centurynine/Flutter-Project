@@ -8,8 +8,9 @@ import 'package:google_fonts/google_fonts.dart';
 int status = 0;
 String statusText = "Not Logged In";
 bool logoutBt = false;
-String userEmail = "No Email";
+dynamic userEmail = "No Email";
 String userName = "No Name";
+
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -22,6 +23,7 @@ class _LoginPageState extends State<LoginPage> {
   String? email;
   String? password;
   final auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -372,4 +374,7 @@ class _LoginPageState extends State<LoginPage> {
       print('คุณออกจากระบบอยู่แล้ว');
     }
   }
+  
 }
+
+ 

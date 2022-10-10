@@ -36,6 +36,17 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   @override
+  void initState() {
+    super.initState();
+    if(FirebaseAuth.instance.currentUser != null){
+      userEmail = FirebaseAuth.instance.currentUser!.email;
+      userName = FirebaseAuth.instance.currentUser!.displayName!;
+      status = 1;
+      statusText = "Logged In";
+    }
+    
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
