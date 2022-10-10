@@ -86,7 +86,8 @@ class _HomepageState extends State<Homepage> {
                             height: 100,
                           ),
                         ),
-                        Container(
+                        FirebaseAuth.instance.currentUser != null
+                        ? Container(
                           child: Column(
                             children: <Widget>[
                               Container(
@@ -101,7 +102,23 @@ class _HomepageState extends State<Homepage> {
                               ),
                             ],
                           ),
-                        ),
+                        )
+                        : Container(
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.only(left: 10),
+                                child: Text(
+                                  'กรุณาเข้าสู่ระบบ',
+                                  style: GoogleFonts.kanit(
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
 
                       ],
                       
@@ -156,7 +173,7 @@ class _HomepageState extends State<Homepage> {
                 Navigator.pushNamed(context, '/setting');
               },
             ),
-            if (status == 1)
+            if (FirebaseAuth.instance.currentUser != null)
               ListTile(
                 title: Text('Logout'),
                 leading: Icon(Icons.logout),

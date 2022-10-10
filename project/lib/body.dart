@@ -1,7 +1,4 @@
-
 import 'dart:convert';
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -164,8 +161,7 @@ class _BodyState extends State<Body> {
                   side: BorderSide(color: Colors.blue, width: 2),
                 ),
                ),
-            ],
-            
+            ], 
           ),
           Column(
             children: [
@@ -210,7 +206,6 @@ class _BodyState extends State<Body> {
             ],
           ),
       ],
-      
     );
   }
 
