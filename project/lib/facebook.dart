@@ -148,10 +148,10 @@ ElevatedButton logoutFB() {
         });
         print(userEmailfb);
         print(userName);
-        uploadUserFB(userEmailfb,userNamefb);
       try {
         final AuthCredential facebookCredential = FacebookAuthProvider.credential(result.accessToken!.token);
         final userCredential = await FirebaseAuth.instance.signInWithCredential(facebookCredential);
+        uploadUserFB(userEmailfb,userNamefb);
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => Homepage()),
@@ -243,12 +243,10 @@ Future<void> checkFB() async {
           }else if(query.docs.isEmpty){
           await FirebaseFirestore.instance.collection("users").add(
         {
-      //    "uid": auth.currentUser!.uid,
+          "uid": auth.currentUser!.uid,
           "email": userEmail.toString(),
-      //    "username": userName.text,
-          "name": userName.toString(),
-          }
-          );
+          "name": userName.toString(),});
+          
   }
    }
 
