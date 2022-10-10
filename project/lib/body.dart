@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:project/login.dart';
 import 'package:project/facebook.dart';
 
@@ -127,7 +128,12 @@ class _BodyState extends State<Body> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               ElevatedButton(
-                child: const Text('เข้าสู่ระบบ'),
+                child: Text('เข้าสู่ระบบ',
+                style: GoogleFonts.kanit(
+                                    fontSize: 20,
+                                    color: Colors.black,
+                                  ),
+                ),
                 onPressed: () {
                 Navigator.pushNamed(context, '/login');
                 },
@@ -145,7 +151,12 @@ class _BodyState extends State<Body> {
                ),
 
                ElevatedButton(
-                child: const Text('สมัครสมาชิก'),
+                child: Text('สมัครสมาชิก',
+                style: GoogleFonts.kanit(
+                                    fontSize: 20,
+                                    color: Colors.black,
+                                  ),
+                ),
                 onPressed: () {
                 Navigator.pushNamed(context, '/register');
                 },
