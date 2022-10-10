@@ -218,8 +218,29 @@ Future<void> checkFB() async {
     );
   }
 
-   void uploadUserFB(String userEmail,String userName) async {
+  //  void uploadUserFB(String userEmail,String userName) async {
+  //         if(FirebaseFirestore.instance.collection("users")
+  //         .where('email', isEqualTo: userEmail)
+  //         .get() != userEmail){
+  //           print("User already exists");
+  //           print(userEmail);
+  //         }else{
+  //         await FirebaseFirestore.instance.collection("users").add(
+  //       {
+  //     //    "uid": auth.currentUser!.uid,
+  //         "email": userEmail.toString(),
+  //     //    "username": userName.text,
+  //         "name": userName.toString(),
+  //         }
+  //         );
+  // }
+  //  }
 
+   void uploadUserFB(String userEmail,String userName) async {
+          QuerySnapshot query = await FirebaseFirestore.instance.collection('users').where('email',isEqualTo:userEmail).get();
+          if (query.docs.isNotEmpty){
+                print("User already exists");
+          }else if(query.docs.isEmpty){
           await FirebaseFirestore.instance.collection("users").add(
         {
       //    "uid": auth.currentUser!.uid,
@@ -229,5 +250,7 @@ Future<void> checkFB() async {
           }
           );
   }
+   }
+
 
 }
