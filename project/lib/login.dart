@@ -360,7 +360,7 @@ class _LoginPageState extends State<LoginPage> {
 ////////
   }
 
-  Future<LoginPage> _signOut() async {
+   Future _signOut() async {
     await FirebaseAuth.instance.signOut();
     if (status == 1) {
       setState(() {
@@ -371,9 +371,5 @@ class _LoginPageState extends State<LoginPage> {
     } else {
       print('คุณออกจากระบบอยู่แล้ว');
     }
-    return new LoginPage();
   }
-
- 
-
 }

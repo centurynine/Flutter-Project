@@ -184,9 +184,15 @@ class _HomepageState extends State<Homepage> {
     );
   }
 
-  Future<LoginPage> _signOut() async {
+  Future _signOut() async {
     await FirebaseAuth.instance.signOut();
-    return new LoginPage();
+    if(FirebaseAuth.instance.currentUser == null){
+      setState(() {
+        userEmail = 'No login';
+        Navigator.pushNamed(context, '/');
+      });
+    }
+
   }
 
 

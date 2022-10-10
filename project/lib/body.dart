@@ -214,17 +214,17 @@ class _BodyState extends State<Body> {
     );
   }
 
-  Future<LoginPage> signOut() async {
+  Future signOut() async {
     await FirebaseAuth.instance.signOut();
     if (status == 1) {
       setState(() {
         status = 0;
-        statusText = 'Loged out';
+        userEmail = 'กรุณาเข้าสู่ระบบ';
       });
     } else {
       print('คุณออกจากระบบอยู่แล้ว');
     }
-    return new LoginPage();
+    Navigator.pushNamed(context, '/login');
   }
 
 
