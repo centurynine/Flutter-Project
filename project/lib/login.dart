@@ -220,17 +220,50 @@ class _LoginPageState extends State<LoginPage> {
                   status = 1;
                   userEmail = value.user!.email!;
                   statusLogin();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("Login Pass")));
+                 ScaffoldMessenger.of(context)
+                  .showMaterialBanner(MaterialBanner(
+                    content: Text("เข้าสู่ระบบสำเร็จ"),
+                    leading: Icon(Icons.info),
+                    actions: [
+                      TextButton(
+                        child: Text("ปิด"),
+                        onPressed: () {
+                          ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                        },
+                      ),
+                    ],
+                  ));
                //   _getDataFromDatabase();
                   Navigator.pushNamed(context, '/');
                 } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("Please verify email")));
+                  ScaffoldMessenger.of(context)
+                  .showMaterialBanner(MaterialBanner(
+                    content: Text("โปรดยืนยันอีเมลล์"),
+                    leading: Icon(Icons.info),
+                    actions: [
+                      TextButton(
+                        child: Text("ปิด"),
+                        onPressed: () {
+                          ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                        },
+                      ),
+                    ],
+                  ));
                 }
               }).catchError((reason) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Login or Password Invalid")));
+                ScaffoldMessenger.of(context)
+                  .showMaterialBanner(MaterialBanner(
+                    content: Text("อีเมลล์หรือรหัสผ่านไม่ถูกต้อง"),
+                    leading: Icon(Icons.info),
+                    actions: [
+                      TextButton(
+                        child: Text("ปิด"),
+                        onPressed: () {
+                          ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                        },
+                      ),
+                    ],
+                  ));
               });
           } on FirebaseAuthException catch (e) {
               if (e.code == 'user-not-found') {

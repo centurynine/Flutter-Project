@@ -36,11 +36,11 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   @override
+
   void initState() {
     super.initState();
     if(FirebaseAuth.instance.currentUser != null){
-      userEmail = FirebaseAuth.instance.currentUser!.email;
-      userName = FirebaseAuth.instance.currentUser!.displayName!;
+      userEmail = FirebaseAuth.instance.currentUser?.email;
       status = 1;
       statusText = "Logged In";
     }
@@ -143,7 +143,7 @@ class _HomepageState extends State<Homepage> {
                 ],
               ),
             ),
-            if (status == 0)
+            if (FirebaseAuth.instance.currentUser == null)
               ListTile(
                 title: Text('เข้าสู่ระบบ'),
                 leading: Icon(Icons.login),
@@ -153,10 +153,11 @@ class _HomepageState extends State<Homepage> {
                 },
               ),
             ListTile(
-              title: Text('Starred'),
+              title: Text('สูตรกล้ามโต'),
               leading: Icon(Icons.star),
               onTap: () {
                 print("Clicked");
+                Navigator.pushNamed(context, '/widget');
               },
             ),
             ListTile(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project/HomePageWidget.dart';
 import 'package:project/facebook.dart';
 import 'package:project/forgotpassword.dart';
 import 'package:project/home.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
         '/forgotpassword': (context) => forgotPassword(),
         '/fb': (context) => FacebookLogin(),
         '/setting': (context) => Setting(),
+        '/widget': (context) => HomePageWidget(),
       },
     );
   }

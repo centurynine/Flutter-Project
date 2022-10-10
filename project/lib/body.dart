@@ -214,6 +214,26 @@ class _BodyState extends State<Body> {
                   side: BorderSide(color: Colors.blue, width: 2),
                 ),
                ),
+               ElevatedButton(
+                child: Text("Popup"),
+                onPressed: () {
+                  ScaffoldMessenger.of(context)
+                  .showMaterialBanner(MaterialBanner(
+                    content: Text("This is a MaterialBanner"),
+                    leading: Icon(Icons.info),
+                    actions: [
+                      TextButton(
+                        child: Text("DISMISS"),
+                        onPressed: () {
+                          ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                        },
+                      ),
+                    ],
+                  ));
+
+                },
+                
+                )
             ],
           ),
       ],
