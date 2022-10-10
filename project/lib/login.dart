@@ -259,11 +259,16 @@ class _LoginPageState extends State<LoginPage> {
                       TextButton(
                         child: Text("ปิด"),
                         onPressed: () {
-                          ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                            ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
                         },
                       ),
+                      
                     ],
                   ));
+                          Future.delayed(const Duration(milliseconds: 2500), () 
+                          {
+                            ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                          });
               });
           } on FirebaseAuthException catch (e) {
               if (e.code == 'user-not-found') {
