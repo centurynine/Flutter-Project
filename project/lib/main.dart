@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/HomePageWidget.dart';
+import 'package:project/ShowMenu.dart';
 import 'package:project/body_login.dart';
 import 'package:project/facebook.dart';
 import 'package:project/forgotpassword.dart';
@@ -52,6 +53,7 @@ class MyApp extends StatelessWidget {
         '/setting': (context) => Setting(),
         '/widget': (context) => HomePageWidget(),
         '/food': (context) => BodyAfterLogin(),
+        '/showmenu': (context) => ShowMenu(),
       },
     );
   }

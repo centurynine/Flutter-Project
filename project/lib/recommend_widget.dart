@@ -21,7 +21,7 @@ class _RecommendgetState extends State<Recommendget> {
         if(selectIndex != tips.length - 1) {
           selectIndex++;
         } else {
-          selectIndex = 0;
+          selectIndex = 0; 
         }
       });
     });
@@ -31,7 +31,7 @@ class _RecommendgetState extends State<Recommendget> {
   Widget build(BuildContext context) {
     return Container(
      height: 180,
-     width: 350,
+     width: 340,
      decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
@@ -75,7 +75,7 @@ class _RecommendgetState extends State<Recommendget> {
                     ),
                     ),
                     const SizedBox(height: 10),
-                    Text('สวัสดีฆรัล ผมนายสิวกอร์น',
+                    Text('สวัสดีฆรับ ผมนายสิวกอร์น',
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.grey,
@@ -103,8 +103,6 @@ class _RecommendgetState extends State<Recommendget> {
               ),
             ],
           )
-
-          
           ),
           )
         ],
