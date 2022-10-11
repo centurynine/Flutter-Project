@@ -208,12 +208,9 @@ class _BodyState extends State<Body> {
     return Column(
       children: [
         Column(
-          
         )
       ],
-      
     );
-    
   }
 
   Future signOut() async {
@@ -229,5 +226,3 @@ class _BodyState extends State<Body> {
     Navigator.pushNamed(context, '/login');
   }
 }
-
- 

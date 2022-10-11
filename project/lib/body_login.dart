@@ -7,8 +7,8 @@ class BodyAfterLogin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
+    return SafeArea(child: 
+    Scaffold(
       body: StreamBuilder<QuerySnapshot>(
           stream: recipes.snapshots(),
           builder: (context,snapshot){
@@ -30,7 +30,7 @@ class BodyAfterLogin extends StatelessWidget {
               },
             );
           }
-          ),   
+          ),  ) 
     );
   }
 }
