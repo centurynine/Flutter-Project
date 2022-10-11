@@ -7,6 +7,7 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/login.dart';
 import 'package:project/facebook.dart';
+import 'package:project/recommend_widget.dart';
 
 class Body extends StatefulWidget {
   const Body({super.key});
@@ -73,12 +74,13 @@ class _BodyState extends State<Body> {
                 const SizedBox(width: 16),
                 const Icon(Icons.search),
                 const SizedBox(width: 16),
-                const Text(
+                Text(
                   'Search',
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.grey,
                   ),
+                  
                 ),
               ],
             
@@ -86,29 +88,26 @@ class _BodyState extends State<Body> {
 
           ),
         ),
-        
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-            "TEST", 
-            style: Theme.of(context)
-                .textTheme
-                .headline5
-                ?.copyWith(fontWeight: FontWeight.bold),
-                ),  
-          ),
-            Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              ElevatedButton(onPressed: () {},
-               child: const Text('ถ่ายรูป')),
-               ElevatedButton(onPressed: () {
-                signOut();
-               },
-               child: const Text('Logout FB')),
+        Container(
+          alignment: Alignment.topLeft,
+          child: Column(
+            children: [
+              Column(
+                children: [
+                  Text('   รายการแนะนำ',
+                  style: GoogleFonts.kanit(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  ),
+                ],
+              )
             ],
           ),
-          
+        ),
+        SizedBox(height: 20),
+        Recommendget(),
+SizedBox(height: 20),
           FirebaseAuth.instance.currentUser != null
           ? Column(
             children: [

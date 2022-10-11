@@ -17,7 +17,6 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController password = TextEditingController();
   TextEditingController confirmPassword = TextEditingController();
   TextEditingController name = TextEditingController();
-  TextEditingController userName = TextEditingController();
 
   final auth = FirebaseAuth.instance;
   @override
@@ -66,10 +65,6 @@ class _RegisterPageState extends State<RegisterPage> {
               Container(
                   margin: const EdgeInsets.only(left: 40.0, right: 40.0),
                   child: buildNameField()),
-                  SizedBox(height: 10),
-              Container(
-                  margin: const EdgeInsets.only(left: 40.0, right: 40.0),
-                  child: buildUserNameField()),
               SizedBox(height: 10),
               Container(
                   margin: const EdgeInsets.only(left: 40.0, right: 40.0),
@@ -110,19 +105,33 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-
  Future<void> registerWithEmailPassword() async {
     //Email şifre kayıt
     try {
       // var userCredential =
       final _user = await auth.createUserWithEmailAndPassword(
-           
           email: email.text.trim(), 
           password: password.text.trim(),
           );
            print(_user.user!.uid);
-          uploadUser();
           _user.user!.sendEmailVerification();
+          _signOut();
+                            ScaffoldMessenger.of(context)
+                  .showMaterialBanner(MaterialBanner(
+                    content: Text("ลงทะเบียนสำเร็จ โปรดยืนยันอีเมลล์"),
+                    leading: Icon(Icons.info),
+                    actions: [
+                      TextButton(
+                        child: Text("ปิด"),
+                        onPressed: () {
+                          ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                        },
+                      ),
+                    ],
+                  ));
+              Future.delayed(Duration(milliseconds: 3000), () {
+                ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+              });
           Navigator.pushNamed(context, '/');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -187,28 +196,6 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
 
-  TextFormField buildUserNameField() {
-    return TextFormField(
-      controller: userName,
-      validator: (value) {
-        if (value!.isEmpty)
-          return 'Username is required';
-        else
-          return null;
-      },
-      keyboardType: TextInputType.text,
-      textInputAction: TextInputAction.next,
-      decoration: const InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(22.0)),
-        ),
-        prefixIcon: Icon(Icons.person),
-        labelText: 'User Name',
-        hintText: 'Bunhee',
-      ),
-    );
-  }
-
   TextFormField buildNameField() {
     return TextFormField(
       controller: name,
@@ -264,16 +251,17 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void uploadUser() async {
-
           await FirebaseFirestore.instance.collection("users").add(
         {
           "uid": auth.currentUser!.uid,
           "email": email.text,
-          "username": userName.text,
           "name": name.text
           }
           );
   }
 
-  
+     Future _signOut() async {
+    await FirebaseAuth.instance.signOut();
+  }
+
 }
