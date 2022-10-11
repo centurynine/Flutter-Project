@@ -187,9 +187,16 @@ class _BodyState extends State<Body> {
                 side: BorderSide(color: Colors.blue, width: 2),
               ),
             ),
-            FirebaseAuth.instance.currentUser != null
-            ? BodyAfterLogin()
-            : Container()
+             FirebaseAuth.instance.currentUser != null
+             ? Column(
+                children: [
+                  ElevatedButton(onPressed: () {
+                    Navigator.pushNamed(context, '/food');
+                  }, child: Text("Go Go Sivagon")
+                  ),
+                ],
+             )
+             : Container()
           ],
         ),
       ],

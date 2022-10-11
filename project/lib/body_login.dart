@@ -1,23 +1,36 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
-final auth = FirebaseAuth.instance;
-FirebaseFirestore firestore = FirebaseFirestore.instance;
-class BodyAfterLogin extends StatefulWidget {
-  const BodyAfterLogin({super.key});
+class BodyAfterLogin extends StatelessWidget {
 
-  @override
-  State<BodyAfterLogin> createState() => _BodyAfterLoginState();
-}
+  CollectionReference recipes = FirebaseFirestore.instance.collection('foods');
 
-class _BodyAfterLoginState extends State<BodyAfterLogin> {
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Scaffold(
+      appBar: AppBar(),
+      body: StreamBuilder<QuerySnapshot>(
+          stream: recipes.snapshots(),
+          builder: (context,snapshot){
+            if (snapshot.hasError) {
+              return Text('Something went wrong');
+              print('Something went wrong');
+            }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Text("Loading");
+               print('Loading');
+            }
+            return ListView.builder(
+              itemCount: (snapshot.data!).docs.length,
+              itemBuilder: (context,index){
+                return ListTile(
+                  title: Text((snapshot.data!).docs[index]['title']),
+                  subtitle: Text((snapshot.data!).docs[index]['subtitle']),
+                );
+              },
+            );
+          }
+          ),   
     );
   }
 }
