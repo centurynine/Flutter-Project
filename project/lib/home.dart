@@ -6,6 +6,8 @@ import 'package:project/body.dart';
 import 'package:project/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import 'body_login.dart';
+
 bool fullScreen = false;
 String screenText = 'Full Screen';
 String showEmail = userEmail.toString();
@@ -76,10 +78,13 @@ class _HomepageState extends State<Homepage> {
                   onPressed: () {
                     _signOut();
                   },
-                )
+                ),
+                
         ],
       ),
       body: Body(),
+      
+    
       drawer: Drawer(
         child: ListView(
           children: <Widget>[
@@ -215,7 +220,6 @@ class _HomepageState extends State<Homepage> {
     }
 
   }
-
 
 showAlertDialog(BuildContext context) {
   AlertDialog alert = AlertDialog(
