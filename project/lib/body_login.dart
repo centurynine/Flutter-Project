@@ -1,16 +1,29 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class BodyAfterLogin extends StatelessWidget {
 
-  CollectionReference recipes = FirebaseFirestore.instance.collection('foods');
+  CollectionReference data = FirebaseFirestore.instance.collection('foods');
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: 
+    return
+    SafeArea(child: 
     Scaffold(
+            appBar: AppBar(
+        backgroundColor: Colors.blue,
+        title: Text(
+          " Bundies",
+         style: GoogleFonts.kanit(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+        ),
+      ),
       body: StreamBuilder<QuerySnapshot>(
-          stream: recipes.snapshots(),
+          stream: data.snapshots(),
           builder: (context,snapshot){
             if (snapshot.hasError) {
               return Text('Something went wrong');
@@ -30,7 +43,8 @@ class BodyAfterLogin extends StatelessWidget {
               },
             );
           }
-          ),  ) 
+          ),  
+          ),
     );
   }
 }

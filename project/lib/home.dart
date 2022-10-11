@@ -26,9 +26,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   /// Widget
   @override
-  Widget build(BuildContext context) => Scaffold(
-      
-      );
+  Widget build(BuildContext context) => Scaffold();
 }
 
 class Homepage extends StatefulWidget {
@@ -79,12 +77,10 @@ class _HomepageState extends State<Homepage> {
                     _signOut();
                   },
                 ),
-                
         ],
       ),
       body: Body(),
-      
-    
+
       drawer: Drawer(
         child: ListView(
           children: <Widget>[

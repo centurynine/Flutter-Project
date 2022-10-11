@@ -9,19 +9,15 @@ import 'package:project/body_login.dart';
 import 'package:project/login.dart';
 import 'package:project/facebook.dart';
 import 'package:project/recommend_widget.dart';
-
 import 'List.dart';
 
 class Body extends StatefulWidget {
   const Body({super.key});
-
   @override
   State<Body> createState() => _BodyState();
 }
-
 class _BodyState extends State<Body> {
   String? name = '';
-  String? userName = '';
   String? userEmail = '';
   final db = FirebaseFirestore.instance;
   Future _getDataFromDatabase() async {
@@ -38,7 +34,6 @@ class _BodyState extends State<Body> {
                         as Map<String, dynamic>;
                 print("documentID---- " + doc.data().toString());
                 setState(() {
-                  userName = getProfile["username"];
                   name = getProfile["name"];
                   userEmail = getProfile["email"];
                 });
@@ -167,7 +162,6 @@ class _BodyState extends State<Body> {
         Column(
           children: [
             Text("Name: $name"),
-            Text("Username: $userName"),
             Text("Email: $userEmail"),
             SizedBox(height: 20),
             ElevatedButton(
