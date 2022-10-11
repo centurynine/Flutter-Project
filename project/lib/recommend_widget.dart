@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 class Recommendget extends StatefulWidget {
   const Recommendget({super.key});
@@ -7,12 +8,25 @@ class Recommendget extends StatefulWidget {
 }
 
 class _RecommendgetState extends State<Recommendget> {
-  final selectIndex = 0;
+  var selectIndex = 0;
   final tips = [
     'Show 1',
     'Show 2',
     'Show 3',
   ];
+  @override
+  void initState() {
+    Timer.periodic(const Duration(seconds: 3), (timer) { 
+      setState(() {
+        if(selectIndex != tips.length - 1) {
+          selectIndex++;
+        } else {
+          selectIndex = 0;
+        }
+      });
+    });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -47,10 +61,12 @@ class _RecommendgetState extends State<Recommendget> {
           Padding(padding: const EdgeInsets.all(24),
           child: AnimatedSwitcher(duration: Duration(milliseconds: 600),
           child: Row(
+           key: UniqueKey(),
             children: [
               Expanded(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(tips[selectIndex],
                     style: TextStyle(
@@ -65,6 +81,13 @@ class _RecommendgetState extends State<Recommendget> {
                       color: Colors.grey,
                     ),
                     ),
+                    ElevatedButton(onPressed: () {},
+                     child: Text('ดูรายละเอียด',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.white,
+                      ),
+                     ))
                   ],
                 ),
               ),
