@@ -21,24 +21,7 @@ class _BodyState extends State<Body> {
   String? name = '';
   String? userName = '';
   String? userEmail = '';
-
-  // Future _getDataFromDatabaseTWO() async {
-  //   await FirebaseFirestore.instance.collection('users')
-  //     .doc(FirebaseAuth.instance.currentUser!.uid)
-  //     .get()
-  //     .then((snapshot) async
-  //     {
-  //       if(snapshot.exists)
-  //       {
-  //         print(snapshot.exists);
-  //         setState(() { 
-  //           name = snapshot.data()!['name'];
-  //           userName = snapshot.data()!['username'];
-  //           userEmail = snapshot.data()!['email'];
-  //         });
-  //       }
-  //     });
-  // }
+  final db = FirebaseFirestore.instance;
   Future _getDataFromDatabase() async {
     if (FirebaseAuth.instance.currentUser != null) {
     await FirebaseFirestore.instance.collection('users')
@@ -61,36 +44,6 @@ class _BodyState extends State<Body> {
       print('No user logged in');
     }
   }
-  // }
-  // Future _getDataFromDatabase() async {
-  //   await FirebaseFirestore.instance.collection('users')
-  //     .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
-  //     .get
-  //     .then(
-  //     (QuerySnapshot snapshot) => {
-  //       snapshot.documents.forEach((f) {
-        
-  //         print("documentID---- " + f.reference.documentID);
-         
-  //       }),
-  //     },
-  //   );
-      
-  // }
-
-
-  // Future _getDataFromDatabase() async {
-  //   await FirebaseFirestore.instance.collection('users').get().then((value) {
-  //     value.docs.forEach((element) {
-  //       setState(() {
-  //         name = element['name'];
-  //         userName = element['username'];
-  //         userEmail = element['email'];
-  //       });
-  //     });
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -235,9 +188,20 @@ class _BodyState extends State<Body> {
                 
                 )
             ],
-          ),
+          ),columnWidget()
       ],
     );
+  }
+
+  Widget columnWidget(){
+    print('render - Column Widget');
+    return Column(
+      children: [
+        Text('data'),
+        
+      ],
+    );
+      
   }
 
   Future signOut() async {

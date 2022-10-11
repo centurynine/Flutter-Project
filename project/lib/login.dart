@@ -233,6 +233,10 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ],
                   ));
+                  Future.delayed(const Duration(milliseconds: 2500), () 
+                          {
+                            ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                          });
                //   _getDataFromDatabase();
                   Navigator.pushNamed(context, '/');
                 } else {
