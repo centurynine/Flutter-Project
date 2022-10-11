@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project/body_login.dart';
 import 'package:project/login.dart';
 import 'package:project/facebook.dart';
 import 'package:project/recommend_widget.dart';
@@ -186,24 +187,9 @@ class _BodyState extends State<Body> {
                 side: BorderSide(color: Colors.blue, width: 2),
               ),
             ),
-            ElevatedButton(
-              child: Text("Popup"),
-              onPressed: () {
-                ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
-                  content: Text("Popup"),
-                  leading: Icon(Icons.info),
-                  actions: [
-                    TextButton(
-                      child: Text("DISMISS"),
-                      onPressed: () {
-                        ScaffoldMessenger.of(context)
-                            .hideCurrentMaterialBanner();
-                      },
-                    ),
-                  ],
-                ));
-              },
-            )
+            FirebaseAuth.instance.currentUser != null
+            ? BodyAfterLogin()
+            : Container()
           ],
         ),
       ],
