@@ -75,7 +75,7 @@ class _RecommendgetState extends State<Recommendget> {
                     ),
                     ),
                     const SizedBox(height: 10),
-                    Text('สวัสดีครัล ผมนายสิวกอร์น',
+                    Text('สวัสดีฆรัล ผมนายสิวกอร์น',
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.grey,
