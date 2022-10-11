@@ -47,17 +47,18 @@ class _HomepageState extends State<Homepage> {
     
   }
 
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title: const Text(
+        title: Text(
           " Apple Store",
-          style: TextStyle(color: Colors.white),
+         style: GoogleFonts.kanit(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
         ),
         actions: <Widget>[
           IconButton(
@@ -198,19 +199,6 @@ class _HomepageState extends State<Homepage> {
                   _signOut();
                 },
               ),
-            const SizedBox(
-              height: 200,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                ElevatedButton(
-                    onPressed: () {
-                      
-                    },
-                    child: Text(screenText)),
-              ],
-            ),
           ],
         ),
       ),
