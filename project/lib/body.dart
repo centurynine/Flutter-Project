@@ -190,7 +190,14 @@ class _BodyState extends State<Body> {
                   ),
                 ],
              )
-             : Container()
+             : Column(
+                children: [
+                  ElevatedButton(onPressed: () {
+                    Navigator.pushNamed(context, '/showmenu');
+                  }, child: Text("Go Go Show menu")
+                  ),
+                ],
+             )
           ],
         ),
       ],

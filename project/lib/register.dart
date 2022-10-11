@@ -114,6 +114,7 @@ class _RegisterPageState extends State<RegisterPage> {
           password: password.text.trim(),
           );
            print(_user.user!.uid);
+           uploadUser();
           _user.user!.sendEmailVerification();
           _signOut();
                             ScaffoldMessenger.of(context)
