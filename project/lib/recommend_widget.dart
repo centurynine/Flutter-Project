@@ -101,7 +101,6 @@ class _RecommendgetState extends State<Recommendget> {
                 ),
                 child: Image.network('https://scontent.fbkk2-4.fna.fbcdn.net/v/t39.30808-1/272920248_6930110877060294_6433230853958653780_n.jpg?stp=dst-jpg_s200x200&_nc_cat=101&ccb=1-7&_nc_sid=7206a8&_nc_ohc=mK4HiRAU8bsAX8FRldE&_nc_pt=1&_nc_ht=scontent.fbkk2-4.fna&oh=00_AT8ltaBNz9jscrETynA1LGkqenjewaxy7KiQsBx-alVFvA&oe=634993A0'),
               ),
-            
             ],
           )
 
