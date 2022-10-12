@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:project/home.dart';
 
 class BodyAfterLogin extends StatefulWidget {
   const BodyAfterLogin({super.key});
@@ -20,6 +21,23 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
         Expanded(
           child: Scaffold(
               appBar: AppBar(
+                automaticallyImplyLeading: false,
+                actions: [
+                  IconButton(
+                    alignment: Alignment.centerRight,
+                    icon: Icon(Icons.home),
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/');
+                    },
+                  ),
+                  IconButton(
+                    alignment: Alignment.centerRight,
+                    icon: Icon(Icons.search),
+                    onPressed: () {
+                      
+                    },
+                  ),
+                ],   
                 title: Text(
                   'รายการอาหาร',
                   style: GoogleFonts.kanit(
