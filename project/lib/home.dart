@@ -240,11 +240,9 @@ class _HomepageState extends State<Homepage> {
 
   Future _signOut() async {
     await FirebaseAuth.instance.signOut();
-    if(FirebaseAuth.instance.currentUser == null){
-      setState(() {
-        userEmail = 'No login';
-        Navigator.pushReplacementNamed(context, '/');
-      });
+  //  Navigator.pop(context);
+    _doOpenPage(context);
+    
     }
 
   }
@@ -282,11 +280,10 @@ gotoLoginpage(BuildContext context) {
   );
 }
 
-void _doOpenPage() {
+void _doOpenPage(context) {
   Navigator.pushReplacement(
     context,
-    MaterialPageRoute(builder: (context) => Homepage()),
+    MaterialPageRoute(builder: (context) => LoginPage()),
   );
 
-}
 }

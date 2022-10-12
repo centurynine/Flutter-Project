@@ -15,18 +15,25 @@ class _RecommendgetState extends State<Recommendget> {
     'Show 3',
   ];
   @override
+  
   void initState() {
     Timer.periodic(const Duration(seconds: 3), (timer) { 
-      setState(() {
-        if(selectIndex != tips.length - 1) {
-          selectIndex++;
-        } else {
-          selectIndex = 0; 
-        }
-      });
+      if (this.mounted) {
+        setState(() {
+          selectIndex = (selectIndex + 1) % tips.length;
+        });
+      }
+      // setState(() {
+      //   if(selectIndex != tips.length - 1) {
+      //     selectIndex++;
+      //   } else {
+      //     selectIndex = 0; 
+      //   }
+      // });
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
