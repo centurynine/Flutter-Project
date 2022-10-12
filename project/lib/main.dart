@@ -12,6 +12,7 @@ import 'package:project/login.dart';
 import 'package:project/register.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:project/setting.dart';
+import 'package:project/upload_data.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
         '/widget': (context) => HomePageWidget(),
         '/food': (context) => BodyAfterLogin(),
         '/showmenu': (context) => ShowMenu(),
+        '/upload': (context) => UploadData(),
       },
     );
   }

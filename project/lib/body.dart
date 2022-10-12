@@ -197,6 +197,14 @@ class _BodyState extends State<Body> {
                   }, child: Text("Go Go Show menu")
                   ),
                 ],
+             ),
+             Column(
+                children: [
+                  ElevatedButton(onPressed: () {
+                    Navigator.pushNamed(context, '/upload');
+                  }, child: Text("Upload Data")
+                  ),
+                ],
              )
           ],
         ),
