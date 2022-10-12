@@ -16,6 +16,7 @@ class _UploadDataState extends State<UploadData> {
   String? title;
   String? subtitle;
   String? ingredients;
+  String? description;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,6 +74,13 @@ class _UploadDataState extends State<UploadData> {
                 margin: const EdgeInsets.only(left: 20.0, right: 20.0),
                 child: subtitleForm(),
               ),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+                child: descriptionForm(),
+              ),
                const SizedBox(
                 height: 10,
               ),
@@ -117,9 +125,32 @@ class _UploadDataState extends State<UploadData> {
 
   TextFormField subtitleForm() {
     return TextFormField(
-      maxLines: 10,
       onSaved: (value) {
         subtitle = value!.trim();
+      },
+      validator: (value) {
+        if (value!.length < 2)
+          return 'กรุณากรอกข้อมูล';
+        else
+          return null;
+      },
+      keyboardType: TextInputType.text,
+      decoration: const InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(22.0)),
+        ),
+        hintText: 'แสดงรายละเอียดเล็กน้อย',
+        labelText: 'คำอธิบาย',
+        prefixIcon: Icon(Icons.food_bank),
+      ),
+    );
+  }
+
+  TextFormField descriptionForm() {
+    return TextFormField(
+      maxLines: 10,
+      onSaved: (value) {
+        description = value!.trim();
       },
       validator: (value) {
         if (value!.length < 2)
@@ -179,16 +210,33 @@ class _UploadDataState extends State<UploadData> {
             print('Valid Form');
             _formstateUpload.currentState!.save();
             try {
+              ScaffoldMessenger.of(context)
+                  .showMaterialBanner(MaterialBanner(
+                    content: Text("กำลังอัพโหลดข้อมูล..."),
+                    leading: Icon(Icons.info),
+                    actions: [
+                      TextButton(
+                        child: const Icon(Icons.settings),
+                        onPressed: () {
+                          ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                        },
+                      ),
+                    ],
+                  ));
              await FirebaseFirestore.instance.collection("foods").add(
         {
           "uid": FirebaseAuth.instance.currentUser!.uid,
           "email": FirebaseAuth.instance.currentUser!.email,
+          "displayname": FirebaseAuth.instance.currentUser!.displayName,
           "title": title,
           "subtitle": subtitle,
+          "description": description,
           "ingredients": ingredients,
           }
           );
-          Navigator.pushNamed(context, 'food');
+          _formstateUpload.currentState!.reset();
+          ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+          Navigator.pushNamed(context, '/food');
         } catch (e) {
               print(e);
             }
