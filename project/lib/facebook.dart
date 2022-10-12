@@ -245,7 +245,10 @@ Future<void> checkFB() async {
         {
           "uid": auth.currentUser!.uid,
           "email": userEmail.toString(),
-          "name": userName.toString(),});   
+          "name": userName.toString(),
+          "created_at": DateTime.now(),
+          }
+          );   
   }
    }
 

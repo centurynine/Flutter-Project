@@ -189,7 +189,7 @@ class _LoginPageState extends State<LoginPage> {
 
   IconButton loginfbButton(BuildContext context) {
     return IconButton(
-      icon: const Icon(Icons.facebook), 
+      icon: const Icon(Icons.facebook),
       iconSize: 50.0,
       color: Colors.black,
       onPressed: () {
@@ -220,61 +220,60 @@ class _LoginPageState extends State<LoginPage> {
                   status = 1;
                   userEmail = value.user!.email!;
                   statusLogin();
-                 ScaffoldMessenger.of(context)
-                  .showMaterialBanner(MaterialBanner(
+                  ScaffoldMessenger.of(context)
+                      .showMaterialBanner(MaterialBanner(
                     content: Text("เข้าสู่ระบบสำเร็จ"),
                     leading: Icon(Icons.info),
                     actions: [
                       TextButton(
                         child: Text("ปิด"),
                         onPressed: () {
-                          ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                          ScaffoldMessenger.of(context)
+                              .hideCurrentMaterialBanner();
                         },
                       ),
                     ],
                   ));
-                  Future.delayed(const Duration(milliseconds: 2500), () 
-                          {
-                            ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-                          });
-               //   _getDataFromDatabase();
+                  Future.delayed(const Duration(milliseconds: 2500), () {
+                    ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                  });
+                  //   _getDataFromDatabase();
                   Navigator.pushNamed(context, '/');
                 } else {
                   ScaffoldMessenger.of(context)
-                  .showMaterialBanner(MaterialBanner(
+                      .showMaterialBanner(MaterialBanner(
                     content: Text("โปรดยืนยันอีเมลล์"),
                     leading: Icon(Icons.info),
                     actions: [
                       TextButton(
                         child: Text("ปิด"),
                         onPressed: () {
-                          ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                          ScaffoldMessenger.of(context)
+                              .hideCurrentMaterialBanner();
                         },
                       ),
                     ],
                   ));
                 }
               }).catchError((reason) {
-                ScaffoldMessenger.of(context)
-                  .showMaterialBanner(MaterialBanner(
-                    content: Text("อีเมลล์หรือรหัสผ่านไม่ถูกต้อง"),
-                    leading: Icon(Icons.info),
-                    actions: [
-                      TextButton(
-                        child: Text("ปิด"),
-                        onPressed: () {
-                            ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-                        },
-                      ),
-                      
-                    ],
-                  ));
-                          Future.delayed(const Duration(milliseconds: 2500), () 
-                          {
-                            ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-                          });
+                ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
+                  content: Text("อีเมลล์หรือรหัสผ่านไม่ถูกต้อง"),
+                  leading: Icon(Icons.info),
+                  actions: [
+                    TextButton(
+                      child: Text("ปิด"),
+                      onPressed: () {
+                        ScaffoldMessenger.of(context)
+                            .hideCurrentMaterialBanner();
+                      },
+                    ),
+                  ],
+                ));
+                Future.delayed(const Duration(milliseconds: 2500), () {
+                  ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                });
               });
-          } on FirebaseAuthException catch (e) {
+            } on FirebaseAuthException catch (e) {
               if (e.code == 'user-not-found') {
                 print('No user found for that email.');
               } else if (e.code == 'wrong-password') {
@@ -311,7 +310,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
- 
+
   TextFormField emailTextFormField() {
     return TextFormField(
       onSaved: (value) {
@@ -404,10 +403,7 @@ class _LoginPageState extends State<LoginPage> {
 ////////
   }
 
-   Future _signOut() async {
+  Future _signOut() async {
     await FirebaseAuth.instance.signOut();
   }
-  
 }
-
- 

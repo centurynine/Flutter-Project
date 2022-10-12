@@ -13,6 +13,7 @@ class UploadData extends StatefulWidget {
 class _UploadDataState extends State<UploadData> {
   final _formstateUpload = GlobalKey<FormState>();
   final auth = FirebaseFirestore.instance;
+  var user = FirebaseAuth.instance.currentUser;
   String? title;
   String? subtitle;
   String? ingredients;
@@ -206,7 +207,26 @@ class _UploadDataState extends State<UploadData> {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         ),
         onPressed: () async {
-          if (_formstateUpload.currentState!.validate()) {
+          if (user == null) {
+            ScaffoldMessenger.of(context)
+                  .showMaterialBanner(MaterialBanner(
+                    content: Text("กรุณาเข้าสู่ระบบ"),
+                    leading: Icon(Icons.info),
+                    actions: [
+                      TextButton(
+                        child: const Icon(Icons.settings),
+                        onPressed: () {
+                          ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                        },
+                      ),
+                    ],
+                  ));
+                  Future.delayed(const Duration(milliseconds: 6000), () {
+                  ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                });
+          }
+          if (user != null) {
+            if (_formstateUpload.currentState!.validate()) {
             print('Valid Form');
             _formstateUpload.currentState!.save();
             try {
@@ -223,6 +243,9 @@ class _UploadDataState extends State<UploadData> {
                       ),
                     ],
                   ));
+                  Future.delayed(const Duration(milliseconds: 6000), () {
+                  ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                });
              await FirebaseFirestore.instance.collection("foods").add(
         {
           "uid": FirebaseAuth.instance.currentUser!.uid,
@@ -232,6 +255,7 @@ class _UploadDataState extends State<UploadData> {
           "subtitle": subtitle,
           "description": description,
           "ingredients": ingredients,
+          "created_at": DateTime.now(),
           }
           );
           _formstateUpload.currentState!.reset();
@@ -245,7 +269,7 @@ class _UploadDataState extends State<UploadData> {
               print('Error');
             }
 
-        }
+        }}
         );
 
 }
