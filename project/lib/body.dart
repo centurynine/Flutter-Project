@@ -186,7 +186,7 @@ class _BodyState extends State<Body> {
                 children: [
                   ElevatedButton(onPressed: () {
                     Navigator.pushNamed(context, '/food');
-                  }, child: Text("Go Go Sivagon")
+                  }, child: Text("ดูรายการอาหารทั้งหมด"),
                   ),
                 ],
              )
@@ -194,7 +194,7 @@ class _BodyState extends State<Body> {
                 children: [
                   ElevatedButton(onPressed: () {
                     Navigator.pushNamed(context, '/showmenu');
-                  }, child: Text("Go Go Show menu")
+                  }, child: Text("ตัวอย่างภาพใหญ่")
                   ),
                 ],
              ),

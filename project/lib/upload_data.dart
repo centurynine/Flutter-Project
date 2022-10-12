@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -9,9 +11,11 @@ class UploadData extends StatefulWidget {
 }
 
 class _UploadDataState extends State<UploadData> {
-  final _formstate = GlobalKey<FormState>();
-  String title = '';
-  String subtitle = '';
+  final _formstateUpload = GlobalKey<FormState>();
+  final auth = FirebaseFirestore.instance;
+  String? title;
+  String? subtitle;
+  String? ingredients;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,17 +36,59 @@ class _UploadDataState extends State<UploadData> {
         ),
       
       ),
-      body: Column(
-        children: <Widget>[
-          Container(
-          child: titleForm(),
-        ),
-        Container(
-          child: subtitleForm(),
-        ),
-        
-        ],
-      ),
+        body: Form(
+          autovalidateMode: AutovalidateMode.always,
+          key: _formstateUpload,
+          child: ListView(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top: 30.0),
+                child: SizedBox(
+                  height: 100,
+                  child: Image.network(
+                      "https://cdn-icons-png.flaticon.com/512/2276/2276931.png"),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 30.0),
+                child: Container(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    "    อัพโหลดรายการอาหาร",
+                    style: GoogleFonts.kanit(
+                      fontSize: 20,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+                child: titleForm(),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+                child: subtitleForm(),
+              ),
+               const SizedBox(
+                height: 10,
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+                child: ingredientsForm(),
+              ),
+              Container(
+                  margin: const EdgeInsets.only(left: 100.0, right: 100.0),
+                  child: submitButton()),
+              const SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
+        )
     );
   }
   
@@ -52,8 +98,8 @@ class _UploadDataState extends State<UploadData> {
         title = value!.trim();
       },
       validator: (value) {
-        if (value!.length < 8)
-          return 'Please Enter more than 8 Character';
+        if (value!.length < 2)
+          return 'กรุณากรอกข้อมูล';
         else
           return null;
       },
@@ -71,17 +117,17 @@ class _UploadDataState extends State<UploadData> {
 
   TextFormField subtitleForm() {
     return TextFormField(
-      maxLines: 5,
+      maxLines: 10,
       onSaved: (value) {
         subtitle = value!.trim();
       },
       validator: (value) {
-        if (value!.length < 8)
-          return 'Please Enter more than 8 Character';
+        if (value!.length < 2)
+          return 'กรุณากรอกข้อมูล';
         else
           return null;
       },
-      keyboardType: TextInputType.text,
+      keyboardType: TextInputType.multiline,
       decoration: const InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(22.0)),
@@ -93,9 +139,35 @@ class _UploadDataState extends State<UploadData> {
     );
   }
 
-  ElevatedButton loginButton() {
+  TextFormField ingredientsForm() {
+    return TextFormField(
+      maxLines: 5,
+      onSaved: (value) {
+        ingredients = value!.trim();
+      },
+      validator: (value) {
+        if (value!.length < 2)
+          return 'กรุณากรอกข้อมูล';
+        else
+          return null;
+      },
+      keyboardType: TextInputType.multiline,
+      decoration: const InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+        ),
+        hintText: '',
+        labelText: 'ส่วนผสม',
+        
+        prefixIcon: Icon(Icons.food_bank),
+      ),
+    );
+  }
+
+
+  ElevatedButton submitButton() {
     return ElevatedButton(
-        child: const Text('Login'),
+        child: const Text('อัพโหลดข้อมูล'),
         style: ElevatedButton.styleFrom(
           primary: Colors.blue,
           onPrimary: Colors.white,
@@ -103,14 +175,26 @@ class _UploadDataState extends State<UploadData> {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         ),
         onPressed: () async {
-         if (_formstate.currentState!.validate()) {
+          if (_formstateUpload.currentState!.validate()) {
             print('Valid Form');
-            _formstate.currentState!.save();
+            _formstateUpload.currentState!.save();
             try {
-              
-            } catch (e) {
+             await FirebaseFirestore.instance.collection("foods").add(
+        {
+          "uid": FirebaseAuth.instance.currentUser!.uid,
+          "email": FirebaseAuth.instance.currentUser!.email,
+          "title": title,
+          "subtitle": subtitle,
+          "ingredients": ingredients,
+          }
+          );
+          Navigator.pushNamed(context, 'food');
+        } catch (e) {
               print(e);
             }
+            }
+            else {
+              print('Error');
             }
 
         }
