@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/HomePageWidget.dart';
 import 'package:project/ShowMenu.dart';
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       initialRoute: '/',
+      builder: EasyLoading.init(),
       routes: {
         '/': (context) => Homepage(),
         '/register': (context) => RegisterPage(),

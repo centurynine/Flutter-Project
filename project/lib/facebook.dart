@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'dart:convert';
@@ -18,40 +19,39 @@ class _FacebookLoginState extends State<FacebookLogin> {
   final auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            "Facebook Login",
-            style: TextStyle(color: Colors.white),
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Facebook Login",
+          style: TextStyle(color: Colors.white),
         ),
-        body:Column(
-      children: <Widget>[
-        
+      ),
+      body: Column(
+        children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-            "TEST", 
-            style: Theme.of(context)
-                .textTheme
-                .headline5
-                ?.copyWith(fontWeight: FontWeight.bold),
-                ),  
+              "TEST",
+              style: Theme.of(context)
+                  .textTheme
+                  .headline5
+                  ?.copyWith(fontWeight: FontWeight.bold),
+            ),
           ),
-            Column(
+          Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-             _displayLoginButton(),
-             logoutFB(),
+              _displayLoginButton(),
+              logoutFB(),
             ],
           ),
           Text(userName),
-      ],
-    ),
+        ],
+      ),
     );
   }
 
-ElevatedButton logoutFB() {
+  ElevatedButton logoutFB() {
     return ElevatedButton(
       onPressed: () {
         signOut();
@@ -60,10 +60,9 @@ ElevatedButton logoutFB() {
     );
   }
 
-
   _displayLoginButton() {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         signInWithFacebook();
       },
       child: Container(
@@ -73,8 +72,7 @@ ElevatedButton logoutFB() {
               color: Colors.blue,
             ),
             borderRadius: BorderRadius.circular(10),
-            color: Colors.blue
-        ),
+            color: Colors.blue),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -87,7 +85,13 @@ ElevatedButton logoutFB() {
                 signInWithFacebook();
               },
             ),
-            const Text("  Log in with facebook",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white,fontSize: 20),),
+            const Text(
+              "  Log in with facebook",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  fontSize: 20),
+            ),
           ],
         ),
       ),
@@ -96,7 +100,7 @@ ElevatedButton logoutFB() {
 
   _fbLogoutButton() {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         signOut();
       },
       child: Container(
@@ -106,8 +110,7 @@ ElevatedButton logoutFB() {
               color: Colors.blue,
             ),
             borderRadius: BorderRadius.circular(10),
-            color: Colors.blue
-        ),
+            color: Colors.blue),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -120,62 +123,71 @@ ElevatedButton logoutFB() {
                 signInWithFacebook();
               },
             ),
-
-            const Text("  Logout ",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white,fontSize: 20),),
+            const Text(
+              "  Logout ",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  fontSize: 20),
+            ),
           ],
         ),
       ),
     );
   }
 
-
   void signInWithFacebook() async {
     try {
-      final LoginResult result = await FacebookAuth.instance.login(permissions: (['email', 'public_profile']));
+      final LoginResult result = await FacebookAuth.instance
+          .login(permissions: (['email', 'public_profile']));
       final token = result.accessToken!.token;
-      print('Facebook token userID : ${result.accessToken!.grantedPermissions}');
-      final graphResponse = await http.get(Uri.parse( 'https://graph.facebook.com/'
+      print(
+          'Facebook token userID : ${result.accessToken!.grantedPermissions}');
+      final graphResponse = await http.get(Uri.parse(
+          'https://graph.facebook.com/'
           'v2.12/me?fields=name,first_name,last_name,email&access_token=${token}'));
       final profile = jsonDecode(graphResponse.body);
       print("Profile is equal to $profile");
-       Map<String,dynamic> data = jsonDecode(graphResponse.body);
-          String userEmailfb = data["email"];
-          String userNamefb = data["name"];
-        setState(() {
-          userEmail = userEmailfb;
-          userName = userNamefb;
-          status = 1;
-        });
-        print(userEmailfb);
-        print(userName);
+      Map<String, dynamic> data = jsonDecode(graphResponse.body);
+      String userEmailfb = data["email"];
+      String userNamefb = data["name"];
+      setState(() {
+        userEmail = userEmailfb;
+        userName = userNamefb;
+        status = 1;
+      });
+      print(userEmailfb);
+      print(userName);
       try {
-        final AuthCredential facebookCredential = FacebookAuthProvider.credential(result.accessToken!.token);
-        final userCredential = await FirebaseAuth.instance.signInWithCredential(facebookCredential);
-        uploadUserFB(userEmailfb,userNamefb);
+        final AuthCredential facebookCredential =
+            FacebookAuthProvider.credential(result.accessToken!.token);
+        final userCredential = await FirebaseAuth.instance
+            .signInWithCredential(facebookCredential);
+        uploadUserFB(userEmailfb, userNamefb);
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => Homepage()),
         );
-      } catch(e){
-      final snackBar = SnackBar(
-        margin: const EdgeInsets.all(20),
-        behavior: SnackBarBehavior.floating,
-        content:  Text(e.toString()),
-        backgroundColor: (Colors.redAccent),
-        action: SnackBarAction(
-          label: 'dismiss',
-          onPressed: () {},
-        ),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    }
+      } catch (e) {
+        final snackBar = SnackBar(
+          margin: const EdgeInsets.all(20),
+          behavior: SnackBarBehavior.floating,
+          content: Text(e.toString()),
+          backgroundColor: (Colors.redAccent),
+          action: SnackBarAction(
+            label: 'dismiss',
+            onPressed: () {},
+          ),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
     } catch (e) {
       print("error occurred");
       print(e.toString());
     }
   }
 
-Future<void> signOut() async {
+  Future<void> signOut() async {
     await FacebookAuth.instance.logOut();
     print(_FacebookLoginState());
     showSuccess("Logout");
@@ -186,12 +198,11 @@ Future<void> signOut() async {
     });
   }
 
-Future<void> checkFB() async {
+  Future<void> checkFB() async {
     print(_FacebookLoginState());
     // await _auth.signOut();
     // _user = null;
   }
-
 
   void showSuccess(String message) {
     showDialog(
@@ -203,9 +214,9 @@ Future<void> checkFB() async {
           actions: <Widget>[
             Center(
               child: new TextButton(
-                
-                child: const Text("OK",
-                textAlign: TextAlign.center,
+                child: const Text(
+                  "OK",
+                  textAlign: TextAlign.center,
                 ),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -218,39 +229,28 @@ Future<void> checkFB() async {
     );
   }
 
-  //  void uploadUserFB(String userEmail,String userName) async {
-  //         if(FirebaseFirestore.instance.collection("users")
-  //         .where('email', isEqualTo: userEmail)
-  //         .get() != userEmail){
-  //           print("User already exists");
-  //           print(userEmail);
-  //         }else{
-  //         await FirebaseFirestore.instance.collection("users").add(
-  //       {
-  //     //    "uid": auth.currentUser!.uid,
-  //         "email": userEmail.toString(),
-  //     //    "username": userName.text,
-  //         "name": userName.toString(),
-  //         }
-  //         );
-  // }
-  //  }
-
-   void uploadUserFB(String userEmail,String userName) async {
-          QuerySnapshot query = await FirebaseFirestore.instance.collection('users').where('email',isEqualTo:userEmail).get();
-          if (query.docs.isNotEmpty){
-                print("User already exists");
-          }else if(query.docs.isEmpty){
-          await FirebaseFirestore.instance.collection("users").add(
-        {
-          "uid": auth.currentUser!.uid,
-          "email": userEmail.toString(),
-          "name": userName.toString(),
-          "created_at": DateTime.now(),
-          }
-          );   
+  void uploadUserFB(String userEmail, String userName) async {
+    QuerySnapshot query = await FirebaseFirestore.instance
+        .collection('users')
+        .where('email', isEqualTo: userEmail)
+        .get();
+    if (query.docs.isNotEmpty) {
+      print("User already exists");
+      EasyLoading.showSuccess('เข้าสู่ระบบสำเร็จ!');
+      Future.delayed(const Duration(milliseconds: 2500), () {
+        EasyLoading.dismiss();
+      });
+    } else if (query.docs.isEmpty) {
+            EasyLoading.showError('กำลังสร้างบัญชีผู้ใช้');
+      Future.delayed(const Duration(milliseconds: 2500), () {
+        EasyLoading.dismiss();
+      });
+      await FirebaseFirestore.instance.collection("users").add({
+        "uid": auth.currentUser!.uid,
+        "email": userEmail.toString(),
+        "name": userName.toString(),
+        "created_at": DateTime.now().toString(),
+      });
+    }
   }
-   }
-
-
 }

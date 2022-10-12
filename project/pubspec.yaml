@@ -40,6 +40,7 @@ dependencies:
   flutter_facebook_auth: ^4.4.1+1
   flutter_signin_button: ^2.0.0
   smooth_page_indicator: ^1.0.0+2
+  flutter_easyloading: ^3.0.5
 
 dev_dependencies:
   flutter_test:

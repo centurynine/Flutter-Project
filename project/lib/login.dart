@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 int status = 0;
@@ -234,12 +235,15 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ],
                   ));
-                  Future.delayed(const Duration(milliseconds: 2500), () {
-                    ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-                  });
+                  EasyLoading.showSuccess('เข้าสู่ระบบสำเร็จ!');
+                Future.delayed(const Duration(milliseconds: 2500), () {
+                  ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                  EasyLoading.dismiss();
+                });
                   //   _getDataFromDatabase();
                   Navigator.pushNamed(context, '/');
                 } else {
+                  EasyLoading.showError('โปรดยืนยันอีเมลล์');
                   ScaffoldMessenger.of(context)
                       .showMaterialBanner(MaterialBanner(
                     content: Text("โปรดยืนยันอีเมลล์"),
@@ -254,6 +258,9 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ],
                   ));
+                  Future.delayed(const Duration(milliseconds: 2500), () {
+                    EasyLoading.dismiss();
+                  });
                 }
               }).catchError((reason) {
                 ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
@@ -269,9 +276,12 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ],
                 ));
+                EasyLoading.showError('อีเมลล์หรือรหัสผ่านไม่ถูกต้อง');
                 Future.delayed(const Duration(milliseconds: 2500), () {
                   ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                  EasyLoading.dismiss();
                 });
+                
               });
             } on FirebaseAuthException catch (e) {
               if (e.code == 'user-not-found') {

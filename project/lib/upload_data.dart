@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class UploadData extends StatefulWidget {
@@ -230,6 +231,7 @@ class _UploadDataState extends State<UploadData> {
             print('Valid Form');
             _formstateUpload.currentState!.save();
             try {
+              EasyLoading.show(status: 'Uploading...');
               ScaffoldMessenger.of(context)
                   .showMaterialBanner(MaterialBanner(
                     content: Text("กำลังอัพโหลดข้อมูล..."),
@@ -261,6 +263,7 @@ class _UploadDataState extends State<UploadData> {
           _formstateUpload.currentState!.reset();
           ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
           Navigator.pushNamed(context, '/food');
+          EasyLoading.dismiss();
         } catch (e) {
               print(e);
             }
