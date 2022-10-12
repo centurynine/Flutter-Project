@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:project/body.dart';
 import 'package:project/login.dart';
 import 'package:firebase_core/firebase_core.dart';
-
 import 'body_login.dart';
 
 bool fullScreen = false;
