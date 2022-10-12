@@ -42,7 +42,12 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                     return ListView.builder(
                       itemCount: (snapshot.data!).docs.length,
                       itemBuilder: (context, index) {
+                        if((snapshot.data!).docs[index]['title'] == ''){
+                          return SizedBox.shrink();
+                        }
+                        else {
                         return Container(
+                          
                           margin: const EdgeInsets.only(
                               left: 30, top: 20, right: 30, bottom: 20),
                           decoration: BoxDecoration(
@@ -62,6 +67,7 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                               ),
                             ],
                           ),
+                          
                           child: ListTile(
                             title: Text((snapshot.data!).docs[index]['title']),
                             subtitle:
@@ -73,7 +79,7 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                             ),
                           
                           ),
-                        );
+                        );}
                       },
                     );
                   })),
