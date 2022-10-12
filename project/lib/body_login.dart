@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,6 +17,7 @@ class BodyAfterLogin extends StatefulWidget {
 class _BodyAfterLoginState extends State<BodyAfterLogin> {
   CollectionReference data = FirebaseFirestore.instance.collection('foods');
   
+
   @override
   
   Widget build(BuildContext context) {
@@ -129,25 +132,3 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
     );
   }
 }
-
-// class NextInfo extends StatefulWidget {
-//   const NextInfo({super.key});
-//   @override
-//   State<NextInfo> createState() => _NextInfoState();
-    
-// }
-//     NextInfo({super.key});
-  
-// class _NextInfoState extends State<NextInfo> {
-//   String? id;
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: new AppBar(
-//         title: new Text('Next Info'),
-//       ),
-//       body: new Text("${widget.id}"),
-//     );
-//   }
-// }
-

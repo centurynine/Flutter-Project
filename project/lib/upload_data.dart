@@ -1,11 +1,13 @@
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_cropper/image_cropper.dart';
 class UploadData extends StatefulWidget {
   const UploadData({super.key});
-
   @override
   State<UploadData> createState() => _UploadDataState();
 }
@@ -20,6 +22,9 @@ class _UploadDataState extends State<UploadData> {
   String? description;
   String? docslength;
   String? countid;
+  File? _foodpic;
+  File? imageFile;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,6 +99,12 @@ class _UploadDataState extends State<UploadData> {
               Container(
                   margin: const EdgeInsets.only(left: 100.0, right: 100.0),
                   child: submitButton()),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                  margin: const EdgeInsets.only(left: 100.0, right: 100.0),
+                  child: showImage()),
               const SizedBox(
                 height: 10,
               ),
@@ -197,7 +208,6 @@ class _UploadDataState extends State<UploadData> {
       ),
     );
   }
-
 
   ElevatedButton submitButton() {
     return ElevatedButton(
@@ -324,7 +334,7 @@ void countDocuments() async {
           "description": description,
           "ingredients": ingredients,
           "created_at": DateTime.now(),
-          }
+        }
           );
           print('Create complete');
           ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
@@ -345,5 +355,145 @@ void countDocuments() async {
                   ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
                 });
  }
+
+
+ //////////////////////////////CAMERA
+ ///
+ ///
+ ///
+ ///
+
+ showImage() {
+    return GestureDetector(
+        onTap: () {
+          _showImage();
+        },
+        child: Container(
+          padding: const EdgeInsets.all(4), // Border width
+          decoration: BoxDecoration(
+              color: Colors.blue, borderRadius: BorderRadius.circular(30)),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(30),
+            child: SizedBox.fromSize(
+              size: const Size.fromRadius(80), // Image radius
+              child: Image(
+                fit: BoxFit.cover,
+                image: _foodpic == null
+                    ? const AssetImage('assets/dish.png')
+                    : Image.file(_foodpic!).image,
+              ),
+            ),
+          ),
+        ));
+  }
+
+  _showImage() {
+    // AlertBox options
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("กรุณาเลือกรูปจาก"),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                InkWell(
+                  onTap: () {
+                    _pictureFromCamera();
+                  },
+                  child: Row(
+                    children: const [
+                      Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: Icon(
+                          Icons.camera,
+                          color: Colors.blue,
+                        ),
+                      ),
+                      Text("กล้องถ่ายรูป")
+                    ],
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                       _pictureFromGallery();
+                      },
+                  child: Row(
+                    children: const [
+                      Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: Icon(
+                          Icons.image,
+                          color: Colors.blue,
+                        ),
+                      ),
+                      Text("คลังรูปภาพ")
+                    ],
+                  ),
+                )
+              ],
+            ),
+          );
+        });
+  }
+
+  _pictureFromCamera() async {
+    //รอกล้อง
+    XFile? pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.camera);
+    _pictureCrop(pickedFile!.path);
+    Navigator.pop(context);
+  }
+
+  _pictureFromGallery() async {
+    //รอคลัง
+    XFile? pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    _pictureCrop(pickedFile!.path);
+    Navigator.pop(context);
+  }
+
+  _pictureCrop(imagePath) async {
+    //ครอปรูป
+    CroppedFile? croppedImage = await ImageCropper()
+        .cropImage(sourcePath: imagePath, maxHeight: 1080, maxWidth: 1920);
+    if (croppedImage != null) {
+      setState(() {
+        _foodpic = File(croppedImage.path);
+      });
+    }
+  }
+
+  chooseImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.camera);
+    setState(() {
+      if (pickedFile != null) {
+        _foodpic = File(pickedFile.path);
+      } else {
+        ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
+          content: Text("ไม่ได้เลือกรูปภาพ โปรดเลือกรูปภาพใหม่อีกครั้ง"),
+          leading: Icon(Icons.info),
+          actions: [
+            TextButton(
+              child: Text("ปิด"),
+              onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+              },
+            ),
+          ],
+        ));
+        Future.delayed(const Duration(milliseconds: 2500), () {
+          ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+        });
+      }
+    });
+  }
+
  
+
+
+
+
+
 }

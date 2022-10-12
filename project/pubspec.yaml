@@ -41,6 +41,8 @@ dependencies:
   flutter_signin_button: ^2.0.0
   smooth_page_indicator: ^1.0.0+2
   flutter_easyloading: ^3.0.5
+  image_picker: ^0.8.6
+  image_cropper: ^3.0.0
 
 dev_dependencies:
   flutter_test:
