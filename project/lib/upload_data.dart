@@ -272,7 +272,7 @@ void countDocuments() async {
     QuerySnapshot _myDoc = await FirebaseFirestore.instance.collection('foods').get();
     List<DocumentSnapshot> _myDocCount = _myDoc.docs;
     docslength = _myDocCount.length.toString();
-    print(docslength);
+    print('จำนวนข้อมูลก่อนเพิ่ม $docslength');
     updateDocuments();
 }
 
@@ -306,7 +306,7 @@ void countDocuments() async {
         .get();
      if (createcountid.docs.isNotEmpty) {
        var countid = (createcountid.docs[0]['allcount'].toString());
-        print("COUNT ID : $countid");
+        print("จำนวนข้อมูลทั้งหมดที่สร้าง : $countid");
         createDatabase(countid);
         
   }
@@ -328,5 +328,22 @@ void countDocuments() async {
           );
           print('Create complete');
           ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+          ScaffoldMessenger.of(context)
+                  .showMaterialBanner(MaterialBanner(
+                    content: Text("เพิ่มรายการอาหารเรียบร้อย!"),
+                    leading: Icon(Icons.food_bank_sharp),
+                    actions: [
+                      TextButton(
+                        child: const Icon(Icons.settings),
+                        onPressed: () {
+                          ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                        },
+                      ),
+                    ],
+                  ));
+                  Future.delayed(const Duration(milliseconds: 6000), () {
+                  ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                });
  }
+ 
 }

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:project/ShowMenu.dart';
 import 'package:project/home.dart';
 
 class BodyAfterLogin extends StatefulWidget {
@@ -13,8 +14,9 @@ class BodyAfterLogin extends StatefulWidget {
 
 class _BodyAfterLoginState extends State<BodyAfterLogin> {
   CollectionReference data = FirebaseFirestore.instance.collection('foods');
-
+  
   @override
+  
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -33,11 +35,9 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                   IconButton(
                     alignment: Alignment.centerRight,
                     icon: Icon(Icons.search),
-                    onPressed: () {
-                      
-                    },
+                    onPressed: () {},
                   ),
-                ],   
+                ],
                 title: Text(
                   'รายการอาหาร',
                   style: GoogleFonts.kanit(
@@ -68,6 +68,8 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                           return SizedBox.shrink();
                         } else {
                           return Container(
+                            width: 200,
+                            height: 150,
                             margin: const EdgeInsets.only(
                                 left: 30, top: 20, right: 30, bottom: 20),
                             decoration: BoxDecoration(
@@ -88,6 +90,10 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                               ],
                             ),
                             child: ListTile(
+                              onTap: () {
+                    
+         
+                              },
                               title:
                                   Text((snapshot.data!).docs[index]['title']),
                               subtitle: Text(
@@ -98,12 +104,17 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                                 height: 50,
                               ),
                               trailing: Wrap(
-                                spacing: 12, 
+                                spacing: 12,
                                 children: <Widget>[
-                                  Text('ID',
-                                   textAlign: TextAlign.end,style: GoogleFonts.kanit(fontSize: 10),),
-                                  Text((snapshot.data!).docs[index]['id'], textAlign: TextAlign.start,
-                                      style: GoogleFonts.kanit(fontSize: 14),
+                                  Text(
+                                    'ID',
+                                    textAlign: TextAlign.end,
+                                    style: GoogleFonts.kanit(fontSize: 10),
+                                  ),
+                                  Text(
+                                    (snapshot.data!).docs[index]['id'],
+                                    textAlign: TextAlign.start,
+                                    style: GoogleFonts.kanit(fontSize: 14),
                                   ),
                                 ],
                               ),
@@ -118,3 +129,25 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
     );
   }
 }
+
+// class NextInfo extends StatefulWidget {
+//   const NextInfo({super.key});
+//   @override
+//   State<NextInfo> createState() => _NextInfoState();
+    
+// }
+//     NextInfo({super.key});
+  
+// class _NextInfoState extends State<NextInfo> {
+//   String? id;
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: new AppBar(
+//         title: new Text('Next Info'),
+//       ),
+//       body: new Text("${widget.id}"),
+//     );
+//   }
+// }
+
