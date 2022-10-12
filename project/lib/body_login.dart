@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class BodyAfterLogin extends StatefulWidget {
   const BodyAfterLogin({super.key});
@@ -30,9 +31,14 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                       print('Something went wrong');
                     }
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Text("Loading");
+                      EasyLoading.show(status: 'Loading...');
                       print('Loading');
+                      return Text("กำลังโหลดข้อมูล...",
+                      textAlign: TextAlign.center,
+                          style: GoogleFonts.kanit(fontSize: 20)
+                      );
                     }
+                    EasyLoading.dismiss();
                     return ListView.builder(
                       itemCount: (snapshot.data!).docs.length,
                       itemBuilder: (context, index) {
