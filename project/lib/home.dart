@@ -130,6 +130,16 @@ class _HomepageState extends State<Homepage> {
                           child: Column(
                             children: <Widget>[
                               Container(
+                                margin: EdgeInsets.only(right: 50),
+                                child: Text(
+                                  FirebaseAuth.instance.currentUser!.displayName.toString(),
+                                  style: GoogleFonts.kanit(
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                               Container(
                                 margin: EdgeInsets.only(left: 10),
                                 child: Text(
                                   userEmail.toString(),
