@@ -318,7 +318,6 @@ void countDocuments() async {
        var countid = (createcountid.docs[0]['allcount'].toString());
         print("จำนวนข้อมูลทั้งหมดที่สร้าง : $countid");
         createDatabase(countid);
-        
   }
  }
 
@@ -358,10 +357,7 @@ void countDocuments() async {
 
 
  //////////////////////////////CAMERA
- ///
- ///
- ///
- ///
+
 
  showImage() {
     return GestureDetector(
@@ -489,11 +485,4 @@ void countDocuments() async {
       }
     });
   }
-
- 
-
-
-
-
-
 }
