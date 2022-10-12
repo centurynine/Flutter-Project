@@ -19,6 +19,7 @@ class _UploadDataState extends State<UploadData> {
   String? ingredients;
   String? description;
   String? docslength;
+  String? countid;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -248,24 +249,12 @@ class _UploadDataState extends State<UploadData> {
                   Future.delayed(const Duration(milliseconds: 6000), () {
                   ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
                 });
-             await FirebaseFirestore.instance.collection("foods").add(
-        {
-          "uid": FirebaseAuth.instance.currentUser!.uid,
-          "email": FirebaseAuth.instance.currentUser!.email,
-          "displayname": FirebaseAuth.instance.currentUser!.displayName,
-          "title": title,
-          "subtitle": subtitle,
-          "description": description,
-          "ingredients": ingredients,
-          "created_at": DateTime.now(),
-
-          }
-          );
+             countDocuments();
+             
           _formstateUpload.currentState!.reset();
-          ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+          
           Navigator.pushNamed(context, '/food');
           EasyLoading.dismiss();
-          countDocuments();
         } catch (e) {
               print(e);
             }
@@ -297,17 +286,47 @@ void countDocuments() async {
         .collection('docs_all_count')
         .where('allcount')
         .get()
-        .then((value) => value.docs.forEach((element) {
+        .then((value) => 
               FirebaseFirestore.instance
                   .collection('docs_all_count')
-                  .doc(element.id)
-                  .update({"allcount": FieldValue.increment(1)});
-            }));
-   print('Add 1 to allcount');
+                  .doc(value.docs[0].id)
+                  .update({"allcount": FieldValue.increment(1)})
+            );
+       print('Add 1 to allcount');
+      createID();
     } else if (query.docs.isEmpty) {
       print('ไม่สามารถเพิ่มฟอร์มจำนวนได้');
     }
   }
-//await FirebaseFirestore.instance.collection('post').doc(postId).update({"like": FieldValue.increment(1)});
 
+    void createID() async {
+    QuerySnapshot createcountid = await FirebaseFirestore.instance
+        .collection('docs_all_count')
+        .where('allcount')
+        .get();
+     if (createcountid.docs.isNotEmpty) {
+       var countid = (createcountid.docs[0]['allcount'].toString());
+        print("COUNT ID : $countid");
+        createDatabase(countid);
+        
+  }
+ }
+
+ void createDatabase(String countid) async {
+    await FirebaseFirestore.instance.collection("foods").add(
+        {
+          "id": countid,
+          "uid": FirebaseAuth.instance.currentUser!.uid,
+          "email": FirebaseAuth.instance.currentUser!.email,
+          "displayname": FirebaseAuth.instance.currentUser!.displayName,
+          "title": title,
+          "subtitle": subtitle,
+          "description": description,
+          "ingredients": ingredients,
+          "created_at": DateTime.now(),
+          }
+          );
+          print('Create complete');
+          ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+ }
 }
