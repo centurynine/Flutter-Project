@@ -79,7 +79,33 @@ class _HomepageState extends State<Homepage> {
                 ),
         ],
       ),
-      body: Body(),
+      body: ListView(children: [
+        Container(
+          child: const Body(),
+        ),
+        Container(
+          child: Text('After body',
+          style: GoogleFonts.kanit(
+                      fontSize: 40,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                    ),
+          ),
+        ),Container(
+          child: Text('After body',
+          style: GoogleFonts.kanit(
+                      fontSize: 40,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                    ),
+          ),
+        ),
+        Container(
+          child: Text('After body',
+        ),
+        ),
+        ]
+        ),
 
       drawer: Drawer(
         child: ListView(
@@ -249,4 +275,5 @@ gotoLoginpage(BuildContext context) {
     MaterialPageRoute(builder: (context) => LoginPage()),
   );
 }
+
 }
