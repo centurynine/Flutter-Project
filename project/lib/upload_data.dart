@@ -19,7 +19,6 @@ class _UploadDataState extends State<UploadData> {
   String? ingredients;
   String? description;
   String? docslength;
-  int? _myDocCount;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -259,7 +258,7 @@ class _UploadDataState extends State<UploadData> {
           "description": description,
           "ingredients": ingredients,
           "created_at": DateTime.now(),
-      
+
           }
           );
           _formstateUpload.currentState!.reset();
@@ -290,28 +289,25 @@ void countDocuments() async {
 
   void updateDocuments() async {
     QuerySnapshot query = await FirebaseFirestore.instance
-        .collection('docs_count')
-        .where('count')
+        .collection('docs_all_count')
+        .where('allcount')
         .get();
     if (query.docs.isNotEmpty) {
-      // FirebaseFirestore.instance.collection('docs_count').doc().update({
-      //   'count': _myDocCount,
-      // });
       FirebaseFirestore.instance
-        .collection('docs_count')
-        .where('count')
+        .collection('docs_all_count')
+        .where('allcount')
         .get()
         .then((value) => value.docs.forEach((element) {
               FirebaseFirestore.instance
-                  .collection('docs_count')
+                  .collection('docs_all_count')
                   .doc(element.id)
-                  .update({'count': docslength});
+                  .update({"allcount": FieldValue.increment(1)});
             }));
-   print('Docs is not empty');
+   print('Add 1 to allcount');
     } else if (query.docs.isEmpty) {
-      print('Docs is empty');
+      print('ไม่สามารถเพิ่มฟอร์มจำนวนได้');
     }
   }
-
+//await FirebaseFirestore.instance.collection('post').doc(postId).update({"like": FieldValue.increment(1)});
 
 }

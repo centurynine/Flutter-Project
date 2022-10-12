@@ -20,9 +20,14 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
         Expanded(
           child: Scaffold(
             appBar: AppBar(
-              title: Text('Apple Store'),
+              title: Text('รายการอาหาร'
+                  ,style: GoogleFonts.kanit(
+                    fontSize: 20,
+                  ),
+              ),
               backgroundColor: Colors.grey,
             ),
+            
               body: StreamBuilder<QuerySnapshot>(
                   stream: data.snapshots(),
                   builder: (context, snapshot) {
@@ -40,6 +45,7 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                     }
                     EasyLoading.dismiss();
                     return ListView.builder(
+                    
                       itemCount: (snapshot.data!).docs.length,
                       itemBuilder: (context, index) {
                         if((snapshot.data!).docs[index]['title'] == ''){
