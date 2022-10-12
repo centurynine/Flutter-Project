@@ -188,7 +188,12 @@ class _BodyState extends State<Body> {
                     Navigator.pushNamed(context, '/food');
                   }, child: Text("ดูรายการอาหารทั้งหมด"),
                   ),
+                  ElevatedButton(onPressed: () {
+                    Navigator.pushNamed(context, '/upload');
+                  }, child: Text("Upload Data")
+                  ),
                 ],
+
              )
              : Column(
                 children: [
@@ -198,14 +203,6 @@ class _BodyState extends State<Body> {
                   ),
                 ],
              ),
-             Column(
-                children: [
-                  ElevatedButton(onPressed: () {
-                    Navigator.pushNamed(context, '/upload');
-                  }, child: Text("Upload Data")
-                  ),
-                ],
-             )
           ],
         ),
       ],
