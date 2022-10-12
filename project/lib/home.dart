@@ -243,7 +243,7 @@ class _HomepageState extends State<Homepage> {
     if(FirebaseAuth.instance.currentUser == null){
       setState(() {
         userEmail = 'No login';
-        Navigator.pushNamed(context, '/');
+        Navigator.pushReplacementNamed(context, '/');
       });
     }
 
@@ -282,4 +282,11 @@ gotoLoginpage(BuildContext context) {
   );
 }
 
+void _doOpenPage() {
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(builder: (context) => Homepage()),
+  );
+
+}
 }
