@@ -326,7 +326,10 @@ void countDocuments() async {
         .get();
      if (createcountid.docs.isNotEmpty) {
        var countid = (createcountid.docs[0]['allcount'].toString());
-        print("จำนวนข้อมูลทั้งหมดที่สร้าง : $countid");
+        print("จำนวนข้อมูล ID ทั้งหมดที่สร้างและ ID ปัจจุบัน : $countid");
+        setState(() {
+          countid = countid;
+        });
         createDatabase(countid);
         uploadImageToFirebase(countid);
   }
@@ -562,7 +565,7 @@ void countDocuments() async {
 
  
 Future uploadImageToFirebase(String countid) async {
-        var reference = FirebaseStorage.instance.ref().child('foods/${countid}.jpg');
+        var reference = FirebaseStorage.instance.ref().child('foods/${countid}');
         var uploadTask = reference.putFile(_foodpic!);
         var url = await (await uploadTask).ref.getDownloadURL();
         print(url);
