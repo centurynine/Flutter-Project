@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+
+
 class UploadData extends StatefulWidget {
   const UploadData({super.key});
   @override
@@ -16,6 +19,7 @@ class _UploadDataState extends State<UploadData> {
   final _formstateUpload = GlobalKey<FormState>();
   final auth = FirebaseFirestore.instance;
   var user = FirebaseAuth.instance.currentUser;
+  var uploadUrl;
   String? title;
   String? subtitle;
   String? ingredients;
@@ -105,6 +109,12 @@ class _UploadDataState extends State<UploadData> {
               Container(
                   margin: const EdgeInsets.only(left: 100.0, right: 100.0),
                   child: submitButton()),
+              const SizedBox(
+                height: 10,
+              ),
+               Container(
+                  margin: const EdgeInsets.only(left: 100.0, right: 100.0),
+                  child: testUpload()),
               const SizedBox(
                 height: 10,
               ),
@@ -335,6 +345,11 @@ void countDocuments() async {
           "created_at": DateTime.now(),
         }
           );
+
+
+
+
+
           print('Create complete');
           ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
           ScaffoldMessenger.of(context)
@@ -394,6 +409,14 @@ void countDocuments() async {
     );
   }
 
+  ElevatedButton testUpload() {
+    return ElevatedButton(
+      onPressed: () {
+       uploadImageToFirebase();
+      },
+      child: const Text('TestUpload'),
+    );
+  }
 
   _showImage() {
     // AlertBox options
@@ -510,7 +533,12 @@ void countDocuments() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     setState(() {
       if (pickedFile != null) {
+
         _foodpic = File(pickedFile.path);
+
+
+
+
       } else {
         ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
           content: Text("ไม่ได้เลือกรูปภาพ โปรดเลือกรูปภาพใหม่อีกครั้ง"),
@@ -530,6 +558,18 @@ void countDocuments() async {
       }
     });
   }
+
+ 
+Future uploadImageToFirebase() async {
+        var reference = FirebaseStorage.instance.ref().child('foods/${countid}.jpg');
+        var uploadTask = reference.putFile(_foodpic!);
+        var url = await (await uploadTask).ref.getDownloadURL();
+        print(url);
+        setState(() {
+          uploadUrl = url;
+        });
+      }
+
 
 
 }

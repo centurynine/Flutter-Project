@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 class Setting extends StatefulWidget {
   const Setting({super.key});
 
@@ -9,7 +9,7 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
-  
+  final prefs = SharedPreferences.getInstance();
   bool fullScreen = false;
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class _SettingState extends State<Setting> {
         ),
         body: Column(
           children: [
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -52,17 +52,20 @@ class _SettingState extends State<Setting> {
   }
 
 
-    screen() {
+    screen() async {
+      
     if (fullScreen == false) {
       setState(() {
         fullScreen = true;
       });
-      SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom]);
     } else if(fullScreen == true){
       setState(() {
         fullScreen = false;
       });
-      SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
     }
   }
+
+
 }
