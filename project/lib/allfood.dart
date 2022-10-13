@@ -76,7 +76,7 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                         } else {
                           return Container(
                             width: 240,
-                            height: 150,
+                            height: 160,
                             margin: const EdgeInsets.only(
                                 left: 20, top: 10, right: 10, bottom: 20),
                             decoration: BoxDecoration(
@@ -120,25 +120,14 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                                 style: GoogleFonts.kanit(fontSize: 13),
                               ),
                               leading: CircleAvatar(
-                                
                                 radius: 30,
-                                
                                 backgroundImage: NetworkImage(
                                     (snapshot.data!).docs[index]
                                         ['uploadImageUrl'],
                                         scale: 1,
-                                        
-
                                         ),
                                 backgroundColor: const Color(0xff6ae792),
-                                // child: Image.network(
-                                //   (snapshot.data!).docs[index]
-                                //       ['uploadImageUrl'],
-                                //   width: 50,
-                                //   height: 50,
-                           //     ),
                               ),
-
                               // Padding(
                               //   padding: const EdgeInsets.only(left: 1, top: 1),
                               //   child: Image.network(
