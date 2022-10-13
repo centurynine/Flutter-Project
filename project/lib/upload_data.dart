@@ -8,7 +8,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-
 class UploadData extends StatefulWidget {
   const UploadData({super.key});
   @override
@@ -33,23 +32,23 @@ class _UploadDataState extends State<UploadData> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text('Upload Data',
-        style: GoogleFonts.kanit(
-                      fontSize: 20,
-                      color: Colors.black,
-                    ),
-                    ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          color: Colors.black,
-          onPressed: () {
-            Navigator.pop(context);
-          },
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          title: Text(
+            'Upload Data',
+            style: GoogleFonts.kanit(
+              fontSize: 20,
+              color: Colors.black,
+            ),
+          ),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            color: Colors.black,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
         ),
-      
-      ),
         body: Form(
           autovalidateMode: AutovalidateMode.always,
           key: _formstateUpload,
@@ -77,6 +76,12 @@ class _UploadDataState extends State<UploadData> {
                 ),
               ),
               Container(
+                  margin: const EdgeInsets.only(left: 50.0, right: 50.0),
+                  child: showImage()),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
                 margin: const EdgeInsets.only(left: 20.0, right: 20.0),
                 child: titleForm(),
               ),
@@ -94,7 +99,7 @@ class _UploadDataState extends State<UploadData> {
                 margin: const EdgeInsets.only(left: 20.0, right: 20.0),
                 child: descriptionForm(),
               ),
-               const SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Container(
@@ -102,29 +107,16 @@ class _UploadDataState extends State<UploadData> {
                 child: ingredientsForm(),
               ),
               Container(
-                  margin: const EdgeInsets.only(left: 100.0, right: 100.0),
-                  child: showImage()),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
-                  margin: const EdgeInsets.only(left: 100.0, right: 100.0),
+                  margin: const EdgeInsets.only(left: 100.0, right: 100.0, bottom: 20.0),
                   child: submitButton()),
               const SizedBox(
-                height: 10,
-              ),
-               Container(
-                  margin: const EdgeInsets.only(left: 100.0, right: 100.0),
-                  child: testUpload()),
-              const SizedBox(
-                height: 10,
+                height: 20,
               ),
             ],
           ),
-        )
-    );
+        ));
   }
-  
+
   TextFormField titleForm() {
     return TextFormField(
       onSaved: (value) {
@@ -214,7 +206,6 @@ class _UploadDataState extends State<UploadData> {
         ),
         hintText: '',
         labelText: 'ส่วนผสม',
-        
         prefixIcon: Icon(Icons.food_bank),
       ),
     );
@@ -222,7 +213,13 @@ class _UploadDataState extends State<UploadData> {
 
   ElevatedButton submitButton() {
     return ElevatedButton(
-        child: const Text('อัพโหลดข้อมูล'),
+        child: Text(
+          'อัพโหลด',
+          style: GoogleFonts.kanit(
+            fontSize: 18,
+            color: Colors.white,
+          ),
+        ),
         style: ElevatedButton.styleFrom(
           primary: Colors.blue,
           onPrimary: Colors.white,
@@ -231,92 +228,87 @@ class _UploadDataState extends State<UploadData> {
         ),
         onPressed: () async {
           if (user == null) {
-            ScaffoldMessenger.of(context)
-                  .showMaterialBanner(MaterialBanner(
-                    content: Text("กรุณาเข้าสู่ระบบ"),
-                    leading: Icon(Icons.info),
-                    actions: [
-                      TextButton(
-                        child: const Icon(Icons.settings),
-                        onPressed: () {
-                          ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-                        },
-                      ),
-                    ],
-                  ));
-                  Future.delayed(const Duration(milliseconds: 6000), () {
-                  ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-                });
+            ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
+              content: Text("กรุณาเข้าสู่ระบบ"),
+              leading: Icon(Icons.info),
+              actions: [
+                TextButton(
+                  child: const Icon(Icons.settings),
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                  },
+                ),
+              ],
+            ));
+            Future.delayed(const Duration(milliseconds: 6000), () {
+              ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+            });
           }
           if (user != null) {
-            if(imageUpload == false){
-              ScaffoldMessenger.of(context)
-                  .showMaterialBanner(MaterialBanner(
-                    content: Text("กรุณาอัพโหลดรูปภาพ"),
-                    leading: Icon(Icons.info),
-                    actions: [
-                      TextButton(
-                        child: const Icon(Icons.settings),
-                        onPressed: () {
-                          ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-                        },
-                      ),
-                    ],
-                  ));
-                  Future.delayed(const Duration(milliseconds: 6000), () {
-                  ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-                });
-            }
-            else if(imageUpload == true){
-            if (_formstateUpload.currentState!.validate()) {
-            print('Valid Form');
-            _formstateUpload.currentState!.save();
-            try {
-              EasyLoading.show(status: 'Uploading...');
-              ScaffoldMessenger.of(context)
-                  .showMaterialBanner(MaterialBanner(
+            if (imageUpload == false) {
+              ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
+                content: Text("กรุณาอัพโหลดรูปภาพ"),
+                leading: Icon(Icons.info),
+                actions: [
+                  TextButton(
+                    child: const Icon(Icons.settings),
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                    },
+                  ),
+                ],
+              ));
+              Future.delayed(const Duration(milliseconds: 6000), () {
+                ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+              });
+            } else if (imageUpload == true) {
+              if (_formstateUpload.currentState!.validate()) {
+                print('Valid Form');
+                _formstateUpload.currentState!.save();
+                try {
+                  EasyLoading.show(status: 'Uploading...');
+                  ScaffoldMessenger.of(context)
+                      .showMaterialBanner(MaterialBanner(
                     content: Text("กำลังอัพโหลดข้อมูล..."),
                     leading: Icon(Icons.info),
                     actions: [
                       TextButton(
                         child: const Icon(Icons.settings),
                         onPressed: () {
-                          ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                          ScaffoldMessenger.of(context)
+                              .hideCurrentMaterialBanner();
                         },
                       ),
                     ],
                   ));
                   Future.delayed(const Duration(milliseconds: 6000), () {
-                  ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-                });
-             countDocuments();
-             
-          _formstateUpload.currentState!.reset();
-          
-          Navigator.pushNamed(context, '/food');
-          EasyLoading.dismiss();
-        } catch (e) {
-              print(e);
-            }
-            }
-            else {
-              print('Error');
-            }
+                    ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                  });
+                  countDocuments();
 
-        }
-        }
-        }
-        );
+                  _formstateUpload.currentState!.reset();
 
-}
+                  Navigator.pushNamed(context, '/food');
+                  EasyLoading.dismiss();
+                } catch (e) {
+                  print(e);
+                }
+              } else {
+                print('Error');
+              }
+            }
+          }
+        });
+  }
 
-void countDocuments() async {
-    QuerySnapshot _myDoc = await FirebaseFirestore.instance.collection('foods').get();
+  void countDocuments() async {
+    QuerySnapshot _myDoc =
+        await FirebaseFirestore.instance.collection('foods').get();
     List<DocumentSnapshot> _myDocCount = _myDoc.docs;
     docslength = _myDocCount.length.toString();
     print('จำนวนข้อมูลก่อนเพิ่ม $docslength');
     updateDocuments();
-}
+  }
 
   void updateDocuments() async {
     QuerySnapshot query = await FirebaseFirestore.instance
@@ -325,87 +317,80 @@ void countDocuments() async {
         .get();
     if (query.docs.isNotEmpty) {
       FirebaseFirestore.instance
-        .collection('docs_all_count')
-        .where('allcount')
-        .get()
-        .then((value) => 
-              FirebaseFirestore.instance
-                  .collection('docs_all_count')
-                  .doc(value.docs[0].id)
-                  .update({"allcount": FieldValue.increment(1)})
-            );
-       print('Add 1 to allcount');
+          .collection('docs_all_count')
+          .where('allcount')
+          .get()
+          .then((value) => FirebaseFirestore.instance
+              .collection('docs_all_count')
+              .doc(value.docs[0].id)
+              .update({"allcount": FieldValue.increment(1)}));
+      print('Add 1 to allcount');
       createID();
     } else if (query.docs.isEmpty) {
       print('ไม่สามารถเพิ่มฟอร์มจำนวนได้');
     }
   }
 
-    void createID() async {
+  void createID() async {
     QuerySnapshot createcountid = await FirebaseFirestore.instance
         .collection('docs_all_count')
         .where('allcount')
         .get();
-     if (createcountid.docs.isNotEmpty) {
-       var countid = (createcountid.docs[0]['allcount'].toString());
-        print("จำนวนข้อมูล ID ทั้งหมดที่สร้างและ ID ปัจจุบัน : $countid");
-        setState(() {
-          countid = countid;
-        });
-        uploadImageToFirebase(countid);
+    if (createcountid.docs.isNotEmpty) {
+      var countid = (createcountid.docs[0]['allcount'].toString());
+      print("จำนวนข้อมูล ID ทั้งหมดที่สร้างและ ID ปัจจุบัน : $countid");
+      setState(() {
+        countid = countid;
+      });
+      uploadImageToFirebase(countid);
+    }
   }
- }
 
- void createDatabase(String countid, String url) async {
-    await FirebaseFirestore.instance.collection("foods").add(
-        {
-          "id": countid,
-          "uid": FirebaseAuth.instance.currentUser!.uid,
-          "email": FirebaseAuth.instance.currentUser!.email,
-          "displayname": FirebaseAuth.instance.currentUser!.displayName,
-          "title": title,
-          "subtitle": subtitle,
-          "description": description,
-          "ingredients": ingredients,
-          "created_at": DateTime.now(),
-          "uploadImageUrl": url,
-        }
-          );
-          print('Create complete');
-          ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-          ScaffoldMessenger.of(context)
-                  .showMaterialBanner(MaterialBanner(
-                    content: Text("เพิ่มรายการอาหารเรียบร้อย!"),
-                    leading: Icon(Icons.food_bank_sharp),
-                    actions: [
-                      TextButton(
-                        child: const Icon(Icons.settings),
-                        onPressed: () {
-                          ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-                        },
-                      ),
-                    ],
-                  ));
-                  Future.delayed(const Duration(milliseconds: 6000), () {
-                  ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-                });
- }
+  void createDatabase(String countid, String url) async {
+    await FirebaseFirestore.instance.collection("foods").add({
+      "id": countid,
+      "uid": FirebaseAuth.instance.currentUser!.uid,
+      "email": FirebaseAuth.instance.currentUser!.email,
+      "displayname": FirebaseAuth.instance.currentUser!.displayName,
+      "title": title,
+      "subtitle": subtitle,
+      "description": description,
+      "ingredients": ingredients,
+      "created_at": DateTime.now(),
+      "uploadImageUrl": url,
+    });
+    print('Create complete');
+    ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+    ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
+      content: Text("เพิ่มรายการอาหารเรียบร้อย!"),
+      leading: Icon(Icons.food_bank_sharp),
+      actions: [
+        TextButton(
+          child: const Icon(Icons.settings),
+          onPressed: () {
+            ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+          },
+        ),
+      ],
+    ));
+    Future.delayed(const Duration(milliseconds: 6000), () {
+      ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+    });
+  }
 
+  //////////////////////////////CAMERA
 
- //////////////////////////////CAMERA
-
-
- showImage() {
+  showImage() {
     return GestureDetector(
         onTap: () {
           _showImage();
         },
         child: Container(
+          margin: EdgeInsets.only(top: 10),
           padding: const EdgeInsets.all(9), // Border width
           decoration: BoxDecoration(
               color: Colors.grey[350], borderRadius: BorderRadius.circular(20)),
           child: ClipRRect(
-            
             borderRadius: BorderRadius.circular(5),
             child: SizedBox.fromSize(
               size: const Size.fromRadius(80), // Image radius
@@ -420,7 +405,6 @@ void countDocuments() async {
         ));
   }
 
-
   ElevatedButton uploadImageButton() {
     return ElevatedButton(
       onPressed: () {
@@ -433,7 +417,7 @@ void countDocuments() async {
   ElevatedButton testUpload() {
     return ElevatedButton(
       onPressed: () {
-    //   uploadImageToFirebase(countid);
+        //   uploadImageToFirebase(countid);
       },
       child: const Text('TestUpload'),
     );
@@ -452,7 +436,6 @@ void countDocuments() async {
                 InkWell(
                   onTap: () {
                     chooseImageFromCamera();
-                 //   _pictureFromCamera();
                   },
                   child: Row(
                     children: const [
@@ -469,8 +452,8 @@ void countDocuments() async {
                 ),
                 InkWell(
                   onTap: () {
-                       chooseImageFromGallery();
-                      },
+                    chooseImageFromGallery();
+                  },
                   child: Row(
                     children: const [
                       Padding(
@@ -490,22 +473,6 @@ void countDocuments() async {
         });
   }
 
-  // _pictureFromCamera() async {
-  //   //รอกล้อง
-  //   XFile? pickedFile =
-  //       await ImagePicker().pickImage(source: ImageSource.camera);
-  //   _pictureCrop(pickedFile!.path);
-  //   Navigator.pop(context);
-  // }
-
-  // _pictureFromGallery() async {
-  //   //รอคลัง
-  //   XFile? pickedFile =
-  //       await ImagePicker().pickImage(source: ImageSource.gallery);
-  //   _pictureCrop(pickedFile!.path);
-  //   Navigator.pop(context);
-  // }
-
   _pictureCrop(imagePath) async {
     //ครอปรูป
     CroppedFile? croppedImage = await ImageCropper()
@@ -515,8 +482,7 @@ void countDocuments() async {
         imageUpload = true;
         _foodpic = File(croppedImage.path);
       });
-    }
-    else {
+    } else {
       setState(() {
         _foodpic = File(imagePath);
       });
@@ -551,7 +517,6 @@ void countDocuments() async {
     });
   }
 
-
   chooseImageFromGallery() async {
     Navigator.pop(context);
     final picker = ImagePicker();
@@ -579,18 +544,16 @@ void countDocuments() async {
     });
   }
 
- 
-Future uploadImageToFirebase(String countid) async {
-        var reference = FirebaseStorage.instance.ref().child('foods/${countid}');
-        var uploadTask = reference.putFile(_foodpic!);
-        var url = await (await uploadTask).ref.getDownloadURL();
-        print('uploadImageToFirebase URL IMAGE : {$url}');
-        createDatabase(countid, url);
-       // pathUpload();
-      }
+  Future uploadImageToFirebase(String countid) async {
+    var reference = FirebaseStorage.instance.ref().child('foods/${countid}');
+    var uploadTask = reference.putFile(_foodpic!);
+    var url = await (await uploadTask).ref.getDownloadURL();
+    print('uploadImageToFirebase URL IMAGE : {$url}');
+    createDatabase(countid, url);
+    // pathUpload();
+  }
 
   void pathUpload() {
     print('pathUpload URL IMAGE : {$uploadUrl}');
   }
-
 }
