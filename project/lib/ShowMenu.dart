@@ -28,6 +28,11 @@ class _ShowMenuState extends State<ShowMenu> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          title: Text(widget.docs['title'],
+          style:  GoogleFonts.kanit(
+            fontSize: 20,
+          ),
+          ),
           actions: [IconButton(onPressed: () {}, icon: Icon(Icons.search))],
         ),
         body: ListView(
@@ -53,6 +58,9 @@ class _ShowMenuState extends State<ShowMenu> {
                   style: GoogleFonts.kanit(fontSize: 20),
                 ),
               ),
+                            SizedBox(
+                height: 20,
+              ),
               Container(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -61,11 +69,14 @@ class _ShowMenuState extends State<ShowMenu> {
                 ),
               ),
               Container(
-                alignment: Alignment.centerLeft,
+              //  alignment: Alignment.centerLeft,
                 child: Text(
                   widget.docs['ingredients'],
-                  style: GoogleFonts.kanit(fontSize: 20),
+                  style: GoogleFonts.kanit(fontSize: 14),
                 ),
+              ),
+              SizedBox(
+                height: 20,
               ),
               Container(
                 alignment: Alignment.centerLeft,
@@ -75,10 +86,14 @@ class _ShowMenuState extends State<ShowMenu> {
                 ),
               ),
               Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
-                  widget.docs['subtitle'],
-                  style: GoogleFonts.kanit(fontSize: 20),
+                  widget.docs['description'],
+                  style: GoogleFonts.kanit(fontSize: 14),
                 ),
+              ),
+              SizedBox(
+                height: 20,
               ),
             ],
           ),]
