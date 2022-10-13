@@ -6,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:project/HomePageWidget.dart';
 import 'package:project/ShowMenu.dart';
 import 'package:project/allfood.dart';
-import 'package:project/camera_page.dart';
 import 'package:project/facebook.dart';
 import 'package:project/forgotpassword.dart';
 import 'package:project/home.dart';
@@ -59,7 +58,6 @@ class MyApp extends StatelessWidget {
         '/food': (context) => BodyAfterLogin(),
         '/showmenu': (context) => ShowMenu(),
         '/upload': (context) => UploadData(),
-        '/camera': (context) => AddFoodsMenuPage(),
       },
     );
   }

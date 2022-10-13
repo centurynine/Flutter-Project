@@ -101,9 +101,6 @@ class _BodyState extends State<Body> {
         ),
         SizedBox(height: 20),
         Recommendget(),
-        ElevatedButton(onPressed: () {
-          Navigator.pushNamed(context, '/camera');
-        }, child: Text('Image Page')),
         SizedBox(height: 20),
         FirebaseAuth.instance.currentUser != null
             ? Column(

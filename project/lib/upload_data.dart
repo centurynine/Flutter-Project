@@ -253,7 +253,6 @@ class _UploadDataState extends State<UploadData> {
                   TextButton(
                     child: const Icon(Icons.settings),
                     onPressed: () {
-                      ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
                     },
                   ),
                 ],
@@ -473,6 +472,7 @@ class _UploadDataState extends State<UploadData> {
         });
   }
 
+
   _pictureCrop(imagePath) async {
     //ครอปรูป
     CroppedFile? croppedImage = await ImageCropper()
@@ -498,24 +498,25 @@ class _UploadDataState extends State<UploadData> {
         _foodpic = File(pickedFile.path);
         _pictureCrop(pickedFile.path);
       } else {
-        ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
-          content: Text("ไม่ได้เลือกรูปภาพ โปรดเลือกรูปภาพใหม่อีกครั้ง"),
-          leading: Icon(Icons.warning),
-          actions: [
-            TextButton(
-              child: Text("ปิด"),
-              onPressed: () {
-                ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-              },
-            ),
-          ],
-        ));
-        Future.delayed(const Duration(milliseconds: 3000), () {
-          ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-        });
+        // ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
+        //   content: Text("ไม่ได้เลือกรูปภาพ โปรดเลือกรูปภาพใหม่อีกครั้ง"),
+        //   leading: Icon(Icons.warning),
+        //   actions: [
+        //     TextButton(
+        //       child: Text("ปิด"),
+        //       onPressed: () {
+        //         ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+        //       },
+        //     ),
+        //   ],
+        // ));
+        // Future.delayed(const Duration(milliseconds: 3000), () {
+        //   ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+        // });
       }
     });
   }
+
 
   chooseImageFromGallery() async {
     Navigator.pop(context);
@@ -544,16 +545,14 @@ class _UploadDataState extends State<UploadData> {
     });
   }
 
+
   Future uploadImageToFirebase(String countid) async {
     var reference = FirebaseStorage.instance.ref().child('foods/${countid}');
     var uploadTask = reference.putFile(_foodpic!);
     var url = await (await uploadTask).ref.getDownloadURL();
     print('uploadImageToFirebase URL IMAGE : {$url}');
     createDatabase(countid, url);
-    // pathUpload();
   }
 
-  void pathUpload() {
-    print('pathUpload URL IMAGE : {$uploadUrl}');
-  }
+
 }

@@ -43,7 +43,6 @@ class _HomepageState extends State<Homepage> {
       status = 1;
       statusText = "Logged In";
     }
-    
   }
 
   @override
