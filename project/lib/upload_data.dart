@@ -98,13 +98,13 @@ class _UploadDataState extends State<UploadData> {
               ),
               Container(
                   margin: const EdgeInsets.only(left: 100.0, right: 100.0),
-                  child: submitButton()),
+                  child: showImage()),
               const SizedBox(
                 height: 10,
               ),
               Container(
                   margin: const EdgeInsets.only(left: 100.0, right: 100.0),
-                  child: showImage()),
+                  child: submitButton()),
               const SizedBox(
                 height: 10,
               ),
@@ -365,23 +365,35 @@ void countDocuments() async {
           _showImage();
         },
         child: Container(
-          padding: const EdgeInsets.all(4), // Border width
+          padding: const EdgeInsets.all(9), // Border width
           decoration: BoxDecoration(
-              color: Colors.blue, borderRadius: BorderRadius.circular(30)),
+              color: Colors.grey[350], borderRadius: BorderRadius.circular(20)),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(30),
+            
+            borderRadius: BorderRadius.circular(5),
             child: SizedBox.fromSize(
               size: const Size.fromRadius(80), // Image radius
               child: Image(
-                fit: BoxFit.cover,
+                fit: BoxFit.fitHeight,
                 image: _foodpic == null
-                    ? const AssetImage('assets/dish.png')
+                    ? const AssetImage('assets/pictureupload.png')
                     : Image.file(_foodpic!).image,
               ),
             ),
           ),
         ));
   }
+
+
+  ElevatedButton uploadImageButton() {
+    return ElevatedButton(
+      onPressed: () {
+        _showImage();
+      },
+      child: const Text('เลือกรูปภาพ'),
+    );
+  }
+
 
   _showImage() {
     // AlertBox options
@@ -395,7 +407,8 @@ void countDocuments() async {
               children: [
                 InkWell(
                   onTap: () {
-                    _pictureFromCamera();
+                    chooseImageFromCamera();
+                 //   _pictureFromCamera();
                   },
                   child: Row(
                     children: const [
@@ -412,7 +425,7 @@ void countDocuments() async {
                 ),
                 InkWell(
                   onTap: () {
-                       _pictureFromGallery();
+                       chooseImageFromGallery();
                       },
                   child: Row(
                     children: const [
@@ -433,13 +446,13 @@ void countDocuments() async {
         });
   }
 
-  _pictureFromCamera() async {
-    //รอกล้อง
-    XFile? pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.camera);
-    _pictureCrop(pickedFile!.path);
-    Navigator.pop(context);
-  }
+  // _pictureFromCamera() async {
+  //   //รอกล้อง
+  //   XFile? pickedFile =
+  //       await ImagePicker().pickImage(source: ImageSource.camera);
+  //   _pictureCrop(pickedFile!.path);
+  //   Navigator.pop(context);
+  // }
 
   _pictureFromGallery() async {
     //รอคลัง
@@ -458,9 +471,14 @@ void countDocuments() async {
         _foodpic = File(croppedImage.path);
       });
     }
+    else {
+      setState(() {
+        _foodpic = File('assets/pictureupload.png');
+      });
+    }
   }
 
-  chooseImage() async {
+  chooseImageFromCamera() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.camera);
     setState(() {
@@ -485,4 +503,33 @@ void countDocuments() async {
       }
     });
   }
+
+
+  chooseImageFromGallery() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedFile != null) {
+        _foodpic = File(pickedFile.path);
+      } else {
+        ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
+          content: Text("ไม่ได้เลือกรูปภาพ โปรดเลือกรูปภาพใหม่อีกครั้ง"),
+          leading: Icon(Icons.info),
+          actions: [
+            TextButton(
+              child: Text("ปิด"),
+              onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+              },
+            ),
+          ],
+        ));
+        Future.delayed(const Duration(milliseconds: 2500), () {
+          ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+        });
+      }
+    });
+  }
+
+
 }
