@@ -13,8 +13,6 @@ class BodyAfterLogin extends StatefulWidget {
 
   @override
   State<BodyAfterLogin> createState() => _BodyAfterLoginState();
-
-
 }
 
 class _BodyAfterLoginState extends State<BodyAfterLogin> {
@@ -29,7 +27,6 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
   // }
 
   @override
-  
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -67,7 +64,6 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                       print('Something went wrong');
                     }
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      
                       EasyLoading.show(status: 'Loading...');
                       print('Loading');
                       return Text("กำลังโหลดข้อมูล...",
@@ -105,8 +101,24 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                             ),
                             child: ListTile(
                               onTap: () {
-                              //   imgUrl((snapshot.data!).docs[index]['id']);
-                              //   print('url: $url');
+                                
+                                //   imgUrl((snapshot.data!).docs[index]['id']);
+                                //   print('url: $url');
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: (context) => ShowMenu(
+                                //               id: (snapshot.data!).docs[index]
+                                //                   ['id'],
+                                //               title: (snapshot.data!)
+                                //                   .docs[index]['title'],
+                                //               detail: (snapshot.data!)
+                                //                   .docs[index]['detail'],
+                                //               price: (snapshot.data!)
+                                //                   .docs[index]['price'],
+                                //               pathUrl: url.toString(),
+                                //             )));
+
                               },
                               title:
                                   Text((snapshot.data!).docs[index]['title']),
@@ -148,11 +160,9 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
   //   print(imgUrl);
   // }
 
-
   // void getImage() async {
   //   final imgUrl = await storageRef.child().getDownloadURL();
   //   print(imgUrl);
   // }
-
 
 }
