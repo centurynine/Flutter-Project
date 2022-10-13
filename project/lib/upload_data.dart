@@ -476,13 +476,13 @@ void countDocuments() async {
   //   Navigator.pop(context);
   // }
 
-  _pictureFromGallery() async {
-    //รอคลัง
-    XFile? pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-    _pictureCrop(pickedFile!.path);
-    Navigator.pop(context);
-  }
+  // _pictureFromGallery() async {
+  //   //รอคลัง
+  //   XFile? pickedFile =
+  //       await ImagePicker().pickImage(source: ImageSource.gallery);
+  //   _pictureCrop(pickedFile!.path);
+  //   Navigator.pop(context);
+  // }
 
   _pictureCrop(imagePath) async {
     //ครอปรูป
@@ -495,21 +495,23 @@ void countDocuments() async {
     }
     else {
       setState(() {
-        _foodpic = File('assets/pictureupload.png');
+        _foodpic = File(imagePath);
       });
     }
   }
 
   chooseImageFromCamera() async {
+    Navigator.pop(context);
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.camera);
     setState(() {
       if (pickedFile != null) {
         _foodpic = File(pickedFile.path);
+        _pictureCrop(pickedFile.path);
       } else {
         ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
           content: Text("ไม่ได้เลือกรูปภาพ โปรดเลือกรูปภาพใหม่อีกครั้ง"),
-          leading: Icon(Icons.info),
+          leading: Icon(Icons.warning),
           actions: [
             TextButton(
               child: Text("ปิด"),
@@ -519,7 +521,7 @@ void countDocuments() async {
             ),
           ],
         ));
-        Future.delayed(const Duration(milliseconds: 2500), () {
+        Future.delayed(const Duration(milliseconds: 3000), () {
           ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
         });
       }
@@ -528,16 +530,12 @@ void countDocuments() async {
 
 
   chooseImageFromGallery() async {
+    Navigator.pop(context);
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     setState(() {
       if (pickedFile != null) {
-
         _foodpic = File(pickedFile.path);
-
-
-
-
       } else {
         ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
           content: Text("ไม่ได้เลือกรูปภาพ โปรดเลือกรูปภาพใหม่อีกครั้ง"),
