@@ -195,14 +195,7 @@ class _BodyState extends State<Body> {
                 ],
 
              )
-             : Column(
-                children: [
-                  ElevatedButton(onPressed: () {
-                    Navigator.pushNamed(context, '/showmenu');
-                  }, child: Text("ตัวอย่างภาพใหญ่")
-                  ),
-                ],
-             ),
+             : Container(),
           ],
         ),
       ],

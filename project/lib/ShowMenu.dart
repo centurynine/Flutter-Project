@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,7 +9,6 @@ import 'package:project/home.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firbaseStorage;
 import 'package:firebase_storage/firebase_storage.dart';
 
-
 class ShowMenu extends StatefulWidget {
   final DocumentSnapshot docs;
 
@@ -21,35 +19,69 @@ class ShowMenu extends StatefulWidget {
 }
 
 class _ShowMenuState extends State<ShowMenu> {
-    CollectionReference data = FirebaseFirestore.instance.collection('foods');
+  CollectionReference data = FirebaseFirestore.instance.collection('foods');
   firbaseStorage.Reference storageRef =
       firbaseStorage.FirebaseStorage.instance.ref().child('foods/');
   String? id;
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(onPressed: () {},
-           icon: Icon(Icons.search)
-           )
-        ],
-      ),
-      body: Column(
-        children: [
-          Container(
-            child: Text(
-               widget.docs['id'],
+        appBar: AppBar(
+          actions: [IconButton(onPressed: () {}, icon: Icon(Icons.search))],
+        ),
+        body: ListView(
+          children: [Column(
+            children: [
+              SizedBox(
+                height: 20,
               ),
-          ),
-                    Container(
-            child: Text(
-               widget.docs['title'],
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                width: 200,
+                height: 300,
+                child: Image.network(widget.docs['uploadImageUrl']),
               ),
-          )
-        ],
-      )
-    );
-  }}
+              Container(
+                alignment: Alignment.center,
+                child: Text(
+                  widget.docs['title'],
+                  style: GoogleFonts.kanit(fontSize: 20),
+                ),
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  '         วัตถุดิบ',
+                  style: GoogleFonts.kanit(fontSize: 20),
+                ),
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  widget.docs['ingredients'],
+                  style: GoogleFonts.kanit(fontSize: 20),
+                ),
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  '         ขั้นตอนการทำ',
+                  style: GoogleFonts.kanit(fontSize: 20),
+                ),
+              ),
+              Container(
+                child: Text(
+                  widget.docs['subtitle'],
+                  style: GoogleFonts.kanit(fontSize: 20),
+                ),
+              ),
+            ],
+          ),]
+        ));
+  }
+}
