@@ -13,19 +13,20 @@ class BodyAfterLogin extends StatefulWidget {
 
   @override
   State<BodyAfterLogin> createState() => _BodyAfterLoginState();
+
+
 }
 
 class _BodyAfterLoginState extends State<BodyAfterLogin> {
   CollectionReference data = FirebaseFirestore.instance.collection('foods');
   firbaseStorage.Reference storageRef =
       firbaseStorage.FirebaseStorage.instance.ref().child('foods/');
-    
-  imgUrl(String id) async {
-   // print('ID : $id');
-    var url = await storageRef.child(id).getDownloadURL();
-    print(url);
-   // return url;
-  }
+  // imgUrl(String id) async {
+  //  // print('ID : $id');
+  //   var url = await storageRef.child(id).getDownloadURL();
+  //   print(url);
+  //   return url;
+  // }
 
   @override
   
@@ -66,6 +67,7 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                       print('Something went wrong');
                     }
                     if (snapshot.connectionState == ConnectionState.waiting) {
+                      
                       EasyLoading.show(status: 'Loading...');
                       print('Loading');
                       return Text("กำลังโหลดข้อมูล...",
@@ -79,7 +81,6 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                         if ((snapshot.data!).docs[index]['title'] == '') {
                           return SizedBox.shrink();
                         } else {
-                          imgUrl((snapshot.data!).docs[index]['id']);
                           return Container(
                             width: 200,
                             height: 150,
@@ -104,14 +105,15 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                             ),
                             child: ListTile(
                               onTap: () {
-                          //      getImage();
+                              //   imgUrl((snapshot.data!).docs[index]['id']);
+                              //   print('url: $url');
                               },
                               title:
                                   Text((snapshot.data!).docs[index]['title']),
                               subtitle: Text(
                                   (snapshot.data!).docs[index]['subtitle']),
                               leading: Image.network(
-                                'https://scontent.fbkk2-4.fna.fbcdn.net/v/t39.30808-1/272920248_6930110877060294_6433230853958653780_n.jpg?stp=dst-jpg_s200x200&_nc_cat=101&ccb=1-7&_nc_sid=7206a8&_nc_ohc=mK4HiRAU8bsAX8FRldE&_nc_pt=1&_nc_ht=scontent.fbkk2-4.fna&oh=00_AT8ltaBNz9jscrETynA1LGkqenjewaxy7KiQsBx-alVFvA&oe=634993A0',
+                                (snapshot.data!).docs[index]['uploadUrl'],
                                 width: 50,
                                 height: 50,
                               ),

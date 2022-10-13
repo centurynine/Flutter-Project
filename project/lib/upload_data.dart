@@ -330,13 +330,11 @@ void countDocuments() async {
         setState(() {
           countid = countid;
         });
-        createDatabase(countid);
         uploadImageToFirebase(countid);
-        print('URL IMAGE : {$uploadUrl}');
   }
  }
 
- void createDatabase(String countid) async {
+ void createDatabase(String countid, String url) async {
     await FirebaseFirestore.instance.collection("foods").add(
         {
           "id": countid,
@@ -348,6 +346,7 @@ void countDocuments() async {
           "description": description,
           "ingredients": ingredients,
           "created_at": DateTime.now(),
+          "uploadUrl": uploadUrl,
         }
           );
           print('Create complete');
@@ -569,8 +568,12 @@ Future uploadImageToFirebase(String countid) async {
           uploadUrl = url;
         });
         print('uploadImageToFirebase URL IMAGE : {$uploadUrl}');
+        createDatabase(countid, url);
+       // pathUpload();
       }
 
-
+  void pathUpload() {
+    print('pathUpload URL IMAGE : {$uploadUrl}');
+  }
 
 }
