@@ -332,6 +332,7 @@ void countDocuments() async {
         });
         createDatabase(countid);
         uploadImageToFirebase(countid);
+        print('URL IMAGE : {$uploadUrl}');
   }
  }
 
@@ -349,11 +350,6 @@ void countDocuments() async {
           "created_at": DateTime.now(),
         }
           );
-
-
-
-
-
           print('Create complete');
           ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
           ScaffoldMessenger.of(context)
@@ -572,6 +568,7 @@ Future uploadImageToFirebase(String countid) async {
         setState(() {
           uploadUrl = url;
         });
+        print('uploadImageToFirebase URL IMAGE : {$uploadUrl}');
       }
 
 

@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:project/ShowMenu.dart';
 import 'package:project/home.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firbaseStorage;
 
 class BodyAfterLogin extends StatefulWidget {
   const BodyAfterLogin({super.key});
@@ -16,7 +17,15 @@ class BodyAfterLogin extends StatefulWidget {
 
 class _BodyAfterLoginState extends State<BodyAfterLogin> {
   CollectionReference data = FirebaseFirestore.instance.collection('foods');
-  
+  firbaseStorage.Reference storageRef =
+      firbaseStorage.FirebaseStorage.instance.ref().child('foods/');
+    
+  imgUrl(String id) async {
+   // print('ID : $id');
+    var url = await storageRef.child(id).getDownloadURL();
+    print(url);
+   // return url;
+  }
 
   @override
   
@@ -70,6 +79,7 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                         if ((snapshot.data!).docs[index]['title'] == '') {
                           return SizedBox.shrink();
                         } else {
+                          imgUrl((snapshot.data!).docs[index]['id']);
                           return Container(
                             width: 200,
                             height: 150,
@@ -94,8 +104,7 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                             ),
                             child: ListTile(
                               onTap: () {
-                    
-         
+                          //      getImage();
                               },
                               title:
                                   Text((snapshot.data!).docs[index]['title']),
@@ -131,4 +140,17 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
       ],
     );
   }
+
+  // void getImage() async {
+  //   var imgUrl = await storageRef.child('${id}').getDownloadURL();
+  //   print(imgUrl);
+  // }
+
+
+  // void getImage() async {
+  //   final imgUrl = await storageRef.child().getDownloadURL();
+  //   print(imgUrl);
+  // }
+
+
 }
