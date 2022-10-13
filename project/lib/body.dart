@@ -9,6 +9,7 @@ import 'package:project/allfood.dart';
 import 'package:project/login.dart';
 import 'package:project/facebook.dart';
 import 'package:project/recommend_widget.dart';
+import 'package:project/searchpage.dart';
 import 'List.dart';
 
 class Body extends StatefulWidget {
@@ -69,7 +70,13 @@ class _BodyState extends State<Body> {
               child: Row(
                 children: [
                   const SizedBox(width: 16),
-                  const Icon(Icons.search),
+                 IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SearchPage()));
+                      },
+                    ),
                   const SizedBox(width: 16),
                   Text(
                     'Search',
