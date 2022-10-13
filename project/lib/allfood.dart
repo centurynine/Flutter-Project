@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:project/ShowMenu.dart';
+import 'package:project/editpage.dart';
 import 'package:project/home.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firbaseStorage;
 
@@ -164,6 +165,18 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                               title: Text('ลบรายการอาหาร'),
                               content: Text('คุณต้องการลบรายการอาหารนี้ใช่หรือไม่'),
                               actions: [
+                                TextButton(
+                                  child: Text('แก้ไข'),
+                                  onPressed: () {
+                                    Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => EditData(
+                                              docs:
+                                                  (snapshot.data!).docs[index],
+                                            )));
+                                  },
+                                ),
                                 TextButton(
                                   child: Text('ยกเลิก'),
                                   onPressed: () {
