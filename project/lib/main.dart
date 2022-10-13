@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
@@ -56,7 +58,7 @@ class MyApp extends StatelessWidget {
         '/setting': (context) => Setting(),
         '/widget': (context) => HomePageWidget(),
         '/food': (context) => BodyAfterLogin(),
-        '/showmenu': (context) => ShowMenu(),
+    //    '/showmenu': (context) => ShowMenu(docs:),
         '/upload': (context) => UploadData(),
       },
     );

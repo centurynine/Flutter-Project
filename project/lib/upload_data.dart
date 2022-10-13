@@ -498,21 +498,24 @@ class _UploadDataState extends State<UploadData> {
         _foodpic = File(pickedFile.path);
         _pictureCrop(pickedFile.path);
       } else {
-        // ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
-        //   content: Text("ไม่ได้เลือกรูปภาพ โปรดเลือกรูปภาพใหม่อีกครั้ง"),
-        //   leading: Icon(Icons.warning),
-        //   actions: [
-        //     TextButton(
-        //       child: Text("ปิด"),
-        //       onPressed: () {
-        //         ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-        //       },
-        //     ),
-        //   ],
-        // ));
-        // Future.delayed(const Duration(milliseconds: 3000), () {
-        //   ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-        // });
+                ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
+                content: Text("ไม่ได้เลือกรูปภาพ กรุณาเลือกรูปภาพอีกครั้ง"),
+                leading: Icon(Icons.info),
+                actions: <Widget>[
+                  Builder(
+                    builder: (context) => TextButton(
+                      child: const Icon(Icons.close),
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                      },
+                      
+                    ),
+                    
+                  ),
+                  
+                ],
+                
+              ));
       }
     });
   }

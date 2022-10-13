@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 class Setting extends StatefulWidget {
   const Setting({super.key});
-
   @override
   State<Setting> createState() => _SettingState();
 }

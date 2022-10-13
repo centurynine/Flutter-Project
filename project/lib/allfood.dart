@@ -19,12 +19,7 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
   CollectionReference data = FirebaseFirestore.instance.collection('foods');
   firbaseStorage.Reference storageRef =
       firbaseStorage.FirebaseStorage.instance.ref().child('foods/');
-  // imgUrl(String id) async {
-  //  // print('ID : $id');
-  //   var url = await storageRef.child(id).getDownloadURL();
-  //   print(url);
-  //   return url;
-  // }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -101,23 +96,18 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                             ),
                             child: ListTile(
                               onTap: () {
-                                
-                                //   imgUrl((snapshot.data!).docs[index]['id']);
-                                //   print('url: $url');
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) => ShowMenu(
-                                //               id: (snapshot.data!).docs[index]
-                                //                   ['id'],
-                                //               title: (snapshot.data!)
-                                //                   .docs[index]['title'],
-                                //               detail: (snapshot.data!)
-                                //                   .docs[index]['detail'],
-                                //               price: (snapshot.data!)
-                                //                   .docs[index]['price'],
-                                //               pathUrl: url.toString(),
-                                //             )));
+
+                               Navigator.push(context, MaterialPageRoute(
+                                builder: (context)=>ShowMenu(
+                                  docs: (snapshot.data!).docs[index],
+                                ))
+                                );
+                              
+                               // Navigator.pushNamed(context, '/showmenu');
+                               //Navigator.push(context, new MaterialPageRoute
+                              //   (builder: (_) => ShowMenu(
+                              //     (snapshot.data.documents[index].documentID)
+                              // )));
 
                               },
                               title:
@@ -164,5 +154,7 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
   //   final imgUrl = await storageRef.child().getDownloadURL();
   //   print(imgUrl);
   // }
+  
+
 
 }
