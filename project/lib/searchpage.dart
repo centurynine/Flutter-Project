@@ -29,8 +29,9 @@ class _SearchPageState extends State<SearchPage> {
               setState(() {
                 name = val;
                 print(name);
- 
-              });
+
+              }
+              );
             },
           ),
         ),
@@ -76,7 +77,7 @@ class _SearchPageState extends State<SearchPage> {
                       ),
                     );
                   },
-                );
+            );
         },
       ),
     );
