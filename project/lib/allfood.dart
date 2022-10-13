@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -17,9 +19,10 @@ class BodyAfterLogin extends StatefulWidget {
 
 class _BodyAfterLoginState extends State<BodyAfterLogin> {
   CollectionReference data = FirebaseFirestore.instance.collection('foods');
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
   firbaseStorage.Reference storageRef =
       firbaseStorage.FirebaseStorage.instance.ref().child('foods/');
-
+  bool isAdmin = false;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -144,11 +147,66 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                               trailing: Wrap(
                                 spacing: 12,
                                 children: <Widget>[
-                                  Text(
-                                    (snapshot.data!).docs[index]['id'],
-                                    textAlign: TextAlign.start,
-                                    style: GoogleFonts.kanit(fontSize: 14),
-                                  ),
+                                            FutureBuilder(
+              future: users.doc().get(),
+              builder: (ctx, futureSnapshot) {
+                if (futureSnapshot.connectionState == ConnectionState.waiting) {
+                  checkAdmin();
+                  //return Text("Loading");
+                }
+                if (isAdmin == true) {
+                  return GestureDetector(
+                    child: Text('ลบ',
+                        style: GoogleFonts.kanit(
+                            fontSize: 15, color: Colors.red)),
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('ลบรายการอาหาร'),
+                              content: Text('คุณต้องการลบรายการอาหารนี้ใช่หรือไม่'),
+                              actions: [
+                                TextButton(
+                                  child: Text('ยกเลิก'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                                TextButton(
+                                  child: Text('ตกลง'),
+                                  onPressed: () {
+                                    FirebaseFirestore.instance
+                                        .collection('foods')
+                                        .doc((snapshot.data!).docs[index].id)
+                                        .delete();
+                                    print('Database ID ${(snapshot.data!).docs[index]['id']} Deledted');
+                                    var imageID = (snapshot.data!).docs[index]['id'];
+                                    print('Picture ID : $imageID Deleted');
+                                    var reference = FirebaseStorage.instance.ref().child('foods/$imageID');
+                                    var delete = reference.delete();
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          });
+                    },
+                  );
+                } else {
+                  return SizedBox.shrink();
+                }
+              },
+            ),
+                                
+
+
+                                    //  Text(
+                                    // (snapshot.data!).docs[index]['id'],
+                                    // textAlign: TextAlign.start,
+                                    // style: GoogleFonts.kanit(fontSize: 14),
+                                 
+                                  
                                 ],
                               ),
                             ),
@@ -162,14 +220,18 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
     );
   }
 
-  // void getImage() async {
-  //   var imgUrl = await storageRef.child('${id}').getDownloadURL();
-  //   print(imgUrl);
-  // }
-
-  // void getImage() async {
-  //   final imgUrl = await storageRef.child().getDownloadURL();
-  //   print(imgUrl);
-  // }
+  void checkAdmin() async {
+    QuerySnapshot query = await FirebaseFirestore.instance
+        .collection('users')
+        .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
+        .where('admin', isEqualTo: 'true')
+        .get();
+    if (query.docs.isNotEmpty){
+        isAdmin = true;
+    }
+    else {
+       isAdmin = false;
+    }
+  }
 
 }

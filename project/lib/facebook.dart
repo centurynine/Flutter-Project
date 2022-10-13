@@ -249,6 +249,7 @@ class _FacebookLoginState extends State<FacebookLogin> {
         "uid": auth.currentUser!.uid,
         "email": userEmail.toString(),
         "name": userName.toString(),
+        "admin": false.toString(),
         "created_at": DateTime.now().toString(),
       });
     }

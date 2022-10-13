@@ -9,16 +9,16 @@ import 'package:project/home.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firbaseStorage;
 import 'package:firebase_storage/firebase_storage.dart';
 
-class ShowMenu extends StatefulWidget {
+class EditMenu extends StatefulWidget {
   final DocumentSnapshot docs;
 
-  const ShowMenu({Key? key, required this.docs}) : super(key: key);
+  const EditMenu({Key? key, required this.docs}) : super(key: key);
 
   @override
-  State<ShowMenu> createState() => _ShowMenuState();
+  State<EditMenu> createState() => _EditMenuState();
 }
 
-class _ShowMenuState extends State<ShowMenu> {
+class _EditMenuState extends State<EditMenu> {
   CollectionReference data = FirebaseFirestore.instance.collection('foods');
   firbaseStorage.Reference storageRef =
       firbaseStorage.FirebaseStorage.instance.ref().child('foods/');
@@ -39,7 +39,6 @@ class _ShowMenuState extends State<ShowMenu> {
         body: ListView(children: [
           Column(
             children: [
-              
               SizedBox(
                 height: 20,
               ),
@@ -74,7 +73,6 @@ class _ShowMenuState extends State<ShowMenu> {
               //   backgroundColor: const Color(0xff6ae792),
               // ),
               Container(
-                
                 alignment: Alignment.center,
                 child: Text(
                   widget.docs['title'],

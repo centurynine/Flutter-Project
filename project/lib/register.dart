@@ -259,6 +259,7 @@ class _RegisterPageState extends State<RegisterPage> {
           "uid": auth.currentUser!.uid,
           "email": email.text,
           "name": name.text,
+          "admin": false.toString(),
           "created_at": DateTime.now().toString(),
           }
           );
