@@ -162,8 +162,8 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: Text('ลบรายการอาหาร'),
-                              content: Text('คุณต้องการลบรายการอาหารนี้ใช่หรือไม่'),
+                              title: Text('แก้ไขรายการอาหาร'),
+                              content: Text(''),
                               actions: [
                                 TextButton(
                                   child: Text('แก้ไข'),
@@ -184,18 +184,18 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                                   },
                                 ),
                                 TextButton(
-                                  child: Text('ตกลง'),
+                                  child: Text('ลบ'),
                                   onPressed: () {
                                     FirebaseFirestore.instance
                                         .collection('foods')
                                         .doc((snapshot.data!).docs[index].id)
                                         .delete();
-                                    print('Database ID ${(snapshot.data!).docs[index]['id']} Deledted');
-                                    var imageID = (snapshot.data!).docs[index]['id'];
-                                    print('Picture ID : $imageID Deleted');
-                                    var reference = FirebaseStorage.instance.ref().child('foods/$imageID');
-                                    var delete = reference.delete();
-                                    Navigator.of(context).pop();
+                                      print('Database ID ${(snapshot.data!).docs[index]['id']} Deledted');
+                                      var imageID = (snapshot.data!).docs[index]['id'];
+                                      print('Picture ID : $imageID Deleted');
+                                      var reference = FirebaseStorage.instance.ref().child('foods/$imageID');
+                                      var delete = reference.delete();
+                                      Navigator.of(context).pop();
                                   },
                                 ),
                               ],
