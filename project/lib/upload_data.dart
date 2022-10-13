@@ -20,6 +20,7 @@ class _UploadDataState extends State<UploadData> {
   final auth = FirebaseFirestore.instance;
   var user = FirebaseAuth.instance.currentUser;
   var uploadUrl;
+  bool imageUpload = false;
   String? title;
   String? subtitle;
   String? ingredients;
@@ -248,6 +249,25 @@ class _UploadDataState extends State<UploadData> {
                 });
           }
           if (user != null) {
+            if(imageUpload == false){
+              ScaffoldMessenger.of(context)
+                  .showMaterialBanner(MaterialBanner(
+                    content: Text("กรุณาอัพโหลดรูปภาพ"),
+                    leading: Icon(Icons.info),
+                    actions: [
+                      TextButton(
+                        child: const Icon(Icons.settings),
+                        onPressed: () {
+                          ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                        },
+                      ),
+                    ],
+                  ));
+                  Future.delayed(const Duration(milliseconds: 6000), () {
+                  ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                });
+            }
+            else if(imageUpload == true){
             if (_formstateUpload.currentState!.validate()) {
             print('Valid Form');
             _formstateUpload.currentState!.save();
@@ -283,7 +303,9 @@ class _UploadDataState extends State<UploadData> {
               print('Error');
             }
 
-        }}
+        }
+        }
+        }
         );
 
 }
@@ -490,6 +512,7 @@ void countDocuments() async {
         .cropImage(sourcePath: imagePath, maxHeight: 1080, maxWidth: 1920);
     if (croppedImage != null) {
       setState(() {
+        imageUpload = true;
         _foodpic = File(croppedImage.path);
       });
     }
