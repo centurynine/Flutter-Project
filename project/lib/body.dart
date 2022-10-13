@@ -51,7 +51,6 @@ class _BodyState extends State<Body> {
     return Column(
       children: [
         Container(
-          
           margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
           child: GestureDetector(
              onTap: () {
