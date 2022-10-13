@@ -346,7 +346,7 @@ void countDocuments() async {
           "description": description,
           "ingredients": ingredients,
           "created_at": DateTime.now(),
-          "uploadUrl": uploadUrl,
+          "uploadImageUrl": url,
         }
           );
           print('Create complete');
@@ -563,11 +563,7 @@ Future uploadImageToFirebase(String countid) async {
         var reference = FirebaseStorage.instance.ref().child('foods/${countid}');
         var uploadTask = reference.putFile(_foodpic!);
         var url = await (await uploadTask).ref.getDownloadURL();
-        print(url);
-        setState(() {
-          uploadUrl = url;
-        });
-        print('uploadImageToFirebase URL IMAGE : {$uploadUrl}');
+        print('uploadImageToFirebase URL IMAGE : {$url}');
         createDatabase(countid, url);
        // pathUpload();
       }

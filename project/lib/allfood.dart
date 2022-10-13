@@ -113,7 +113,7 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                               subtitle: Text(
                                   (snapshot.data!).docs[index]['subtitle']),
                               leading: Image.network(
-                                (snapshot.data!).docs[index]['uploadUrl'],
+                                (snapshot.data!).docs[index]['uploadImageUrl'],
                                 width: 50,
                                 height: 50,
                               ),
