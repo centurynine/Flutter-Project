@@ -152,13 +152,10 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
               builder: (ctx, futureSnapshot) {
                 if (futureSnapshot.connectionState == ConnectionState.waiting) {
                   checkAdmin();
-                  //return Text("Loading");
                 }
                 if (isAdmin == true) {
                   return GestureDetector(
-                    child: Text('ลบ',
-                        style: GoogleFonts.kanit(
-                            fontSize: 15, color: Colors.red)),
+                    child: Icon(Icons.edit),
                     onTap: () {
                       showDialog(
                           context: context,

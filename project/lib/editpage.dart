@@ -11,9 +11,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 class EditMenu extends StatefulWidget {
   final DocumentSnapshot docs;
-
   const EditMenu({Key? key, required this.docs}) : super(key: key);
-
   @override
   State<EditMenu> createState() => _EditMenuState();
 }
@@ -79,7 +77,7 @@ class _EditMenuState extends State<EditMenu> {
                   style: GoogleFonts.kanit(fontSize: 20),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Container(
@@ -97,7 +95,7 @@ class _EditMenuState extends State<EditMenu> {
                   style: GoogleFonts.kanit(fontSize: 14),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Container(
@@ -114,7 +112,7 @@ class _EditMenuState extends State<EditMenu> {
                   style: GoogleFonts.kanit(fontSize: 14),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
             ],
