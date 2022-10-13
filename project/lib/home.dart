@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/body.dart';
 import 'package:project/login.dart';
@@ -41,7 +42,6 @@ class _HomepageState extends State<Homepage> {
     if(FirebaseAuth.instance.currentUser != null){
       userEmail = FirebaseAuth.instance.currentUser?.email;
       status = 1;
-      statusText = "Logged In";
     }
   }
 
@@ -51,7 +51,7 @@ class _HomepageState extends State<Homepage> {
       appBar: AppBar(
         backgroundColor: Colors.blue,
         title: Text(
-          " Apple Store",
+          " Aroy App",
          style: GoogleFonts.kanit(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
@@ -238,6 +238,7 @@ class _HomepageState extends State<Homepage> {
   }
 
   Future _signOut() async {
+    EasyLoading.showInfo('ออกจากระบบสำเร็จ');
     await FirebaseAuth.instance.signOut();
   //  Navigator.pop(context);
     _doOpenPage(context);
@@ -284,5 +285,10 @@ void _doOpenPage(context) {
     context,
     MaterialPageRoute(builder: (context) => LoginPage()),
   );
+           Future.delayed(const Duration(milliseconds: 2000), () {
+               EasyLoading.dismiss();
+            });
+ 
+
 
 }

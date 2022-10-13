@@ -69,7 +69,8 @@ class _ShowMenuState extends State<ShowMenu> {
                 ),
               ),
               Container(
-              //  alignment: Alignment.centerLeft,
+                alignment: Alignment.centerLeft,
+                margin: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
                   widget.docs['ingredients'],
                   style: GoogleFonts.kanit(fontSize: 14),

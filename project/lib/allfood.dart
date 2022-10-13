@@ -19,7 +19,6 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
   CollectionReference data = FirebaseFirestore.instance.collection('foods');
   firbaseStorage.Reference storageRef =
       firbaseStorage.FirebaseStorage.instance.ref().child('foods/');
- 
 
   @override
   Widget build(BuildContext context) {
@@ -59,9 +58,9 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                       print('Something went wrong');
                     }
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      EasyLoading.show(status: 'Loading...');
+                      EasyLoading.show(status: 'กำลังโหลด...');
                       print('Loading');
-                      return Text("กำลังโหลดข้อมูล...",
+                      return Text("",
                           textAlign: TextAlign.center,
                           style: GoogleFonts.kanit(fontSize: 20));
                     }
@@ -69,21 +68,24 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                     return ListView.builder(
                       itemCount: (snapshot.data!).docs.length,
                       itemBuilder: (context, index) {
-                        if ((snapshot.data!).docs[index]['title'] == '') {
+                        if ((snapshot.data!).docs[index]['title'] == '' ||
+                            (snapshot.data!).docs[index]['uploadImageUrl'] ==
+                                '' ||
+                            (snapshot.data!).docs[index]['id'] == '') {
                           return SizedBox.shrink();
                         } else {
                           return Container(
-                            width: 200,
+                            width: 240,
                             height: 150,
                             margin: const EdgeInsets.only(
-                                left: 30, top: 20, right: 30, bottom: 20),
+                                left: 20, top: 10, right: 10, bottom: 20),
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(10),
+                                  topLeft: Radius.circular(30),
                                   topRight: Radius.circular(10),
                                   bottomLeft: Radius.circular(10),
-                                  bottomRight: Radius.circular(10)),
+                                  bottomRight: Radius.circular(30)),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.grey.withOpacity(0.5),
@@ -95,38 +97,64 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                               ],
                             ),
                             child: ListTile(
-                              onTap: () {
-
-                               Navigator.push(context, MaterialPageRoute(
-                                builder: (context)=>ShowMenu(
-                                  docs: (snapshot.data!).docs[index],
-                                ))
-                                );
-                              
-                               // Navigator.pushNamed(context, '/showmenu');
-                               //Navigator.push(context, new MaterialPageRoute
-                              //   (builder: (_) => ShowMenu(
-                              //     (snapshot.data.documents[index].documentID)
-                              // )));
-
-                              },
-                              title:
-                                  Text((snapshot.data!).docs[index]['title']),
-                              subtitle: Text(
-                                  (snapshot.data!).docs[index]['subtitle']),
-                              leading: Image.network(
-                                (snapshot.data!).docs[index]['uploadImageUrl'],
-                                width: 100,
-                                height: 100,
+                              shape: RoundedRectangleBorder(
+                                //<-- SEE HERE
+                                side: BorderSide(width: 4, color: Colors.grey),
+                                borderRadius: BorderRadius.circular(23),
                               ),
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ShowMenu(
+                                              docs:
+                                                  (snapshot.data!).docs[index],
+                                            )));
+                              },
+                              title: Text(
+                                (snapshot.data!).docs[index]['title'],
+                                style: GoogleFonts.notoSansThai(fontSize: 20),
+                              ),
+                              subtitle: Text(
+                                (snapshot.data!).docs[index]['subtitle'],
+                                style: GoogleFonts.kanit(fontSize: 13),
+                              ),
+                              leading: CircleAvatar(
+                                
+                                radius: 30,
+                                
+                                backgroundImage: NetworkImage(
+                                    (snapshot.data!).docs[index]
+                                        ['uploadImageUrl'],
+                                        scale: 1,
+                                        
+
+                                        ),
+                                backgroundColor: const Color(0xff6ae792),
+                                // child: Image.network(
+                                //   (snapshot.data!).docs[index]
+                                //       ['uploadImageUrl'],
+                                //   width: 50,
+                                //   height: 50,
+                           //     ),
+                              ),
+
+                              // Padding(
+                              //   padding: const EdgeInsets.only(left: 1, top: 1),
+                              //   child: Image.network(
+                              //     (snapshot.data!).docs[index]
+                              //         ['uploadImageUrl'],
+                              //     width: 50,
+                              //     height: 50,
+                              //   ),
+                              // ),
+                              // Image.network((snapshot.data!).docs[index]['uploadImageUrl'],
+                              //   width: 100,
+                              //   height: 100,
+                              // ),
                               trailing: Wrap(
                                 spacing: 12,
                                 children: <Widget>[
-                                  Text(
-                                    'ID',
-                                    textAlign: TextAlign.end,
-                                    style: GoogleFonts.kanit(fontSize: 10),
-                                  ),
                                   Text(
                                     (snapshot.data!).docs[index]['id'],
                                     textAlign: TextAlign.start,
@@ -154,7 +182,5 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
   //   final imgUrl = await storageRef.child().getDownloadURL();
   //   print(imgUrl);
   // }
-  
-
 
 }

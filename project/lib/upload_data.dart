@@ -97,14 +97,14 @@ class _UploadDataState extends State<UploadData> {
               ),
               Container(
                 margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-                child: descriptionForm(),
+                child: ingredientsForm(),
               ),
               const SizedBox(
                 height: 10,
               ),
               Container(
                 margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-                child: ingredientsForm(),
+                child:  descriptionForm(),
               ),
               Container(
                   margin: const EdgeInsets.only(left: 100.0, right: 100.0, bottom: 20.0),
@@ -129,6 +129,7 @@ class _UploadDataState extends State<UploadData> {
           return null;
       },
       keyboardType: TextInputType.text,
+      maxLength: 30,
       decoration: const InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(22.0)),
@@ -152,6 +153,7 @@ class _UploadDataState extends State<UploadData> {
           return null;
       },
       keyboardType: TextInputType.text,
+      maxLength: 200,
       decoration: const InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(22.0)),
@@ -159,6 +161,7 @@ class _UploadDataState extends State<UploadData> {
         hintText: 'แสดงรายละเอียดเล็กน้อย',
         labelText: 'คำอธิบาย',
         prefixIcon: Icon(Icons.food_bank),
+        
       ),
     );
   }
@@ -182,6 +185,7 @@ class _UploadDataState extends State<UploadData> {
         ),
         hintText: 'รายละเอียด',
         labelText: 'ขั้นตอนการทำ',
+        alignLabelWithHint: true,
         prefixIcon: Icon(Icons.how_to_reg),
       ),
     );
@@ -528,6 +532,7 @@ class _UploadDataState extends State<UploadData> {
     setState(() {
       if (pickedFile != null) {
         _foodpic = File(pickedFile.path);
+        _pictureCrop(pickedFile.path);
       } else {
         ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
           content: Text("ไม่ได้เลือกรูปภาพ โปรดเลือกรูปภาพใหม่อีกครั้ง"),
