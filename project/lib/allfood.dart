@@ -10,6 +10,7 @@ import 'package:project/ShowMenu.dart';
 import 'package:project/editpage.dart';
 import 'package:project/home.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firbaseStorage;
+import 'package:project/searchpage.dart';
 
 class BodyAfterLogin extends StatefulWidget {
   const BodyAfterLogin({super.key});
@@ -19,7 +20,8 @@ class BodyAfterLogin extends StatefulWidget {
 }
 
 class _BodyAfterLoginState extends State<BodyAfterLogin> {
-  CollectionReference data = FirebaseFirestore.instance.collection('foods');
+  Query<Map<String, dynamic>> data = FirebaseFirestore.instance.collection('foods').orderBy('id', descending: true);
+
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   firbaseStorage.Reference storageRef =
       firbaseStorage.FirebaseStorage.instance.ref().child('foods/');
@@ -35,15 +37,19 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                 actions: [
                   IconButton(
                     alignment: Alignment.centerRight,
-                    icon: Icon(Icons.home),
+                    icon: const Icon(Icons.home),
+                    iconSize: 30,
                     onPressed: () {
                       Navigator.pushReplacementNamed(context, '/');
                     },
                   ),
                   IconButton(
                     alignment: Alignment.centerRight,
-                    icon: Icon(Icons.search),
-                    onPressed: () {},
+                    icon: const Icon(Icons.search),
+                    onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => SearchPage()));
+                    },
                   ),
                 ],
                 title: Text(
@@ -52,7 +58,7 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                     fontSize: 20,
                   ),
                 ),
-                backgroundColor: Colors.grey,
+                backgroundColor: Colors.red[400],
               ),
               body: StreamBuilder<QuerySnapshot>(
                   stream: data.snapshots(),
@@ -168,6 +174,7 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                                 TextButton(
                                   child: Text('แก้ไข'),
                                   onPressed: () {
+                                    Navigator.of(context).pop();
                                     Navigator.push(
                                     context,
                                     MaterialPageRoute(
