@@ -33,6 +33,7 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
         Expanded(
           child: Scaffold(
               appBar: AppBar(
+                
                 automaticallyImplyLeading: false,
                 actions: [
                   IconButton(
@@ -107,8 +108,9 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                               ],
                             ),
                             child: ListTile(
+                              minVerticalPadding: 0,
+                              textColor: Colors.grey[900],
                               shape: RoundedRectangleBorder(
-                                //<-- SEE HERE
                                 side: BorderSide(width: 4, color: Colors.grey),
                                 borderRadius: BorderRadius.circular(23),
                               ),
@@ -123,20 +125,41 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                               },
                               title: Text(
                                 (snapshot.data!).docs[index]['title'],
+                                maxLines: 1,
                                 style: GoogleFonts.notoSansThai(fontSize: 20),
                               ),
                               subtitle: Text(
                                 (snapshot.data!).docs[index]['subtitle'],
+                                maxLines: 6,
                                 style: GoogleFonts.kanit(fontSize: 13),
                               ),
-                              leading: CircleAvatar(
-                                radius: 30,
-                                backgroundImage: NetworkImage(
-                                    (snapshot.data!).docs[index]
-                                        ['uploadImageUrl'],
-                                        scale: 1,
-                                        ),
-                                backgroundColor: const Color(0xff6ae792),
+                              leading: Column(
+                                children: [
+                                  Container(
+                                    width: 50,
+                                    height: 50,
+                                    margin: EdgeInsets.symmetric(horizontal: 2),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      image: DecorationImage(
+                                        image: NetworkImage(
+                                            (snapshot.data!).docs[index]
+                                                ['uploadImageUrl']),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                              //       children: [
+                              //     CircleAvatar(
+                              //   radius: 3,
+                              //   backgroundImage: NetworkImage(
+                              //       (snapshot.data!).docs[index]
+                              //           ['uploadImageUrl'],
+                              //           scale: 1,
+                              //           ),
+                              //   backgroundColor: const Color(0xff6ae792),
+                              // ),
+                                  ],
                               ),
                               // Padding(
                               //   padding: const EdgeInsets.only(left: 1, top: 1),
