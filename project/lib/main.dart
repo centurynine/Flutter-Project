@@ -13,6 +13,7 @@ import 'package:project/facebook.dart';
 import 'package:project/forgotpassword.dart';
 import 'package:project/home.dart';
 import 'package:project/login.dart';
+import 'package:project/myfood.dart';
 import 'package:project/register.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:project/searchpage.dart';
@@ -64,6 +65,7 @@ class MyApp extends StatelessWidget {
         '/upload': (context) => UploadData(),
         '/changedisplayname': (context) => Changedisplayname(),
         '/searchpage': (context) => SearchPage(),
+        '/myfood': (context) => MyFood(),
       },
     );
   }

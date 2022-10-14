@@ -190,10 +190,10 @@ class _HomepageState extends State<Homepage> {
               },
             ),
             ListTile(
-              title: Text('Recent'),
+              title: Text('MyFood'),
               leading: Icon(Icons.timer),
               onTap: () {
-                print("Clicked");
+                Navigator.pushNamed(context, '/myfood');
               },
             ),
             ListTile(

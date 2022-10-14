@@ -219,9 +219,7 @@ class _LoginPageState extends State<LoginPage> {
                       email: email!, password: password!)
                   .then((value) {
                 if (value.user!.emailVerified) {
-                  status = 1;
                   userEmail = value.user!.email!;
-                  statusLogin();
                   ScaffoldMessenger.of(context)
                       .showMaterialBanner(MaterialBanner(
                     content: Text("เข้าสู่ระบบสำเร็จ"),
@@ -237,17 +235,19 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ));
                   EasyLoading.showSuccess('เข้าสู่ระบบสำเร็จ!');
-                Future.delayed(const Duration(milliseconds: 2500), () {
+                 Future.delayed(const Duration(milliseconds: 1500), () {
                   ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
                   EasyLoading.dismiss();
-                });
+                 });
                   //   _getDataFromDatabase();
                   Navigator.pushNamed(context, '/');
                 } else {
-                  EasyLoading.showError('โปรดยืนยันอีเมลล์');
+                  FirebaseAuth.instance.currentUser!.sendEmailVerification();
+                  FirebaseAuth.instance.signOut();
+                  EasyLoading.showError('ตรวจสอบอีเมลของคุณ');
                   ScaffoldMessenger.of(context)
                       .showMaterialBanner(MaterialBanner(
-                    content: Text("โปรดยืนยันอีเมลล์"),
+                    content: Text("ยังไม่ยืนยันอีเมลล์"),
                     leading: Icon(Icons.info),
                     actions: [
                       TextButton(
@@ -260,7 +260,7 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ));
                   Future.delayed(const Duration(milliseconds: 2500), () {
-                    EasyLoading.dismiss();
+                  EasyLoading.dismiss();
                   });
                 }
               }).catchError((reason) {
