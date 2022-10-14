@@ -11,6 +11,7 @@ import 'package:project/editpage.dart';
 import 'package:project/home.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firbaseStorage;
 import 'package:project/searchpage.dart';
+import 'package:project/searchpagemyfood.dart';
 
 class MyFood extends StatefulWidget {
   const MyFood({super.key});
@@ -20,8 +21,9 @@ class MyFood extends StatefulWidget {
 }
 
 class _MyFoodState extends State<MyFood> {
-  Query<Map<String, dynamic>> data = FirebaseFirestore.instance.collection('foods')
-  .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email);
+  Query<Map<String, dynamic>> data = FirebaseFirestore.instance
+      .collection('foods')
+      .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email);
 
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   firbaseStorage.Reference storageRef =
@@ -48,13 +50,15 @@ class _MyFoodState extends State<MyFood> {
                     alignment: Alignment.centerRight,
                     icon: const Icon(Icons.search),
                     onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => SearchPage()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SearchPageMyFood()));
                     },
                   ),
                 ],
                 title: Text(
-                  'รายการอาหาร',
+                  'รายการอาหารของฉัน',
                   style: GoogleFonts.kanit(
                     fontSize: 20,
                   ),
@@ -65,7 +69,7 @@ class _MyFoodState extends State<MyFood> {
                   stream: data.snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
-                      return Text('Something went wrong');
+                      return Text('การโหลดข้อมูลผิดพลาด');
                       print('Something went wrong');
                     }
                     if (snapshot.connectionState == ConnectionState.waiting) {
@@ -133,10 +137,10 @@ class _MyFoodState extends State<MyFood> {
                               leading: CircleAvatar(
                                 radius: 30,
                                 backgroundImage: NetworkImage(
-                                    (snapshot.data!).docs[index]
-                                        ['uploadImageUrl'],
-                                        scale: 1,
-                                        ),
+                                  (snapshot.data!).docs[index]
+                                      ['uploadImageUrl'],
+                                  scale: 1,
+                                ),
                                 backgroundColor: const Color(0xff6ae792),
                               ),
                               // Padding(
@@ -155,76 +159,96 @@ class _MyFoodState extends State<MyFood> {
                               trailing: Wrap(
                                 spacing: 12,
                                 children: <Widget>[
-                                            FutureBuilder(
-              future: users.doc().get(),
-              builder: (ctx, futureSnapshot) {
-                if (futureSnapshot.connectionState == ConnectionState.waiting) {
-                  checkCreate();
-                }
-                if (isCreate == true) {
-                  return GestureDetector(
-                    child: Icon(Icons.edit),
-                    onTap: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Text('แก้ไขรายการอาหาร'),
-                              content: Text(''),
-                              actions: [
-                                TextButton(
-                                  child: Text('แก้ไข'),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                    Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => EditData(
-                                              docs:
-                                                  (snapshot.data!).docs[index],
-                                            )));
-                                  },
-                                ),
-                                TextButton(
-                                  child: Text('ยกเลิก'),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                                TextButton(
-                                  child: Text('ลบ'),
-                                  onPressed: () {
-                                    FirebaseFirestore.instance
-                                        .collection('foods')
-                                        .doc((snapshot.data!).docs[index].id)
-                                        .delete();
-                                      print('Database ID ${(snapshot.data!).docs[index]['id']} Deledted');
-                                      var imageID = (snapshot.data!).docs[index]['id'];
-                                      print('Picture ID : $imageID Deleted');
-                                      var reference = FirebaseStorage.instance.ref().child('foods/$imageID');
-                                      var delete = reference.delete();
-                                      Navigator.of(context).pop();
-                                  },
-                                ),
-                              ],
-                            );
-                          });
-                    },
-                  );
-                } else {
-                  return SizedBox.shrink();
-                }
-              },
-            ),
-                                
+                                  FutureBuilder(
+                                    future: users.doc().get(),
+                                    builder: (ctx, futureSnapshot) {
+                                      if (futureSnapshot.connectionState ==
+                                          ConnectionState.waiting) {
+                                        checkCreate();
+                                      }
+                                      if (isCreate == true) {
+                                        return GestureDetector(
+                                          child: Icon(Icons.edit),
+                                          onTap: () {
+                                            showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return AlertDialog(
+                                                    title: const Text(
+                                                        'แก้ไขรายการอาหาร'),
+                                                    content: Text(''),
+                                                    actions: [
+                                                      TextButton(
+                                                        child: Text('แก้ไข'),
+                                                        onPressed: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          EditData(
+                                                                            docs:
+                                                                                (snapshot.data!).docs[index],
+                                                                          )));
+                                                        },
+                                                      ),
+                                                      TextButton(
+                                                        child: Text('ยกเลิก'),
+                                                        onPressed: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                      ),
+                                                      TextButton(
+                                                        child: Text('ลบ'),
+                                                        onPressed: () {
+                                                          FirebaseFirestore
+                                                              .instance
+                                                              .collection(
+                                                                  'foods')
+                                                              .doc((snapshot
+                                                                      .data!)
+                                                                  .docs[index]
+                                                                  .id)
+                                                              .delete();
+                                                          print(
+                                                              'Database ID ${(snapshot.data!).docs[index]['id']} Deledted');
+                                                          var imageID =
+                                                              (snapshot.data!)
+                                                                      .docs[
+                                                                  index]['id'];
+                                                          print(
+                                                              'Picture ID : $imageID Deleted');
+                                                          var reference =
+                                                              FirebaseStorage
+                                                                  .instance
+                                                                  .ref()
+                                                                  .child(
+                                                                      'foods/$imageID');
+                                                          var delete = reference
+                                                              .delete();
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                      ),
+                                                    ],
+                                                  );
+                                                });
+                                          },
+                                        );
+                                      } else {
+                                        return const SizedBox.shrink();
+                                      }
+                                    },
+                                  ),
 
-
-                                    //  Text(
-                                    // (snapshot.data!).docs[index]['id'],
-                                    // textAlign: TextAlign.start,
-                                    // style: GoogleFonts.kanit(fontSize: 14),
-                                 
-                                  
+                                  //  Text(
+                                  // (snapshot.data!).docs[index]['id'],
+                                  // textAlign: TextAlign.start,
+                                  // style: GoogleFonts.kanit(fontSize: 14),
                                 ],
                               ),
                             ),
@@ -243,11 +267,10 @@ class _MyFoodState extends State<MyFood> {
         .collection('foods')
         .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
         .get();
-    if (query.docs.isNotEmpty){
-        isCreate = true;
-    }
-    else {
-       isCreate = false;
+    if (query.docs.isNotEmpty) {
+      isCreate = true;
+    } else {
+      isCreate = false;
     }
   }
 

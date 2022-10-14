@@ -17,6 +17,7 @@ import 'package:project/myfood.dart';
 import 'package:project/register.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:project/searchpage.dart';
+import 'package:project/searchpagemyfood.dart';
 import 'package:project/setting.dart';
 import 'package:project/upload_data.dart';
 
@@ -65,6 +66,7 @@ class MyApp extends StatelessWidget {
         '/upload': (context) => UploadData(),
         '/changedisplayname': (context) => Changedisplayname(),
         '/searchpage': (context) => SearchPage(),
+        '/searchpagemyfood': (context) => SearchPageMyFood(),
         '/myfood': (context) => MyFood(),
       },
     );
