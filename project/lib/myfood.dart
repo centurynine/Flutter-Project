@@ -26,7 +26,6 @@ class _MyFoodState extends State<MyFood> {
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   firbaseStorage.Reference storageRef =
       firbaseStorage.FirebaseStorage.instance.ref().child('foods/');
-  bool isAdmin = false;
   bool isCreate = false;
   @override
   Widget build(BuildContext context) {
@@ -160,9 +159,9 @@ class _MyFoodState extends State<MyFood> {
               future: users.doc().get(),
               builder: (ctx, futureSnapshot) {
                 if (futureSnapshot.connectionState == ConnectionState.waiting) {
-                  checkAdmin();
+                  checkCreate();
                 }
-                if (isAdmin == true) {
+                if (isCreate == true) {
                   return GestureDetector(
                     child: Icon(Icons.edit),
                     onTap: () {
@@ -239,17 +238,16 @@ class _MyFoodState extends State<MyFood> {
     );
   }
 
-  void checkAdmin() async {
+  void checkCreate() async {
     QuerySnapshot query = await FirebaseFirestore.instance
-        .collection('users')
+        .collection('foods')
         .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
-        .where('admin', isEqualTo: 'true')
         .get();
     if (query.docs.isNotEmpty){
-        isAdmin = true;
+        isCreate = true;
     }
     else {
-       isAdmin = false;
+       isCreate = false;
     }
   }
 
