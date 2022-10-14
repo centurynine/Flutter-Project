@@ -284,6 +284,7 @@ void _doOpenPage(context) {
   Navigator.pushReplacement(
     context,
     MaterialPageRoute(builder: (context) => LoginPage()),
+  
   );
            Future.delayed(const Duration(milliseconds: 2000), () {
                EasyLoading.dismiss();

@@ -121,6 +121,7 @@ class _EditDataState extends State<EditData> {
 
   TextFormField titleForm() {
     return TextFormField(
+      initialValue: widget.docs['title'],
       onSaved: (value) {
         title = value!.trim();
       },
@@ -145,6 +146,7 @@ class _EditDataState extends State<EditData> {
 
   TextFormField subtitleForm() {
     return TextFormField(
+      initialValue: widget.docs['subtitle'],
       onSaved: (value) {
         subtitle = value!.trim();
       },
@@ -170,6 +172,7 @@ class _EditDataState extends State<EditData> {
 
   TextFormField descriptionForm() {
     return TextFormField(
+      initialValue: widget.docs['description'],
       maxLines: 10,
       onSaved: (value) {
         description = value!.trim();
@@ -195,6 +198,7 @@ class _EditDataState extends State<EditData> {
 
   TextFormField ingredientsForm() {
     return TextFormField(
+      initialValue: widget.docs['ingredients'],
       maxLines: 5,
       onSaved: (value) {
         ingredients = value!.trim();
