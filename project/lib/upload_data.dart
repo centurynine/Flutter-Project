@@ -7,12 +7,71 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 class UploadData extends StatefulWidget {
   const UploadData({super.key});
   @override
   State<UploadData> createState() => _UploadDataState();
 }
+//   int _counter = 0;
+// String? message;
+// String channelId = "1000";
+// String channelName = "FLUTTER_NOTIFICATION_CHANNEL";
+// String channelDescription = "FLUTTER_NOTIFICATION_CHANNEL_DETAIL";
+
+// sendNotification() async {
+//   const BigPictureStyleInformation bigPictureStyleInformation =
+//       BigPictureStyleInformation(
+//     DrawableResourceAndroidBitmap('flutter'),
+//     largeIcon: DrawableResourceAndroidBitmap('flutter'),
+//     contentTitle: 'สวัดดีครับ คุณ <a> User </b>',
+//     htmlFormatContentTitle: true,
+//     summaryText: 'สรุปข่าว <i> ข่าวสำคัญ 1 </i>',
+//     htmlFormatSummaryText: true,
+//   );
+//   var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
+//     '10000',
+//     'FLUTTER_NOTIFICATION_CHANNEL',
+//     channelDescription: 'FLUTTER_NOTIFICATION_CHANNEL_DETAIL',
+//     importance: Importance.max,
+//     priority: Priority.high,
+//     styleInformation: bigPictureStyleInformation,
+//   );
+
+//   var iOSPlatformChannelSpecifics = const DarwinNotificationDetails();
+
+//   var platformChannelSpecifics = NotificationDetails(
+//       android: androidPlatformChannelSpecifics,
+//       iOS: iOSPlatformChannelSpecifics);
+//   await flutterLocalNotificationsPlugin.show(
+//       111, 'สวัสดีครับ', 'ข่าวร้อนๆมาแล้ว ', platformChannelSpecifics,
+//       payload: 'I just haven\'t Met You Yet');
+// }
+
+// @override
+// Widget build(BuildContext context) {
+//   return Scaffold(
+//     appBar: AppBar(
+//       title: Text(widget.title),
+//     ),
+//     body: Center(
+//       child: Column(
+//         mainAxisAlignment: MainAxisAlignment.center,
+//       ),
+//     ),
+//     floatingActionButton: FloatingActionButton(
+//       onPressed: () {
+//         sendNotification();
+//       },
+//       tooltip: 'Increment',
+//       child: const Icon(Icons.add),
+//     ),
+//   );
+// }
 
 class _UploadDataState extends State<UploadData> {
   final _formstateUpload = GlobalKey<FormState>();
@@ -28,6 +87,11 @@ class _UploadDataState extends State<UploadData> {
   String? countid;
   File? _foodpic;
   File? imageFile;
+  int _counter = 0;
+  String? message;
+  String channelId = "1000";
+  String channelName = "FLUTTER_NOTIFICATION_CHANNEL";
+  String channelDescription = "FLUTTER_NOTIFICATION_CHANNEL_DETAIL";
 
   @override
   Widget build(BuildContext context) {
@@ -104,10 +168,11 @@ class _UploadDataState extends State<UploadData> {
               ),
               Container(
                 margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-                child:  descriptionForm(),
+                child: descriptionForm(),
               ),
               Container(
-                  margin: const EdgeInsets.only(left: 100.0, right: 100.0, bottom: 20.0),
+                  margin: const EdgeInsets.only(
+                      left: 100.0, right: 100.0, bottom: 20.0),
                   child: submitButton()),
               const SizedBox(
                 height: 20,
@@ -115,6 +180,55 @@ class _UploadDataState extends State<UploadData> {
             ],
           ),
         ));
+  }
+
+  initState() {
+    message = "No message.";
+    var initializationSettingsAndroid =
+        const AndroidInitializationSettings('notiicon');
+    var initializationSettingsIOS = DarwinInitializationSettings(
+        onDidReceiveLocalNotification: (id, title, body, payload) async {
+      print("onDidReceiveLocalNotification called.");
+    });
+    var initializationSettings = InitializationSettings(
+        android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
+
+    flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onDidReceiveNotificationResponse: (payload) async {
+      print("onSelectNotification called.");
+      setState(() {
+        message = payload.payload;
+      });
+    });
+    super.initState();
+  }
+
+  sendNotification() async {
+    const BigPictureStyleInformation bigPictureStyleInformation =
+        BigPictureStyleInformation(
+      DrawableResourceAndroidBitmap('flutter'),
+      largeIcon: DrawableResourceAndroidBitmap('flutter'),
+      contentTitle: 'สะ แรน คุณ <a> User </b>',
+      htmlFormatContentTitle: true,
+      summaryText: 'สวัดดี สะเเสน <i> ข่าวสำคัญ 1 </i>',
+      htmlFormatSummaryText: true,
+    );
+    var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
+      '10000',
+      'FLUTTER_NOTIFICATION_CHANNEL',
+      channelDescription: 'FLUTTER_NOTIFICATION_CHANNEL_DETAIL',
+      importance: Importance.max,
+      priority: Priority.high,
+      styleInformation: bigPictureStyleInformation,
+    );
+
+    var iOSPlatformChannelSpecifics = const DarwinNotificationDetails();
+    var platformChannelSpecifics = NotificationDetails(
+        android: androidPlatformChannelSpecifics,
+        iOS: iOSPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.show(
+        111, 'สะแรน', 'สะเเรนมาเเล้ว ', platformChannelSpecifics,
+        payload: ' ');
   }
 
   TextFormField titleForm() {
@@ -161,7 +275,6 @@ class _UploadDataState extends State<UploadData> {
         hintText: 'แสดงรายละเอียดเล็กน้อย',
         labelText: 'คำอธิบาย',
         prefixIcon: Icon(Icons.food_bank),
-        
       ),
     );
   }
@@ -233,14 +346,16 @@ class _UploadDataState extends State<UploadData> {
         onPressed: () async {
           if (user == null) {
             ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
-              content: Text("กรุณาเข้าสู่ระบบ"),
+              content: Text(" กรุณาเข้าสู่ระบบ "),
               leading: Icon(Icons.info),
-              actions: [
-                TextButton(
-                  child: const Icon(Icons.settings),
-                  onPressed: () {
-                    ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-                  },
+              actions: <Widget>[
+                Builder(
+                  builder: (context) => TextButton(
+                    child: const Icon(Icons.close),
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                    },
+                  ),
                 ),
               ],
             ));
@@ -251,13 +366,17 @@ class _UploadDataState extends State<UploadData> {
           if (user != null) {
             if (imageUpload == false) {
               ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
-                content: Text("กรุณาอัพโหลดรูปภาพ"),
+                content: Text(" กรุณาอัพโหลดรูปภาพ "),
                 leading: Icon(Icons.info),
-                actions: [
-                  TextButton(
-                    child: const Icon(Icons.settings),
-                    onPressed: () {
-                    },
+                actions: <Widget>[
+                  Builder(
+                    builder: (context) => TextButton(
+                      child: const Icon(Icons.close),
+                      onPressed: () {
+                        ScaffoldMessenger.of(context)
+                            .hideCurrentMaterialBanner();
+                      },
+                    ),
                   ),
                 ],
               ));
@@ -274,23 +393,24 @@ class _UploadDataState extends State<UploadData> {
                       .showMaterialBanner(MaterialBanner(
                     content: Text("กำลังอัพโหลดข้อมูล..."),
                     leading: Icon(Icons.info),
-                    actions: [
-                      TextButton(
-                        child: const Icon(Icons.settings),
-                        onPressed: () {
-                          ScaffoldMessenger.of(context)
-                              .hideCurrentMaterialBanner();
-                        },
+                    actions: <Widget>[
+                      Builder(
+                        builder: (context) => TextButton(
+                          child: const Icon(Icons.close),
+                          onPressed: () {
+                            ScaffoldMessenger.of(context)
+                                .hideCurrentMaterialBanner();
+                          },
+                        ),
                       ),
                     ],
                   ));
-                  Future.delayed(const Duration(milliseconds: 6000), () {
+                  Future.delayed(const Duration(milliseconds: 2000), () {
                     ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
                   });
+                  sendNotification();
                   countDocuments();
-
                   _formstateUpload.currentState!.reset();
-
                   Navigator.pushNamed(context, '/food');
                   EasyLoading.dismiss();
                 } catch (e) {
@@ -476,7 +596,6 @@ class _UploadDataState extends State<UploadData> {
         });
   }
 
-
   _pictureCrop(imagePath) async {
     //ครอปรูป
     CroppedFile? croppedImage = await ImageCropper()
@@ -502,28 +621,23 @@ class _UploadDataState extends State<UploadData> {
         _foodpic = File(pickedFile.path);
         _pictureCrop(pickedFile.path);
       } else {
-                ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
-                content: Text("ไม่ได้เลือกรูปภาพ กรุณาเลือกรูปภาพอีกครั้ง"),
-                leading: Icon(Icons.info),
-                actions: <Widget>[
-                  Builder(
-                    builder: (context) => TextButton(
-                      child: const Icon(Icons.close),
-                      onPressed: () {
-                        ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-                      },
-                      
-                    ),
-                    
-                  ),
-                  
-                ],
-                
-              ));
+        ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
+          content: Text("ไม่ได้เลือกรูปภาพ กรุณาเลือกรูปภาพอีกครั้ง"),
+          leading: Icon(Icons.info),
+          actions: <Widget>[
+            Builder(
+              builder: (context) => TextButton(
+                child: const Icon(Icons.close),
+                onPressed: () {
+                  ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                },
+              ),
+            ),
+          ],
+        ));
       }
     });
   }
-
 
   chooseImageFromGallery() async {
     Navigator.pop(context);
@@ -553,7 +667,6 @@ class _UploadDataState extends State<UploadData> {
     });
   }
 
-
   Future uploadImageToFirebase(String countid) async {
     var reference = FirebaseStorage.instance.ref().child('foods/${countid}');
     var uploadTask = reference.putFile(_foodpic!);
@@ -561,6 +674,4 @@ class _UploadDataState extends State<UploadData> {
     print('uploadImageToFirebase URL IMAGE : {$url}');
     createDatabase(countid, url);
   }
-
-
 }
