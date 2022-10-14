@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/ShowMenu.dart';
-
+import 'package:project/editpage.dart';
+CollectionReference users = FirebaseFirestore.instance.collection('users');
 class SearchPageMyFood extends StatefulWidget {
   const SearchPageMyFood({super.key});
 
@@ -15,7 +17,7 @@ class _SearchPageMyFoodState extends State<SearchPageMyFood> {
   String? name = ' ';
   String? name_lowercase = ' ';
   String? name_uppercase = ' ';
-
+  bool isCreate = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -145,6 +147,101 @@ class _SearchPageMyFoodState extends State<SearchPageMyFood> {
                               ),
                               backgroundColor: const Color(0xff6ae792),
                             ),
+                            trailing: Wrap(
+                                spacing: 12,
+                                children: <Widget>[
+                                  FutureBuilder(
+                                    future: users.doc().get(),
+                                    builder: (ctx, futureSnapshot) {
+                                      if (futureSnapshot.connectionState ==
+                                          ConnectionState.waiting) {
+                                        checkCreate();
+                                      }
+                                      if (isCreate == true) {
+                                        return GestureDetector(
+                                          child: Icon(Icons.edit),
+                                          onTap: () {
+                                            showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return AlertDialog(
+                                                    title: const Text(
+                                                        'แก้ไขรายการอาหาร'),
+                                                    content: Text(''),
+                                                    actions: [
+                                                      TextButton(
+                                                        child: Text('แก้ไข'),
+                                                        onPressed: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          EditData(
+                                                                            docs:
+                                                                                (snapshot.data!).docs[index],
+                                                                          )));
+                                                        },
+                                                      ),
+                                                      TextButton(
+                                                        child: Text('ยกเลิก'),
+                                                        onPressed: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                      ),
+                                                      TextButton(
+                                                        child: Text('ลบ'),
+                                                        onPressed: () {
+                                                          FirebaseFirestore
+                                                              .instance
+                                                              .collection(
+                                                                  'foods')
+                                                              .doc((snapshot
+                                                                      .data!)
+                                                                  .docs[index]
+                                                                  .id)
+                                                              .delete();
+                                                          print(
+                                                              'Database ID ${(snapshot.data!).docs[index]['id']} Deledted');
+                                                          var imageID =
+                                                              (snapshot.data!)
+                                                                      .docs[
+                                                                  index]['id'];
+                                                          print(
+                                                              'Picture ID : $imageID Deleted');
+                                                          var reference =
+                                                              FirebaseStorage
+                                                                  .instance
+                                                                  .ref()
+                                                                  .child(
+                                                                      'foods/$imageID');
+                                                          var delete = reference
+                                                              .delete();
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                      ),
+                                                    ],
+                                                  );
+                                                });
+                                          },
+                                        );
+                                      } else {
+                                        return const SizedBox.shrink();
+                                      }
+                                    },
+                                  ),
+
+                                  //  Text(
+                                  // (snapshot.data!).docs[index]['id'],
+                                  // textAlign: TextAlign.start,
+                                  // style: GoogleFonts.kanit(fontSize: 14),
+                                ],
+                              ),
                           ),
                         );
                       }
@@ -155,6 +252,19 @@ class _SearchPageMyFoodState extends State<SearchPageMyFood> {
           }),
     );
   }
+
+  void checkCreate() async {
+    QuerySnapshot query = await FirebaseFirestore.instance
+        .collection('foods')
+        .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
+        .get();
+    if (query.docs.isNotEmpty) {
+      isCreate = true;
+    } else {
+      isCreate = false;
+    }
+  }
+
 }
             
                     /*DocumentSnapshot data =
