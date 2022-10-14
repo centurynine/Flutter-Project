@@ -49,7 +49,7 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.red[400],
         title: Text(
           " Aroy App",
          style: GoogleFonts.kanit(
@@ -109,7 +109,7 @@ class _HomepageState extends State<Homepage> {
         child: ListView(
           children: <Widget>[
             Container(
-              color: Colors.blue,
+              color: Colors.red[400],
               child: Column(
                 children: <Widget>[
                   Container(
