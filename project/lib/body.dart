@@ -142,15 +142,14 @@ class _BodyState extends State<Body> {
                       Navigator.pushNamed(context, '/login');
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.white60,
-                      onPrimary: Colors.blue[700],
+                      foregroundColor: Colors.red[400], backgroundColor: Colors.white60,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
+                        borderRadius: BorderRadius.circular(22.0),
                       ),
                       fixedSize: Size(150, 70),
                       elevation: 15,
                       shadowColor: Colors.white,
-                      side: BorderSide(color: Colors.blue, width: 2),
+                      side: BorderSide(color: Colors.red, width: 3),
                     ),
                   ),
                   ElevatedButton(
@@ -165,15 +164,14 @@ class _BodyState extends State<Body> {
                       Navigator.pushNamed(context, '/register');
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.white60,
-                      onPrimary: Colors.blue[700],
+                      foregroundColor: Colors.red[400], backgroundColor: Colors.white60,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
+                        borderRadius: BorderRadius.circular(22.0),
                       ),
                       fixedSize: Size(150, 70),
                       elevation: 15,
                       shadowColor: Colors.white,
-                      side: BorderSide(color: Colors.blue, width: 2),
+                      side: BorderSide(color: Colors.red, width: 3),
                     ),
                   ),
                 ],
@@ -197,7 +195,7 @@ class _BodyState extends State<Body> {
                 fixedSize: Size(150, 70),
                 elevation: 15,
                 shadowColor: Colors.white,
-                side: BorderSide(color: Colors.blue, width: 2),
+                side: BorderSide(color: Colors.red, width: 2),
               ),
             ),
              FirebaseAuth.instance.currentUser != null
