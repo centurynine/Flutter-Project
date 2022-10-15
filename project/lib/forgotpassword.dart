@@ -14,11 +14,15 @@ class _forgotPasswordState extends State<forgotPassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.red[400],
-        title: const Text('Forgot Password'),
+        backgroundColor: Colors.white,
+        title: const Text('Forgot Password',
+            style: TextStyle(
+              color: Colors.black87,
+            )),
+      
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          color: Colors.black,
+          icon: const Icon(Icons.arrow_back_ios_new_outlined),
+          color: Colors.black87,
           onPressed: () {
             Navigator.pop(context);
           },

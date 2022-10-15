@@ -30,11 +30,15 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Colors.red[400],
-          title: const Text('Login'),
+          backgroundColor: Colors.white,
+          title: const Text('Login',
+              style: TextStyle(
+                color: Colors.black87,
+              )),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            color: Colors.black,
+            icon: const Icon(Icons.arrow_back_ios_new_outlined,
+                color: Colors.black87, size: 20),
+            color: Colors.black87,
             onPressed: () {
               //   Navigator.pop(context);
               Navigator.pushNamed(context, '/');

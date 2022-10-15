@@ -39,6 +39,7 @@ class _HomepageState extends State<Homepage> {
  final GlobalKey<ScaffoldState> _drawerKey = new GlobalKey<ScaffoldState>();
   void initState() {
     super.initState();
+    SystemChrome.setEnabledSystemUIMode (SystemUiMode.manual, overlays: []);
     if(FirebaseAuth.instance.currentUser != null){
       userEmail = FirebaseAuth.instance.currentUser?.email;
     }
@@ -118,6 +119,7 @@ class _HomepageState extends State<Homepage> {
         child: ListView(
           children: <Widget>[
             Container(
+              margin: EdgeInsets.only(top: 0),
               color: Colors.red[400],
               child: Column(
                 children: <Widget>[
