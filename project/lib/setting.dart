@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,6 +15,63 @@ class Setting extends StatefulWidget {
 class _SettingState extends State<Setting> {
   final prefs = SharedPreferences.getInstance();
   bool fullScreen = false;
+  String? name;
+
+@override
+void initState() {
+  if(name == null) {
+    setState(() {
+      name = 'ไม่พบชื่อผู้ใช้';
+    });
+  }
+  super.initState();
+  checkInfo();
+}
+
+
+  void checkInfo() async {
+    if(FirebaseAuth.instance.currentUser != null){
+     await FirebaseFirestore.instance
+        .collection('users')
+        .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
+        .get()
+       .then((value) => value.docs.forEach((element) {
+        setState(() {
+          name = element.data()['name'];
+        });
+      }));
+      }
+      else {
+        setState(() {
+          name = 'กรุณาเข้าสู่ระบบ';
+        });
+      }
+      }
+        
+
+
+
+//   void checkInfo() async {
+//     if(FirebaseAuth.instance.currentUser != null){
+//     QuerySnapshot query = await FirebaseFirestore.instance
+//         .collection('users')
+//         .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
+//         .get()
+// ;
+//     if (query.docs.isNotEmpty){
+//         print('พบข้อมูล');
+//         setState(() {
+//           name = query.docs[0].data()['name'];
+//         });
+//     }
+//     else {
+//        print('ไม่พบข้อมูล');
+//     }
+//   }
+//   else{
+//     print('ไม่พบการเข้าสู่ระบบ');
+//   }
+// }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -38,7 +97,7 @@ class _SettingState extends State<Setting> {
               // user card
               BigUserCard(
                 cardColor: Colors.red,
-                userName: "Babacar Ndong",
+                userName: name.toString(),
                 userProfilePic: AssetImage("assets/images/idcard.png"),
                 cardActionWidget: SettingsItem(
                   icons: Icons.edit,
