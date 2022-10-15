@@ -157,6 +157,7 @@ class _BodyState extends State<Body> {
                             color: Colors.white,
                           ),
                         ),
+                        
                         onPressed: () {
                           Navigator.pushNamed(context, '/myfood');
                         },
@@ -168,6 +169,7 @@ class _BodyState extends State<Body> {
                           fixedSize: Size(180, 70),
                           elevation: 15,
                           shadowColor: Colors.white,
+                          
                         //  side: BorderSide(color: Colors.red, width: 3),
                         ),
                       ),
@@ -190,7 +192,7 @@ class _BodyState extends State<Body> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(22.0),
                           ),
-                          fixedSize: Size(180, 70),
+                          fixedSize: Size(140, 70),
                           elevation: 15,
                           shadowColor: Colors.white,
                           side: BorderSide(color: Colors.pinkAccent, width: 3),
