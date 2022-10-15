@@ -181,61 +181,109 @@ class _HomepageState extends State<Homepage> {
                 ],
               ),
             ),
-            if (FirebaseAuth.instance.currentUser == null)
-              ListTile(
-                title: Text('เข้าสู่ระบบ'),
-                leading: Icon(Icons.login),
-                onTap: () {
-                  print("เข้าสู่ระบบ");
-                  gotoLoginpage(context);
-                },
-              ),
-            ListTile(
-              title: Text('สูตรกล้ามโต'),
-              leading: Icon(Icons.star),
+            FirebaseAuth.instance.currentUser != null
+            ? Column(
+              children: [
+                ListTile(
+                  title: Text('รายการอาหารทั้งหมด',
+                  style: GoogleFonts.kanit(
+                    fontSize: 14,
+                    color: Colors.black)),
+                   leading: Image.asset(
+                    'assets/allfood.png',
+                    width: 25,
+                    height: 25,),
+                  onTap: () {
+                    print("Clicked");
+                    Navigator.pushNamed(context, '/food');
+                  },
+                ),
+                ListTile(
+              title: Text('รายการอาหารของฉัน',
+              style: GoogleFonts.kanit(
+                fontSize: 14,
+                color: Colors.black)),
+               leading: Image.asset(
+                'assets/myfood.png',
+                width: 25,
+                height: 25,),
               onTap: () {
                 print("Clicked");
-                Navigator.pushNamed(context, '/widget');
-              },
-            ),
-            ListTile(
-              title: Text('MyFood'),
-              leading: Icon(Icons.timer),
-              onTap: () {
                 Navigator.pushNamed(context, '/myfood');
               },
-            ),
-            ListTile(
-              title: Text('Offline'),
-              leading: Icon(Icons.offline_pin),
-              onTap: () {
-                print("Clicked");
-              },
-            ),
-            ListTile(
-              title: Text('Uploads'),
-              leading: Icon(Icons.file_upload),
-              onTap: () {
-                print("Clicked");
-              },
-            ),
-            ListTile(
-              title: Text('Setting'),
-              leading: Icon(Icons.settings),
+             ),
+              ListTile(
+              title: Text('ตั้งค่า',
+              style: GoogleFonts.kanit(
+                fontSize: 14,
+                color: Colors.black)),
+               leading: Image.asset(
+                'assets/setting.png',
+                width: 25,
+                height: 25,),
               onTap: () {
                 print("Clicked");
                 Navigator.pushNamed(context, '/setting');
               },
-            ),
-            if (FirebaseAuth.instance.currentUser != null)
+             ),
               ListTile(
-                title: Text('Logout'),
-                leading: Icon(Icons.logout),
+              title: Text('ออกจากระบบ',
+              style: GoogleFonts.kanit(
+                fontSize: 14,
+                color: Colors.black)),
+               leading: Image.asset(
+                'assets/logout.png',
+                width: 25,
+                height: 25,),
+              onTap: () {
+                _signOut();
+                Navigator.pushNamed(context, '/');
+              },
+             ),
+              ],
+            )
+            : Column(
+              children: [
+                Container(
+                  child: ListTile(
+                    title: Text('เข้าสู่ระบบ',
+                    style: GoogleFonts.kanit(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black87,
+                        ),
+                    ),
+                    leading: Image.asset(
+                      'assets/login.png',
+                      width: 25,
+                      height: 25,
+                    ),
+                    onTap: () {
+                      print("Clicked");
+                      Navigator.pushNamed(context, '/login');
+                    },
+                  ),
+                ),
+                ListTile(
+                title: Text('สมัครสมาชิก',
+                style: GoogleFonts.kanit(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black87,
+                    ),
+                ),
+                leading: Image.asset(
+                  'assets/register.png',
+                  width: 25,
+                  height: 25,
+                ),
                 onTap: () {
-                  print("Clicked Signout");
-                  _signOut();
+                  print("Clicked");
+                  Navigator.pushNamed(context, '/register');
                 },
               ),
+              ],
+            ),
           ],
         ),
       ),

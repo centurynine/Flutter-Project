@@ -250,41 +250,9 @@ class _BodyState extends State<Body> {
               ),
         Column(
           children: [
-            Text("Name: $name"),
-            Text("Email: $userEmail"),
-            SizedBox(height: 20),
-            ElevatedButton(
-              child: const Text('Get User Data'),
-              onPressed: () {
-                _getDataFromDatabase();
-              },
-              style: ElevatedButton.styleFrom(
-                primary: Colors.white60,
-                onPrimary: Colors.blue[700],
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                fixedSize: Size(150, 70),
-                elevation: 15,
-                shadowColor: Colors.white,
-                side: BorderSide(color: Colors.red, width: 2),
-              ),
-            ),
-             FirebaseAuth.instance.currentUser != null
-             ? Column(
-                children: [
-                  ElevatedButton(onPressed: () {
-                    Navigator.pushNamed(context, '/food');
-                  }, child: Text("ดูรายการอาหารทั้งหมด"),
-                  ),
-                  ElevatedButton(onPressed: () {
-                    Navigator.pushNamed(context, '/upload');
-                  }, child: Text("Upload Data")
-                  ),
-                ],
-
-             )
-             : Container(),
+              Container(
+                
+              )
           ],
         ),
       ],
