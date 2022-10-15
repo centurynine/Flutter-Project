@@ -20,10 +20,36 @@ class ShowMenu extends StatefulWidget {
 
 class _ShowMenuState extends State<ShowMenu> {
   CollectionReference data = FirebaseFirestore.instance.collection('foods');
+
   firbaseStorage.Reference storageRef =
       firbaseStorage.FirebaseStorage.instance.ref().child('foods/');
   String? id;
+  String? name;
 
+  void checkNameWhoCreated() async {
+    final users = await FirebaseFirestore.instance
+        .collection('users')
+        .where('email', isEqualTo: widget.docs['email'])
+        .get();
+        if(users.docs.isNotEmpty){
+          print('พบข้อมูลชื่อผู้โพส');
+          print(users.docs[0].data()['email']);
+          setState(() {
+            name = users.docs[0].data()['name'];
+          });
+        }else if(users.docs.isEmpty){
+          print('ไม่พบข้อมูลชื่อผู้โพส');
+          setState(() {
+            name = 'ไม่พบชื่อผู้โพส';
+          });
+        }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    checkNameWhoCreated();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -141,7 +167,7 @@ class _ShowMenuState extends State<ShowMenu> {
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
-                  'แชร์เมนูโดย ${widget.docs['displayname']}',
+                  'แชร์เมนูโดย $name',
                   style: GoogleFonts.kanit(fontSize: 14),
                 ),
               ),

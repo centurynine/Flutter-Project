@@ -281,6 +281,7 @@ class _BodyState extends State<Body> {
                //       side: BorderSide(color: Colors.red, width: 3),
                     ),
                   ),
+         
                   ElevatedButton(
                     child: Text(
                       'สมัครสมาชิก',
@@ -312,6 +313,7 @@ class _BodyState extends State<Body> {
               )
           ],
         ),
+        
       ],
     );
   }
