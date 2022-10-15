@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:project/body.dart';
 import 'package:project/login.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:project/pleaselogin.dart';
 import 'allfood.dart';
 
 bool fullScreen = false;
@@ -91,27 +92,12 @@ class _HomepageState extends State<Homepage> {
         Container(
           child: const Body(),
         ),
-        Container(
-          child: Text('After body',
-          style: GoogleFonts.kanit(
-                      fontSize: 40,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
-                    ),
-          ),
-        ),Container(
-          child: Text('After body',
-          style: GoogleFonts.kanit(
-                      fontSize: 40,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
-                    ),
-          ),
+        SizedBox(
+          height: 20,
         ),
-        Container(
-          child: Text('After body',
-        ),
-        ),
+        FirebaseAuth.instance.currentUser != null
+        ? Body()
+        : PleaseLogin(),
         ]
         ),
       key: _drawerKey,
