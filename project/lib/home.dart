@@ -96,7 +96,7 @@ class _HomepageState extends State<Homepage> {
           height: 20,
         ),
         FirebaseAuth.instance.currentUser != null
-        ? Body()
+        ? Container()
         : PleaseLogin(),
         ]
         ),
