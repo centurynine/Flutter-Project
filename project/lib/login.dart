@@ -1,14 +1,16 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project/facebook.dart';
+import 'package:project/home.dart';
 
 int status = 0;
-String statusText = "Not Logged In";
-bool logoutBt = false;
 dynamic userEmail = "No Email";
 String userName = "No Name";
 
@@ -24,7 +26,25 @@ class _LoginPageState extends State<LoginPage> {
   String? email;
   String? password;
   final auth = FirebaseAuth.instance;
+ 
+  @override
+  void initState() {
+    super.initState();
+    if(FirebaseAuth.instance.currentUser != null){
+      print('Found user');
+     SchedulerBinding.instance.addPostFrameCallback((_) {
+  Navigator.push(
+        context,
+        new MaterialPageRoute(
+            builder: (context) => Homepage()));
+});
+    }
+    else {
+      print('ไม่พบการเข้าสู่ระบบ');
+    }
+  }
 
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -199,7 +219,7 @@ class _LoginPageState extends State<LoginPage> {
       iconSize: 50.0,
       color: Colors.black,
       onPressed: () {
-        Navigator.pushNamed(context, '/fb');
+        Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => FacebookLogin()));
       },
     );
   }
@@ -218,6 +238,7 @@ class _LoginPageState extends State<LoginPage> {
             print('Valid Form');
             _formstate.currentState!.save();
             try {
+              EasyLoading.show(status: 'กำลังโหลด...');
               await auth
                   .signInWithEmailAndPassword(
                       email: email!, password: password!)
@@ -393,30 +414,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void statusLogin() {
-    if (status == 1) {
-      setState(() {
-        statusText = 'Loged in';
-      });
-      print('Login = $status');
-    } else {
-      print('Login Fail');
-    }
-  }
-
-  void statusLogout() {
-    if (status == 0) {
-      setState(() {
-        statusText = 'Loged out';
-      });
-      userEmail = "No Email";
-      print('Logout');
-    } else {
-      print('Logout Fail');
-      print('Status $status');
-    }
-////////
-  }
 
   Future _signOut() async {
     await FirebaseAuth.instance.signOut();

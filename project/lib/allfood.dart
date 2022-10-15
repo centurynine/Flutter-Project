@@ -3,13 +3,16 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:project/ShowMenu.dart';
 import 'package:project/editpage.dart';
 import 'package:project/home.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firbaseStorage;
+import 'package:project/login.dart';
 import 'package:project/searchpage.dart';
 class BodyAfterLogin extends StatefulWidget {
   const BodyAfterLogin({super.key});
@@ -25,6 +28,24 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
   firbaseStorage.Reference storageRef =
       firbaseStorage.FirebaseStorage.instance.ref().child('foods/');
   bool isAdmin = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if(FirebaseAuth.instance.currentUser == null){
+      print('ไม่พบการเข้าสู่ระบบ');
+     SchedulerBinding.instance.addPostFrameCallback((_) {
+  Navigator.push(
+        context,
+        new MaterialPageRoute(
+            builder: (context) => LoginPage()));
+});
+    }
+    else {
+      print('Found user');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -234,6 +255,7 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
   }
 
   void checkAdmin() async {
+    if(FirebaseAuth.instance.currentUser != null){
     QuerySnapshot query = await FirebaseFirestore.instance
         .collection('users')
         .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
@@ -246,5 +268,8 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
        isAdmin = false;
     }
   }
-
+  else{
+    print('ไม่พบการเข้าสู่ระบบ');
+  }
+}
 }

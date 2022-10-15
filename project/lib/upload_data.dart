@@ -39,6 +39,9 @@ class _UploadDataState extends State<UploadData> {
 
   String? titlenoti;
   String? subtitlenoti;
+
+
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -147,35 +150,11 @@ class _UploadDataState extends State<UploadData> {
       });
     });
     super.initState();
+
+
+
+    
   }
-
-  // sendNotification() async {
-  //   const BigPictureStyleInformation bigPictureStyleInformation =
-  //     BigPictureStyleInformation(
-  //     DrawableResourceAndroidBitmap('flutter'),
-  //     largeIcon: DrawableResourceAndroidBitmap('flutter'),
-  //     contentTitle: 'อัพโหลดเมนูอาหารแล้ว',
-  //     htmlFormatContentTitle: true,
-  //     summaryText: 'อัพโหลดข้อมูลสำเร็จ <i> ข่าวสำคัญ </i>',
-  //     htmlFormatSummaryText: true,
-  //   );
-  //   var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
-  //     '10000',
-  //     'FLUTTER_NOTIFICATION_CHANNEL',
-  //     channelDescription: 'FLUTTER_NOTIFICATION_CHANNEL_DETAIL',
-  //     importance: Importance.max,
-  //     priority: Priority.high,
-  //     styleInformation: bigPictureStyleInformation,
-  //   );
-
-  //   var iOSPlatformChannelSpecifics = const DarwinNotificationDetails();
-  //   var platformChannelSpecifics = NotificationDetails(
-  //       android: androidPlatformChannelSpecifics,
-  //       iOS: iOSPlatformChannelSpecifics);
-  //   await flutterLocalNotificationsPlugin.show(
-  //       111, 'Uploaded', 'อัพโหลดข้อมูลสำเร็จ ', platformChannelSpecifics,
-  //       payload: ' ');
-  // }
 
   sendNotification() async {
     const BigPictureStyleInformation bigPictureStyleInformation =

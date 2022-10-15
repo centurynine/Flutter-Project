@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project/home.dart';
 import 'package:project/login.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,6 +19,24 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController password = TextEditingController();
   TextEditingController confirmPassword = TextEditingController();
   TextEditingController name = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    if(FirebaseAuth.instance.currentUser != null){
+      print('Found user');
+     SchedulerBinding.instance.addPostFrameCallback((_) {
+  Navigator.push(
+        context,
+        new MaterialPageRoute(
+            builder: (context) => Homepage()));
+});
+    }
+    else {
+      print('ไม่พบการเข้าสู่ระบบ');
+    }
+  }
+
 
   final auth = FirebaseAuth.instance;
   @override

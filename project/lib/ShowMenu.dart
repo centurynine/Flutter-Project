@@ -36,7 +36,7 @@ class _ShowMenuState extends State<ShowMenu> {
             color: Colors.black87,
             onPressed: () {
               //   Navigator.pop(context);
-              Navigator.pushNamed(context, '/');
+              Navigator.pop(context);
             },
           ),
           title: Text(
@@ -132,6 +132,16 @@ class _ShowMenuState extends State<ShowMenu> {
                 margin: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
                   widget.docs['description'],
+                  style: GoogleFonts.kanit(fontSize: 14),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  'แชร์เมนูโดย ${widget.docs['displayname']}',
                   style: GoogleFonts.kanit(fontSize: 14),
                 ),
               ),

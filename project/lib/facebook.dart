@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:project/home.dart';
@@ -21,42 +23,41 @@ class _FacebookLoginState extends State<FacebookLogin> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: const Text(
           "Facebook Login",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.black87),
+        ),
+        leading: IconButton(
+          alignment: Alignment.centerRight,
+          icon: const Icon(Icons.arrow_back_ios_new_outlined, color: Colors.black87, size: 20.0),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
       ),
-      body: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              "TEST",
-              style: Theme.of(context)
-                  .textTheme
-                  .headline5
-                  ?.copyWith(fontWeight: FontWeight.bold),
+      body: Center(
+        child: Column(
+          children: <Widget>[
+            Container(
+              margin: const EdgeInsets.only(top: 50.0),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Text(
+                  "เข้าสู่ระบบด้วย Facebook",
+                  style: GoogleFonts.kanit(fontSize: 20, color: Colors.black87),
+                ),
+              ),
             ),
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              _displayLoginButton(),
-              logoutFB(),
-            ],
-          ),
-          Text(userName),
-        ],
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                _displayLoginButton(),
+              ],
+            ),
+          ],
+        ),
       ),
-    );
-  }
-
-  ElevatedButton logoutFB() {
-    return ElevatedButton(
-      onPressed: () {
-        signOut();
-      },
-      child: const Text('Logout FB'),
     );
   }
 
@@ -79,14 +80,14 @@ class _FacebookLoginState extends State<FacebookLogin> {
           children: [
             SignInButton(
               Buttons.Facebook,
-              text: "Log in with facebook",
+              text: "Continue with facebook",
               mini: true,
               onPressed: () {
                 signInWithFacebook();
               },
             ),
             const Text(
-              "  Log in with facebook",
+              "  Continue with facebook",
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
@@ -138,6 +139,7 @@ class _FacebookLoginState extends State<FacebookLogin> {
 
   void signInWithFacebook() async {
     try {
+      EasyLoading.show(status: 'กำลังโหลด...');
       final LoginResult result = await FacebookAuth.instance
           .login(permissions: (['email', 'public_profile']));
       final token = result.accessToken!.token;
@@ -154,7 +156,6 @@ class _FacebookLoginState extends State<FacebookLogin> {
       setState(() {
         userEmail = userEmailfb;
         userName = userNamefb;
-        status = 1;
       });
       print(userEmailfb);
       print(userName);
@@ -164,10 +165,14 @@ class _FacebookLoginState extends State<FacebookLogin> {
         final userCredential = await FirebaseAuth.instance
             .signInWithCredential(facebookCredential);
         uploadUserFB(userEmailfb, userNamefb);
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => Homepage()),
-        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => Homepage()),
+        // );
+
+        Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => Homepage()));
+
+        EasyLoading.dismiss();
       } catch (e) {
         final snackBar = SnackBar(
           margin: const EdgeInsets.all(20),
@@ -180,10 +185,12 @@ class _FacebookLoginState extends State<FacebookLogin> {
           ),
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        EasyLoading.dismiss();
       }
     } catch (e) {
       print("error occurred");
       print(e.toString());
+      EasyLoading.dismiss();
     }
   }
 
@@ -193,7 +200,6 @@ class _FacebookLoginState extends State<FacebookLogin> {
     showSuccess("Logout");
     // await _auth.signOut()
     setState(() {
-      status = 0;
       userName = 'No Name';
     });
   }
@@ -241,7 +247,7 @@ class _FacebookLoginState extends State<FacebookLogin> {
         EasyLoading.dismiss();
       });
     } else if (query.docs.isEmpty) {
-            EasyLoading.showError('กำลังสร้างบัญชีผู้ใช้');
+      EasyLoading.showError('กำลังสร้างบัญชีผู้ใช้');
       Future.delayed(const Duration(milliseconds: 2500), () {
         EasyLoading.dismiss();
       });
