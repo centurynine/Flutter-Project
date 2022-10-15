@@ -139,13 +139,10 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
  Future<void> registerWithEmailPassword() async {
-    //Email şifre kayıt
     try {
-      // var userCredential =
       final _user = await auth.createUserWithEmailAndPassword(
           email: email.text.trim(), 
           password: password.text.trim(),
-
           );
            print(_user.user!.uid);
            FirebaseAuth.instance.currentUser!.updateProfile(displayName: name.text.trim());

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
 
@@ -35,45 +36,67 @@ class _SettingState extends State<Setting> {
           child: ListView(
             children: [
               // user card
-              SimpleUserCard(
-                userName: "AMX ขี้เมาแมน",
-                userProfilePic: AssetImage("assets/maxprofile.png"),
+              BigUserCard(
+                cardColor: Colors.red,
+                userName: "Babacar Ndong",
+                userProfilePic: AssetImage("assets/images/idcard.png"),
+                cardActionWidget: SettingsItem(
+                  icons: Icons.edit,
+                  iconStyle: IconStyle(
+                    withBackground: true,
+                    borderRadius: 50,
+                    backgroundColor: Colors.yellow[600],
+                  ),
+                  title: "Modify",
+                  subtitle: "Tap to change your data",
+                  onTap: () {
+                    print("OK");
+                  },
+                ),
               ),
               const SizedBox(height: 20),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text("FullScreen"),
-                  Container(
-                    child: Switch(
-                      value: fullScreen,
-                      onChanged: (value) {
-                        setState(() {
-                          screen();
-                          print(fullScreen);
-                        });
-                      },
-                      activeTrackColor: Colors.lightGreenAccent,
-                      activeColor: Colors.green,
-                    ),
-                  ),
-                ],
-              ),
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: []),
               // You can add a settings title
               SettingsGroup(
-                settingsGroupTitle: "Account",
+                settingsGroupTitle: "การตั้งค่า",
+                settingsGroupTitleStyle: GoogleFonts.kanit(
+                  fontSize: 22,
+                  color: Colors.black87,
+                ),
                 items: [
-                  // SettingsItem(
-                  //   onTap: () {},
-                  //   icons: Icons.exit_to_app_rounded,
-                  //   title: "Sign Out",
-                  // ),
                   SettingsItem(
                     onTap: () {
                       Navigator.pushNamed(context, '/changedisplayname');
                     },
-                    icons: Icons.settings,
-                    title: "Change username",
+                    icons: Icons.display_settings_outlined,
+                    iconStyle: IconStyle(
+                      withBackground: true,
+                      borderRadius: 50,
+                      backgroundColor: Colors.blue[400],
+                    ),
+                    title: "เปลี่ยนชื่อแสดงผล",
+                    titleStyle: GoogleFonts.kanit(
+                      fontSize: 18,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  SettingsItem(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/forgotpassword');
+                    },
+                    icons: Icons.password,
+                    iconStyle: IconStyle(
+                      withBackground: true,
+                      borderRadius: 50,
+                      backgroundColor: Colors.red[400],
+                    ),
+                    title: "ลืมรหัสผ่าน",
+                    titleStyle: GoogleFonts.kanit(
+                      fontSize: 18,
+                      color: Colors.black87,
+                    ),
                   ),
                   // SettingsItem(
                   //   onTap: () {},

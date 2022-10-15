@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/body.dart';
 import 'package:project/setting.dart';
@@ -129,16 +130,15 @@ class _ChangedisplaynameState extends State<Changedisplayname> {
       .get();
       if(query.docs.isEmpty){
         print('สามารถเปลี่ยนชื่อได้');
-    
+        EasyLoading.show(status: 'กำลังโหลด...');
         changeName();
       }
       else {
          print('ไม่สามารถเปลี่ยนชื่อได้');
+         EasyLoading.showError('ไม่สามารถใช้ชื่อนี้ได้');
       }
     }
   }
-
-
 
  void changeName() async {
     final User? user = auth.currentUser;
@@ -153,6 +153,8 @@ class _ChangedisplaynameState extends State<Changedisplayname> {
           'name': nameNew,
         });
       }));
+      EasyLoading.dismiss();
+      EasyLoading.showSuccess('เปลี่ยนชื่อสำเร็จแล้ว');
       print(nameNew);
       Navigator.push(
         context,
