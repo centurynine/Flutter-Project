@@ -22,10 +22,12 @@ class MyFood extends StatefulWidget {
 
 class _MyFoodState extends State<MyFood> {
   Query<Map<String, dynamic>> data = FirebaseFirestore.instance
-      .collection('foods')
-      .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email);
+  .collection('foods')
+  .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email);
 
-  CollectionReference users = FirebaseFirestore.instance.collection('users');
+  CollectionReference users = FirebaseFirestore.instance
+  .collection('users');
+
   firbaseStorage.Reference storageRef =
       firbaseStorage.FirebaseStorage.instance.ref().child('foods/');
   bool isCreate = false;

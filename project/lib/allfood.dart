@@ -33,20 +33,12 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
         Expanded(
           child: Scaffold(
               appBar: AppBar(
-                
+                backgroundColor: Colors.white,
                 automaticallyImplyLeading: false,
                 actions: [
                   IconButton(
                     alignment: Alignment.centerRight,
-                    icon: const Icon(Icons.home),
-                    iconSize: 30,
-                    onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/');
-                    },
-                  ),
-                  IconButton(
-                    alignment: Alignment.centerRight,
-                    icon: const Icon(Icons.search),
+                    icon: const Icon(Icons.search,color: Colors.black87, size: 30.0),
                     onPressed: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) => SearchPage()));
@@ -57,9 +49,20 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                   'รายการอาหาร',
                   style: GoogleFonts.kanit(
                     fontSize: 20,
+                    color: Colors.black87,
                   ),
                 ),
-                backgroundColor: Colors.red[400],
+              leading: 
+
+                       IconButton(
+                        alignment: Alignment.centerRight,
+                        icon: const Icon(Icons.home,
+                            color: Colors.black87, size: 30.0),
+                        iconSize: 30,
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(context, '/');
+                        },
+                  ),
               ),
               body: StreamBuilder<QuerySnapshot>(
                   stream: data.snapshots(),
@@ -149,31 +152,8 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                                       ),
                                     ),
                                   ),
-                              //       children: [
-                              //     CircleAvatar(
-                              //   radius: 3,
-                              //   backgroundImage: NetworkImage(
-                              //       (snapshot.data!).docs[index]
-                              //           ['uploadImageUrl'],
-                              //           scale: 1,
-                              //           ),
-                              //   backgroundColor: const Color(0xff6ae792),
-                              // ),
                                   ],
                               ),
-                              // Padding(
-                              //   padding: const EdgeInsets.only(left: 1, top: 1),
-                              //   child: Image.network(
-                              //     (snapshot.data!).docs[index]
-                              //         ['uploadImageUrl'],
-                              //     width: 50,
-                              //     height: 50,
-                              //   ),
-                              // ),
-                              // Image.network((snapshot.data!).docs[index]['uploadImageUrl'],
-                              //   width: 100,
-                              //   height: 100,
-                              // ),
                               trailing: Wrap(
                                 spacing: 12,
                                 children: <Widget>[
@@ -226,6 +206,10 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                                       var reference = FirebaseStorage.instance.ref().child('foods/$imageID');
                                       var delete = reference.delete();
                                       Navigator.of(context).pop();
+                                      EasyLoading.show(status: 'ลบรายการอาหารแล้ว');
+                                      Future.delayed(const Duration(milliseconds: 2000), () {
+                                        EasyLoading.dismiss();
+                                      });
                                   },
                                 ),
                               ],
@@ -237,16 +221,7 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                   return SizedBox.shrink();
                 }
               },
-            ),
-                                
-
-
-                                    //  Text(
-                                    // (snapshot.data!).docs[index]['id'],
-                                    // textAlign: TextAlign.start,
-                                    // style: GoogleFonts.kanit(fontSize: 14),
-                                 
-                                  
+            ),                    
                                 ],
                               ),
                             ),
