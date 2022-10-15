@@ -28,13 +28,25 @@ class _ShowMenuState extends State<ShowMenu> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.white,
+          automaticallyImplyLeading: false,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new_outlined,
+                color: Colors.black87, size: 20),
+            color: Colors.black87,
+            onPressed: () {
+              //   Navigator.pop(context);
+              Navigator.pushNamed(context, '/');
+            },
+          ),
           title: Text(
             widget.docs['title'],
             style: GoogleFonts.kanit(
               fontSize: 20,
+              color: Colors.black87
             ),
           ),
-          actions: [IconButton(onPressed: () {}, icon: Icon(Icons.search))],
+          actions: [IconButton(onPressed: () {}, icon: Icon(Icons.search, color: Colors.black87,))],
         ),
         body: ListView(children: [
           Column(
@@ -47,7 +59,7 @@ class _ShowMenuState extends State<ShowMenu> {
                     const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
                 decoration: BoxDecoration(
                   color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(25),
                   border: Border.all(color: Colors.grey[350]!),
                   boxShadow: [
                     BoxShadow(
@@ -58,20 +70,28 @@ class _ShowMenuState extends State<ShowMenu> {
                     ),
                   ],
                   ),
-                child: Container(
-                  height: 200,
-                  width: 300,
-                  child: Image.network(widget.docs['uploadImageUrl']
-                ),
-                )
-              ),
-              // CircleAvatar(
-              //   radius: 150,
-              //   backgroundImage: NetworkImage(
-              //    widget.docs['uploadImageUrl']
-              //   ),
-              //   backgroundColor: const Color(0xff6ae792),
+              //   child: Container(
+                  
+              //     height: 200,
+              //     width: 300,
+              //     child: Image.network(widget.docs['uploadImageUrl'],
+              //         fit: BoxFit.cover),
+                
+              //   )
               // ),
+                  child:
+                  
+              ClipRRect(
+    borderRadius: BorderRadius.circular(25.0),
+    child: Image.network(
+        widget.docs['uploadImageUrl'],
+        height: 200.0,
+        width: 300.0,
+        fit: BoxFit.cover,
+    ),
+),),
+
+
               Container(
                 
                 alignment: Alignment.center,

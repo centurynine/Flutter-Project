@@ -248,20 +248,23 @@ class _UploadDataState extends State<UploadData> {
       },
       keyboardType: TextInputType.text,
       maxLength: 200,
+      minLines: 1,
+      maxLines: 6,
       decoration: const InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(22.0)),
         ),
         hintText: 'แสดงรายละเอียดเล็กน้อย',
         labelText: 'คำอธิบาย',
-        prefixIcon: Icon(Icons.food_bank),
+        prefixIcon: Icon(Icons.note_alt),
       ),
     );
   }
 
   TextFormField descriptionForm() {
     return TextFormField(
-      maxLines: 10,
+      minLines: 1,
+      maxLines: 15,
       onSaved: (value) {
         description = value!.trim();
       },
@@ -279,14 +282,15 @@ class _UploadDataState extends State<UploadData> {
         hintText: 'รายละเอียด',
         labelText: 'ขั้นตอนการทำ',
         alignLabelWithHint: true,
-        prefixIcon: Icon(Icons.how_to_reg),
+        prefixIcon: Icon(Icons.description_outlined ),
       ),
     );
   }
 
   TextFormField ingredientsForm() {
     return TextFormField(
-      maxLines: 5,
+      minLines: 1,
+      maxLines: 15,
       onSaved: (value) {
         ingredients = value!.trim();
       },
@@ -303,20 +307,13 @@ class _UploadDataState extends State<UploadData> {
         ),
         hintText: '',
         labelText: 'ส่วนผสม',
-        prefixIcon: Icon(Icons.food_bank),
+        prefixIcon: Icon(Icons.fastfood_outlined),
       ),
     );
   }
 
   ElevatedButton submitButton() {
     return ElevatedButton(
-        child: Text(
-          'อัพโหลด',
-          style: GoogleFonts.kanit(
-            fontSize: 18,
-            color: Colors.white,
-          ),
-        ),
         style: ElevatedButton.styleFrom(
           primary: Colors.blue,
           onPrimary: Colors.white,
@@ -401,7 +398,14 @@ class _UploadDataState extends State<UploadData> {
               }
             }
           }
-        });
+        },
+        child: Text(
+          'อัพโหลด',
+          style: GoogleFonts.kanit(
+            fontSize: 18,
+            color: Colors.white,
+          ),
+        ));
   }
 
   void countDocuments() async {
