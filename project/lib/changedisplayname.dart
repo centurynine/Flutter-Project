@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/body.dart';
+import 'package:project/setting.dart';
 
 class Changedisplayname extends StatefulWidget {
   const Changedisplayname({super.key});
@@ -11,28 +13,35 @@ class Changedisplayname extends StatefulWidget {
 
 class _ChangedisplaynameState extends State<Changedisplayname> {
   final formKey = GlobalKey<FormState>();
-  final emailController = TextEditingController();
+  final nameController = TextEditingController();
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  String? nameNew;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(' Change Displayname'),
+        backgroundColor: Colors.white,
+        title: const Text(' Change Displayname',
+            style: TextStyle(color: Colors.black87)
+        ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          color: Colors.white,
+          icon: const Icon(Icons.arrow_back_ios_new_outlined),
+          color: Colors.black87,
           onPressed: () {
             Navigator.pop(context);
           },
         ),
       ),
       body: Form(
+        key: formKey,
         child: ListView(children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(top: 30.0),
             child: SizedBox(
               height: 100,
-              child: Image.network(
-                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTBqPGnBVxNcciJClCawl8fnZovFiRoc-c3g&usqp=CAU"),
+              child: Image.asset(
+                  "assets/images/idcard.png"),
             ),
           ),
           SizedBox(height: 80),
@@ -50,22 +59,11 @@ class _ChangedisplaynameState extends State<Changedisplayname> {
               color: Colors.black,
             ),
           ),
-          // Container(
-          //   margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
-          //                     decoration: BoxDecoration(
-          //                       border: Border(
-          //                         bottom: BorderSide(
-          //                           color: Colors.black,
-          //                           width: 0.5,
-          //                         ),
-          //                       ),
-          //                     ),
-          //                   ),
           Padding(
             padding: const EdgeInsets.only(top: 20.0),
             child: Container(
                 margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-                child: forgorText()),
+                child: nameText()),
           ),
           SizedBox(height: 20),
           Container(
@@ -76,30 +74,34 @@ class _ChangedisplaynameState extends State<Changedisplayname> {
     );
   }
 
-  TextFormField forgorText() {
+  TextFormField nameText() {
     return TextFormField(
-      controller: emailController,
-      cursorColor: Colors.lightBlue,
-      textInputAction: TextInputAction.done,
-      decoration: InputDecoration(
-        prefixIcon: Icon(Icons.people),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30),
-        ),
-        labelText: 'Display Name',
-        labelStyle: GoogleFonts.kanit(
-          fontSize: 15,
-        ),
-      ),
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      validator: (value) {
-        if (!validateUsername(value!)) {
-          return 'Please enter your Displayname';
-        }
-        return null;
+      maxLength: 25,
+      onSaved: (value) {
+        nameNew = value!.trim();
       },
+      validator: (value) {
+        if (!validateUsername(value!))
+          return 'กรุณากรอกชื่อให้มากกว่า 6 ตัวอักษร';
+        else
+        setState(() {
+          nameNew = value;
+        });
+          return null;
+      },
+      keyboardType: TextInputType.emailAddress,
+      textInputAction: TextInputAction.next,
+      decoration: const InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(22.0)),
+        ),
+        labelText: 'Display name',
+        prefixIcon: Icon(Icons.email),
+        hintText: 'Your Name',
+      ),
     );
   }
+
 
   ElevatedButton buildButton() {
     return ElevatedButton(
@@ -110,14 +112,62 @@ class _ChangedisplaynameState extends State<Changedisplayname> {
           borderRadius: BorderRadius.circular(20.0),
         ),
       ),
-      onPressed: () async {},
+      onPressed: () async {
+        checkName();
+      },
       child: const Text('Change DisplayName'),
     );
   }
 
-  bool validateUsername(String value) {
-    RegExp regex = RegExp(
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
-    return (!regex.hasMatch(value)) ? false : true;
+  void checkName() async {
+    final User? user = auth.currentUser;
+    final email = user!.email;
+    if (formKey.currentState!.validate()) {
+      QuerySnapshot query = await FirebaseFirestore.instance
+      .collection('users')
+      .where('name' ,isEqualTo: nameNew)
+      .get();
+      if(query.docs.isEmpty){
+        print('สามารถเปลี่ยนชื่อได้');
+    
+        changeName();
+      }
+      else {
+         print('ไม่สามารถเปลี่ยนชื่อได้');
+      }
+    }
   }
+
+
+
+ void changeName() async {
+    final User? user = auth.currentUser;
+    final email = user!.email;
+    if (formKey.currentState!.validate()) {
+      await FirebaseFirestore.instance
+      .collection('users')
+      .where('uid' ,isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+      .get()
+      .then((value) => value.docs.forEach((element) {
+        FirebaseFirestore.instance.collection('users').doc(element.id).update({
+          'name': nameNew,
+        });
+      }));
+      print(nameNew);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Setting()),
+      );
+    }
+  }
+
+  bool validateUsername(String value) {
+    if (value.length < 6) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+
 }
