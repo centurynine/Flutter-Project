@@ -135,18 +135,18 @@ class _BodyState extends State<Body> {
                       'เข้าสู่ระบบ',
                       style: GoogleFonts.kanit(
                         fontSize: 20,
-                        color: Colors.black,
+                        color: Colors.white,
                       ),
                     ),
                     onPressed: () {
                       Navigator.pushNamed(context, '/login');
                     },
                     style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.red[400], backgroundColor: Colors.white60,
+                      foregroundColor: Colors.red[400], backgroundColor: Colors.red[400],
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(22.0),
                       ),
-                      fixedSize: Size(150, 70),
+                      fixedSize: Size(140, 70),
                       elevation: 15,
                       shadowColor: Colors.white,
                       side: BorderSide(color: Colors.red, width: 3),
@@ -157,18 +157,18 @@ class _BodyState extends State<Body> {
                       'สมัครสมาชิก',
                       style: GoogleFonts.kanit(
                         fontSize: 20,
-                        color: Colors.black,
+                        color: Colors.white,
                       ),
                     ),
                     onPressed: () {
                       Navigator.pushNamed(context, '/register');
                     },
                     style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.red[400], backgroundColor: Colors.white60,
+                      foregroundColor: Colors.red[400], backgroundColor: Colors.red[400],
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(22.0),
                       ),
-                      fixedSize: Size(150, 70),
+                      fixedSize: Size(140, 70),
                       elevation: 15,
                       shadowColor: Colors.white,
                       side: BorderSide(color: Colors.red, width: 3),
