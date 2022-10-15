@@ -17,61 +17,6 @@ class UploadData extends StatefulWidget {
   @override
   State<UploadData> createState() => _UploadDataState();
 }
-//   int _counter = 0;
-// String? message;
-// String channelId = "1000";
-// String channelName = "FLUTTER_NOTIFICATION_CHANNEL";
-// String channelDescription = "FLUTTER_NOTIFICATION_CHANNEL_DETAIL";
-
-// sendNotification() async {
-//   const BigPictureStyleInformation bigPictureStyleInformation =
-//       BigPictureStyleInformation(
-//     DrawableResourceAndroidBitmap('flutter'),
-//     largeIcon: DrawableResourceAndroidBitmap('flutter'),
-//     contentTitle: 'สวัดดีครับ คุณ <a> User </b>',
-//     htmlFormatContentTitle: true,
-//     summaryText: 'สรุปข่าว <i> ข่าวสำคัญ 1 </i>',
-//     htmlFormatSummaryText: true,
-//   );
-//   var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
-//     '10000',
-//     'FLUTTER_NOTIFICATION_CHANNEL',
-//     channelDescription: 'FLUTTER_NOTIFICATION_CHANNEL_DETAIL',
-//     importance: Importance.max,
-//     priority: Priority.high,
-//     styleInformation: bigPictureStyleInformation,
-//   );
-
-//   var iOSPlatformChannelSpecifics = const DarwinNotificationDetails();
-
-//   var platformChannelSpecifics = NotificationDetails(
-//       android: androidPlatformChannelSpecifics,
-//       iOS: iOSPlatformChannelSpecifics);
-//   await flutterLocalNotificationsPlugin.show(
-//       111, 'สวัสดีครับ', 'ข่าวร้อนๆมาแล้ว ', platformChannelSpecifics,
-//       payload: 'I just haven\'t Met You Yet');
-// }
-
-// @override
-// Widget build(BuildContext context) {
-//   return Scaffold(
-//     appBar: AppBar(
-//       title: Text(widget.title),
-//     ),
-//     body: Center(
-//       child: Column(
-//         mainAxisAlignment: MainAxisAlignment.center,
-//       ),
-//     ),
-//     floatingActionButton: FloatingActionButton(
-//       onPressed: () {
-//         sendNotification();
-//       },
-//       tooltip: 'Increment',
-//       child: const Icon(Icons.add),
-//     ),
-//   );
-// }
 
 class _UploadDataState extends State<UploadData> {
   final _formstateUpload = GlobalKey<FormState>();
@@ -87,12 +32,13 @@ class _UploadDataState extends State<UploadData> {
   String? countid;
   File? _foodpic;
   File? imageFile;
-  int _counter = 0;
   String? message;
   String channelId = "1000";
   String channelName = "FLUTTER_NOTIFICATION_CHANNEL";
   String channelDescription = "FLUTTER_NOTIFICATION_CHANNEL_DETAIL";
 
+  String? titlenoti;
+  String? subtitlenoti;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -203,14 +149,42 @@ class _UploadDataState extends State<UploadData> {
     super.initState();
   }
 
+  // sendNotification() async {
+  //   const BigPictureStyleInformation bigPictureStyleInformation =
+  //     BigPictureStyleInformation(
+  //     DrawableResourceAndroidBitmap('flutter'),
+  //     largeIcon: DrawableResourceAndroidBitmap('flutter'),
+  //     contentTitle: 'อัพโหลดเมนูอาหารแล้ว',
+  //     htmlFormatContentTitle: true,
+  //     summaryText: 'อัพโหลดข้อมูลสำเร็จ <i> ข่าวสำคัญ </i>',
+  //     htmlFormatSummaryText: true,
+  //   );
+  //   var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
+  //     '10000',
+  //     'FLUTTER_NOTIFICATION_CHANNEL',
+  //     channelDescription: 'FLUTTER_NOTIFICATION_CHANNEL_DETAIL',
+  //     importance: Importance.max,
+  //     priority: Priority.high,
+  //     styleInformation: bigPictureStyleInformation,
+  //   );
+
+  //   var iOSPlatformChannelSpecifics = const DarwinNotificationDetails();
+  //   var platformChannelSpecifics = NotificationDetails(
+  //       android: androidPlatformChannelSpecifics,
+  //       iOS: iOSPlatformChannelSpecifics);
+  //   await flutterLocalNotificationsPlugin.show(
+  //       111, 'Uploaded', 'อัพโหลดข้อมูลสำเร็จ ', platformChannelSpecifics,
+  //       payload: ' ');
+  // }
+
   sendNotification() async {
     const BigPictureStyleInformation bigPictureStyleInformation =
-        BigPictureStyleInformation(
-      DrawableResourceAndroidBitmap('flutter'),
-      largeIcon: DrawableResourceAndroidBitmap('flutter'),
-      contentTitle: 'สะ แรน คุณ <a> User </b>',
+      BigPictureStyleInformation(
+      DrawableResourceAndroidBitmap('food'),
+      largeIcon: DrawableResourceAndroidBitmap('bell'),
+      contentTitle: 'อัพโหลดรายการอาหารแล้ว',
       htmlFormatContentTitle: true,
-      summaryText: 'สวัดดี สะเเสน <i> ข่าวสำคัญ 1 </i>',
+      summaryText: 'รายการอาหารถูกอัพโหลดลงในระบบแล้ว',
       htmlFormatSummaryText: true,
     );
     var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
@@ -227,7 +201,7 @@ class _UploadDataState extends State<UploadData> {
         android: androidPlatformChannelSpecifics,
         iOS: iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.show(
-        111, 'สะแรน', 'สะเเรนมาเเล้ว ', platformChannelSpecifics,
+        111, 'อัพโหลดรายการอาหารแล้ว', 'เมนู $titlenoti', platformChannelSpecifics,
         payload: ' ');
   }
 
@@ -235,6 +209,9 @@ class _UploadDataState extends State<UploadData> {
     return TextFormField(
       onSaved: (value) {
         title = value!.trim();
+        setState(() {
+          titlenoti = title;
+        });
       },
       validator: (value) {
         if (value!.length < 2)
@@ -259,6 +236,9 @@ class _UploadDataState extends State<UploadData> {
     return TextFormField(
       onSaved: (value) {
         subtitle = value!.trim();
+        setState(() {
+          subtitlenoti = subtitle;
+        });
       },
       validator: (value) {
         if (value!.length < 2)
@@ -408,7 +388,7 @@ class _UploadDataState extends State<UploadData> {
                   Future.delayed(const Duration(milliseconds: 2000), () {
                     ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
                   });
-                  sendNotification();
+              //    sendNotification();
                   countDocuments();
                   _formstateUpload.currentState!.reset();
                   Navigator.pushNamed(context, '/food');
@@ -482,6 +462,7 @@ class _UploadDataState extends State<UploadData> {
       "created_at": DateTime.now(),
       "uploadImageUrl": url,
     });
+    sendNotification();
     print('Create complete');
     ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
     ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
