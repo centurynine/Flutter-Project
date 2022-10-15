@@ -22,9 +22,10 @@ class _SearchPageMyFoodState extends State<SearchPageMyFood> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.red[400],
+        backgroundColor: Colors.white,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
+          icon: const Icon(Icons.arrow_back_ios,
+              color: Colors.black, size: 20),
           onPressed: () {
             Navigator.of(context).pop();
           },

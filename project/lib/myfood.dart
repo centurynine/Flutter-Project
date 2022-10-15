@@ -42,15 +42,8 @@ class _MyFoodState extends State<MyFood> {
                 actions: [
                   IconButton(
                     alignment: Alignment.centerRight,
-                    icon: const Icon(Icons.home),
-                    iconSize: 30,
-                    onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/');
-                    },
-                  ),
-                  IconButton(
-                    alignment: Alignment.centerRight,
-                    icon: const Icon(Icons.search),
+                    icon: const Icon(Icons.search,
+                        color: Colors.black, size: 25),
                     onPressed: () {
                       Navigator.push(
                           context,
@@ -62,10 +55,19 @@ class _MyFoodState extends State<MyFood> {
                 title: Text(
                   'รายการอาหารของฉัน',
                   style: GoogleFonts.kanit(
-                    fontSize: 20,
+                    fontSize: 20,color: Colors.black87,
                   ),
                 ),
-                backgroundColor: Colors.red[400],
+                backgroundColor: Colors.white,
+                leading:                        IconButton(
+                        alignment: Alignment.centerRight,
+                        icon: const Icon(Icons.home,
+                            color: Colors.black87, size: 30.0),
+                        iconSize: 30,
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(context, '/');
+                        },
+                  ),
               ),
               body: StreamBuilder<QuerySnapshot>(
                   stream: data.snapshots(),

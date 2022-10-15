@@ -11,7 +11,6 @@ import 'package:project/editpage.dart';
 import 'package:project/home.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firbaseStorage;
 import 'package:project/searchpage.dart';
-
 class BodyAfterLogin extends StatefulWidget {
   const BodyAfterLogin({super.key});
 
@@ -52,8 +51,7 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                     color: Colors.black87,
                   ),
                 ),
-              leading: 
-
+              leading:
                        IconButton(
                         alignment: Alignment.centerRight,
                         icon: const Icon(Icons.home,

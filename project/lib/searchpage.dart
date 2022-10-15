@@ -19,9 +19,10 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.red[400],
+        backgroundColor: Colors.white,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
+          icon: const Icon(Icons.arrow_back_ios,
+              color: Colors.black, size: 20),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -43,11 +44,15 @@ class _SearchPageState extends State<SearchPage> {
                 ),
            
               child: TextField(
-                decoration: const InputDecoration(
+                decoration:  InputDecoration(
                    border: InputBorder.none,
                     prefixIcon: Icon(Icons.search, color: Colors.black87),
-                    hintText: 'Search',
-                    contentPadding: EdgeInsets.only(top: 18.0)),
+                    hintText: 'ค้นหารายการอาหาร',
+                    hintStyle: GoogleFonts.kanit(
+                      fontSize: 16,
+                      color: Colors.black87,
+                    ),
+                    contentPadding: EdgeInsets.only(top: 10.0)),
                 onChanged: (val) {
                   setState(() {
                     name_lowercase = val.toLowerCase();
