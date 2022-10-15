@@ -36,12 +36,11 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   @override
-
+ final GlobalKey<ScaffoldState> _drawerKey = new GlobalKey<ScaffoldState>();
   void initState() {
     super.initState();
     if(FirebaseAuth.instance.currentUser != null){
       userEmail = FirebaseAuth.instance.currentUser?.email;
-      status = 1;
     }
   }
 
@@ -49,19 +48,28 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.red[400],
+        leading: IconButton(
+          icon: Icon(Icons.menu,
+            color: Colors.black87,
+          ),
+          onPressed: () {
+            _drawerKey.currentState!.openDrawer();
+          },
+        ),
+        backgroundColor: Colors.white,
         title: Text(
           " Aroy App",
          style: GoogleFonts.kanit(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
-                      color: Colors.white,
+                      color: Colors.black87,
                     ),
         ),
         actions: <Widget>[
           FirebaseAuth.instance.currentUser == null
               ? IconButton(
-                  icon: Icon(Icons.login),
+                  icon: Icon(Icons.login,
+                      color: Colors.black87, size: 30),
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -70,7 +78,8 @@ class _HomepageState extends State<Homepage> {
                   },
                 )
               : IconButton(
-                  icon: Icon(Icons.logout),
+                  icon: Icon(Icons.logout,
+                                        color: Colors.black87, size: 30),
                   onPressed: () {
                     _signOut();
                   },
@@ -104,7 +113,7 @@ class _HomepageState extends State<Homepage> {
         ),
         ]
         ),
-
+      key: _drawerKey,
       drawer: Drawer(
         child: ListView(
           children: <Widget>[

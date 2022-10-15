@@ -123,10 +123,82 @@ class _BodyState extends State<Body> {
         SizedBox(height: 20),
         FirebaseAuth.instance.currentUser != null
             ? Column(
-                children: [
-                  Text("Login Success"),
-                ],
-              )
+              children: [
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      ElevatedButton(
+                        child: Text(
+                          'รายการอาหารทั้งหมด',
+                          style: GoogleFonts.kanit(
+                            fontSize: 17,
+                            color: Colors.white,
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/food');
+                        },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.red[400], backgroundColor: Colors.red[400],
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(22.0),
+                          ),
+                          fixedSize: Size(180, 70),
+                          elevation: 15,
+                          shadowColor: Colors.white,
+                     //     side: BorderSide(color: Colors.red, width: 3),
+                        ),
+                      ),
+                      ElevatedButton(
+                        child: Text(
+                          'รายการอาหารของฉัน',
+                          style: GoogleFonts.kanit(
+                            fontSize: 17,
+                            color: Colors.white,
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/myfood');
+                        },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.red[400], backgroundColor: Colors.red[400],
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(22.0),
+                          ),
+                          fixedSize: Size(180, 70),
+                          elevation: 15,
+                          shadowColor: Colors.white,
+                        //  side: BorderSide(color: Colors.red, width: 3),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                        child: Text(
+                          'แชร์สูตรอาหาร',
+                          style: GoogleFonts.kanit(
+                            fontSize: 17,
+                            color: Colors.white,
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/upload');
+                        },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.pinkAccent, backgroundColor: Colors.pinkAccent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(22.0),
+                          ),
+                          fixedSize: Size(180, 70),
+                          elevation: 15,
+                          shadowColor: Colors.white,
+                          side: BorderSide(color: Colors.pinkAccent, width: 3),
+                        ),
+                      ),
+              ],
+              
+            )
             : Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
@@ -149,7 +221,7 @@ class _BodyState extends State<Body> {
                       fixedSize: Size(140, 70),
                       elevation: 15,
                       shadowColor: Colors.white,
-                      side: BorderSide(color: Colors.red, width: 3),
+               //       side: BorderSide(color: Colors.red, width: 3),
                     ),
                   ),
                   ElevatedButton(
@@ -171,7 +243,7 @@ class _BodyState extends State<Body> {
                       fixedSize: Size(140, 70),
                       elevation: 15,
                       shadowColor: Colors.white,
-                      side: BorderSide(color: Colors.red, width: 3),
+               //       side: BorderSide(color: Colors.red, width: 3),
                     ),
                   ),
                 ],
@@ -231,14 +303,6 @@ class _BodyState extends State<Body> {
 
   Future signOut() async {
     await FirebaseAuth.instance.signOut();
-    if (status == 1) {
-      setState(() {
-        status = 0;
-        userEmail = 'กรุณาเข้าสู่ระบบ';
-      });
-    } else {
-      print('คุณออกจากระบบอยู่แล้ว');
-    }
     Navigator.pushNamed(context, '/login');
   }
 }
