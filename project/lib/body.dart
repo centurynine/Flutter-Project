@@ -51,7 +51,8 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
+        FirebaseAuth.instance.currentUser != null
+        ? Container(
           margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
           child: GestureDetector(
              onTap: () {
@@ -100,7 +101,58 @@ class _BodyState extends State<Body> {
                   ],
                 )),
           ),
+        )
+        : Container(
+          margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+          child: GestureDetector(
+             onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => LoginPage()));
+                      },
+            child: Container(
+                height: 56,
+                width: MediaQuery.of(context).size.width - 48,
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(12),
+                  // boxShadow: [
+                  //   BoxShadow(
+                  //     color: Colors.black.withOpacity(0.1),
+                  //     offset: const Offset(0, 10),
+                  //     blurRadius: 10,
+                  //   ),
+                  // ],
+                ),
+                alignment: Alignment.center,
+                child: Row(
+                  children: [
+                    const SizedBox(width: 16),
+                   IconButton(
+              icon: const Icon(Icons.lock),
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LoginPage()));
+                        },
+                      ),
+                    const SizedBox(width: 16),
+                    GestureDetector(child: Text
+                      ('Search',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey,
+                      )
+                      ,
+                      ),
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => LoginPage()));
+                      },
+                    ),
+                  ],
+                )),
+          ),
         ),
+        
         Container(
           alignment: Alignment.topLeft,
           child: Column(
