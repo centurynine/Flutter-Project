@@ -114,7 +114,7 @@ class _forgotPasswordState extends State<forgotPassword> {
   ElevatedButton buildButton() {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: Colors.lightBlue,
+        primary: Colors.red[400],
         onPrimary: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
@@ -154,7 +154,7 @@ class _forgotPasswordState extends State<forgotPassword> {
           "สมัครสมาชิก!",
           style: GoogleFonts.kanit(
             fontSize: 15,
-            color: Colors.blue,
+            color: Colors.red[400],
           ),
         ),
       ),

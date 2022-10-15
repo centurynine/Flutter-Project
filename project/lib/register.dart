@@ -104,6 +104,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: buildConfirmPasswordField()),
               SizedBox(height: 30),
               Container(
+                height: 50,
                   margin: const EdgeInsets.only(left: 100.0, right: 100.0),
                   child: buildRegisterButton()),
             
@@ -116,13 +117,20 @@ class _RegisterPageState extends State<RegisterPage> {
 
   ElevatedButton buildRegisterButton() {
     return ElevatedButton(
+      
       style: ElevatedButton.styleFrom(
-        primary: Colors.blue,
+        
+        primary: Colors.red[400],
         onPrimary: Colors.white,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       ),
-      child: const Text('Register'),
+      child: Text('สมัครสมาชิก',
+      style: GoogleFonts.kanit(
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
+      ),
       onPressed: () async {
         print('Register');
         registerWithEmailPassword();

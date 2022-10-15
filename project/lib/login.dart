@@ -155,7 +155,7 @@ class _LoginPageState extends State<LoginPage> {
           "สมัครสมาชิก!",
           style: GoogleFonts.kanit(
             fontSize: 15,
-            color: Colors.blue,
+            color: Colors.red[400],
           ),
         ),
       ),
@@ -174,7 +174,7 @@ class _LoginPageState extends State<LoginPage> {
           "ลืมรหัสผ่าน?",
           style: GoogleFonts.kanit(
             fontSize: 15,
-            color: Colors.blue,
+            color: Colors.red[400],
           ),
         ),
       ),
@@ -217,7 +217,7 @@ class _LoginPageState extends State<LoginPage> {
     return IconButton(
       icon: const Icon(Icons.facebook),
       iconSize: 50.0,
-      color: Colors.black,
+      color: Colors.blue,
       onPressed: () {
         Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => FacebookLogin()));
       },
@@ -228,7 +228,7 @@ class _LoginPageState extends State<LoginPage> {
     return ElevatedButton(
         child: const Text('Login'),
         style: ElevatedButton.styleFrom(
-          primary: Colors.blue,
+          primary: Colors.red[400],
           onPrimary: Colors.white,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),

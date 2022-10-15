@@ -10,6 +10,7 @@ import 'package:project/login.dart';
 import 'package:project/facebook.dart';
 import 'package:project/recommend_widget.dart';
 import 'package:project/searchpage.dart';
+import 'package:project/upload_widget.dart';
 import 'List.dart';
 
 class Body extends StatefulWidget {
@@ -198,6 +199,8 @@ class _BodyState extends State<Body> {
                           side: BorderSide(color: Colors.pinkAccent, width: 3),
                         ),
                       ),
+                      SizedBox(height: 20),
+                      Uploadwidget()
               ],
               
             )
