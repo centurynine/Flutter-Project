@@ -149,7 +149,11 @@ class _HomepageState extends State<Homepage> {
                                Container(
                                 margin: EdgeInsets.only(left: 10),
                                 child: Text(
-                                  userEmail.toString(),
+                                  userEmail.toString().length > 28
+                                      ? userEmail.toString().substring(0, 20) + '...'
+                                      : userEmail.toString(),
+                                  overflow: TextOverflow.fade,
+                              //  userEmail.toString().substring(0, userEmail.toString().indexOf('@')),
                                   style: GoogleFonts.kanit(
                                     fontSize: 14,
                                     color: Colors.white,
