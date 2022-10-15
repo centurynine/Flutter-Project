@@ -60,6 +60,15 @@ class _PleaseLoginState extends State<PleaseLogin> {
       ),
       child: Stack(
         children: [
+          Column(
+            children: [
+              Divider(
+                color: Colors.grey,
+                thickness: 4,
+                height: 1,
+              ),
+            ],
+          ),
           Positioned(
             top: 25,
           //  right: 200,
@@ -101,7 +110,7 @@ class _PleaseLoginState extends State<PleaseLogin> {
                       child: ElevatedButton(onPressed: () {
                         Navigator.pushNamed(context, '/login');                      
                         },
-                       child: Text('เข้าสู่ระบบ!',
+                       child: Text('เข้าสู่ระบบ',
                         style: GoogleFonts.kanit(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -110,15 +119,21 @@ class _PleaseLoginState extends State<PleaseLogin> {
                         
                        )),
                     )
+                    
                   ],
                 ),
+                
               ),
               const SizedBox(width: 20),
            
             ],
+            
           )
+          
           ),
+          
           )
+          ,         
         ],
       ),
     );
