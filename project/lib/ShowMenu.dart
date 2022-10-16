@@ -25,18 +25,31 @@ class _ShowMenuState extends State<ShowMenu> {
       firbaseStorage.FirebaseStorage.instance.ref().child('foods/');
   String? id;
   String? name;
-
+  String? avatar = 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
   void checkNameWhoCreated() async {
     final users = await FirebaseFirestore.instance
         .collection('users')
         .where('email', isEqualTo: widget.docs['email'])
+        .where('avatar')
         .get();
         if(users.docs.isNotEmpty){
           print('พบข้อมูลชื่อผู้โพส');
           print(users.docs[0].data()['email']);
           setState(() {
             name = users.docs[0].data()['name'];
+            avatar = users.docs[0].data()['avatar'];
           });
+         // print(avatar);
+          if(avatar == null){
+            setState(() {
+               print('ไม่พบรูปภาพ');
+               avatar = 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+            });
+            print(avatar);
+          }
+          else {
+            print('พบภาพโปรไฟล์');
+          }
         }else if(users.docs.isEmpty){
           print('ไม่พบข้อมูลชื่อผู้โพส');
           setState(() {
@@ -163,6 +176,15 @@ class _ShowMenuState extends State<ShowMenu> {
               ),
               SizedBox(
                 height: 20,
+              ),
+                ClipRRect(
+                      borderRadius: BorderRadius.circular(35.0),
+                      child: Image.network(avatar.toString(),
+                          width: 95, height: 95, fit: BoxFit.cover
+                      ),
+                    ),
+              SizedBox(
+                height: 10,
               ),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 20),
