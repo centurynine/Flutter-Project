@@ -80,12 +80,19 @@ void initState() {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Colors.white.withOpacity(.94),
+        backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Text('Setting'),
+          backgroundColor: Colors.white,
+          title: Text('Setting',
+          style: GoogleFonts.kanit(
+            color: Colors.black87,
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+          ),
+          ),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            color: Colors.white,
+            icon: const Icon(Icons.arrow_back_ios_new_outlined),
+            color: Colors.black87,
             onPressed: () {
               //   Navigator.pop(context);
               Navigator.pushNamed(context, '/');
@@ -103,7 +110,7 @@ void initState() {
                 children: [
                   Column(
                     children: [BigUserCard(
-                      cardColor: Colors.red,
+                      cardColor: Colors.black54,
                       userName: name.toString(),
                       cardActionWidget: SettingsItem(
                         icons: Icons.edit,
@@ -112,8 +119,16 @@ void initState() {
                           borderRadius: 50,
                           backgroundColor: Colors.yellow[600],
                         ),
-                        title: "Modify",
-                        subtitle: "Tap to change your data",
+                        title: "แก้ไขภาพโปรไฟล์",
+                        titleStyle: GoogleFonts.kanit(
+                          color: Colors.black87,
+                          fontSize: 18,
+                        ),
+                        subtitle: "กดเพื่อเลือกภาพโปรไฟล์",
+                        subtitleStyle: GoogleFonts.kanit(
+                          color: Colors.black87,
+                          fontSize: 13,
+                        ),
                         onTap: () {
                           print("OK");
                         },
@@ -122,10 +137,13 @@ void initState() {
                 ]
                 ),
                    Positioned(
-                    top: 19,
-                    left: 62,
-                    child: Image.network(avatar.toString(),
-                        width: 75, height: 75, fit: BoxFit.cover
+                    top: 15,
+                    left: 50,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(35.0),
+                      child: Image.network(avatar.toString(),
+                          width: 95, height: 95, fit: BoxFit.cover
+                      ),
                     )
                   ),
                 ],
