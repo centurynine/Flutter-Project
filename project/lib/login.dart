@@ -30,11 +30,11 @@ class _LoginPageState extends State<LoginPage> {
  
   @override
   void initState() {
-    super.initState();
+    super.initState();    
     if(FirebaseAuth.instance.currentUser != null){
       print('Found user');
      SchedulerBinding.instance.addPostFrameCallback((_) {
-  Navigator.push(
+      Navigator.push(
         context,
         new MaterialPageRoute(
             builder: (context) => Homepage()));
@@ -50,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
  
-drawer:  DrawerWidget(),
+      drawer:  DrawerWidget(),
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -184,24 +184,6 @@ drawer:  DrawerWidget(),
       onTap: () {
         print('Goto  Regis pagge');
         Navigator.pushNamed(context, '/forgotpassword');
-      },
-    );
-  }
-
-  GestureDetector logoutText(BuildContext context) {
-    return GestureDetector(
-      child: Container(
-        alignment: Alignment.center,
-        child: Text(
-          "ออกจากระบบ",
-          style: GoogleFonts.kanit(
-            fontSize: 15,
-            color: Colors.blue,
-          ),
-        ),
-      ),
-      onTap: () {
-        _signOut();
       },
     );
   }
