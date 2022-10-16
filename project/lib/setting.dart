@@ -16,6 +16,7 @@ class _SettingState extends State<Setting> {
   final prefs = SharedPreferences.getInstance();
   bool fullScreen = false;
   String? name;
+  String? avatar = 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
 
 @override
 void initState() {
@@ -38,12 +39,14 @@ void initState() {
        .then((value) => value.docs.forEach((element) {
         setState(() {
           name = element.data()['name'];
+          avatar = element.data()['avatar'];
         });
       }));
       }
       else {
         setState(() {
           name = 'กรุณาเข้าสู่ระบบ';
+          avatar = 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
         });
       }
       }
@@ -72,6 +75,7 @@ void initState() {
 //     print('ไม่พบการเข้าสู่ระบบ');
 //   }
 // }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -95,23 +99,36 @@ void initState() {
           child: ListView(
             children: [
               // user card
-              BigUserCard(
-                cardColor: Colors.red,
-                userName: name.toString(),
-                userProfilePic: AssetImage("assets/images/idcard.png"),
-                cardActionWidget: SettingsItem(
-                  icons: Icons.edit,
-                  iconStyle: IconStyle(
-                    withBackground: true,
-                    borderRadius: 50,
-                    backgroundColor: Colors.yellow[600],
-                  ),
-                  title: "Modify",
-                  subtitle: "Tap to change your data",
-                  onTap: () {
-                    print("OK");
-                  },
+              Stack(
+                children: [
+                  Column(
+                    children: [BigUserCard(
+                      cardColor: Colors.red,
+                      userName: name.toString(),
+                      cardActionWidget: SettingsItem(
+                        icons: Icons.edit,
+                        iconStyle: IconStyle(
+                          withBackground: true,
+                          borderRadius: 50,
+                          backgroundColor: Colors.yellow[600],
+                        ),
+                        title: "Modify",
+                        subtitle: "Tap to change your data",
+                        onTap: () {
+                          print("OK");
+                        },
+                      ), userProfilePic: AssetImage('assets/images/transparent.png',),
+                    ),
+                ]
                 ),
+                   Positioned(
+                    top: 19,
+                    left: 62,
+                    child: Image.network(avatar.toString(),
+                        width: 75, height: 75, fit: BoxFit.cover
+                    )
+                  ),
+                ],
               ),
               const SizedBox(height: 20),
               Row(
