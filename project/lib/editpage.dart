@@ -540,16 +540,16 @@ class _EditDataState extends State<EditData> {
   }
 
 
-  void editData() async {
-    FirebaseFirestore.instance.collection('foods').get().then((snapshot) {
-            for (DocumentSnapshot edit in snapshot.docs) {
-              edit.reference.update({
-                'isReadyToPlay': true, //True or false
-                'totalScore': 254 //Your new value
-              });
-            }
-          }
-          );
-  }
+  // void editData() async {
+  //   FirebaseFirestore.instance.collection('foods').get().then((snapshot) {
+  //           for (DocumentSnapshot edit in snapshot.docs) {
+  //             edit.reference.update({
+  //               'isReadyToPlay': true, 
+  //               'totalScore': 254 
+  //             });
+  //           }
+  //         }
+  //         );
+  // }
 
 }

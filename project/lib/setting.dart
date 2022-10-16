@@ -130,7 +130,7 @@ void initState() {
                           fontSize: 13,
                         ),
                         onTap: () {
-                          print("OK");
+                          Navigator.pushNamed(context, '/avatarupload');
                         },
                       ), userProfilePic: AssetImage('assets/images/transparent.png',),
                     ),

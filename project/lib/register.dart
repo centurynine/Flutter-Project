@@ -361,6 +361,7 @@ class _RegisterPageState extends State<RegisterPage> {
           "name": name.text,
           "admin": false.toString(),
           "created_at": DateTime.now().toString(),
+          "loginwith": 'Firebase',
           "avatar": 'https://firebasestorage.googleapis.com/v0/b/mainproject-25523.appspot.com/o/avatarnull%2Favatar.png?alt=media&token=14755271-9e58-4710-909c-b10f9c1917e9'
           }
     );

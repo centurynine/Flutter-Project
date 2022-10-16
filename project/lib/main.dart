@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:project/HomePageWidget.dart';
 import 'package:project/ShowMenu.dart';
 import 'package:project/allfood.dart';
+import 'package:project/avatarupload.dart';
 import 'package:project/changedisplayname.dart';
 import 'package:project/facebook.dart';
 import 'package:project/forgotpassword.dart';
@@ -68,6 +69,7 @@ class MyApp extends StatelessWidget {
         '/searchpage': (context) => SearchPage(),
         '/searchpagemyfood': (context) => SearchPageMyFood(),
         '/myfood': (context) => MyFood(),
+        '/avatarupload': (context) => AvatarUpload(),
       },
     );
   }
