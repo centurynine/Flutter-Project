@@ -191,7 +191,7 @@ void initState() {
                 ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
               });
             } else if (imageUpload == true) {
-                print('Valid Form');
+                uploadImageToFirebase();
                 try {
                   EasyLoading.show(status: 'Uploading...');
                   ScaffoldMessenger.of(context)
@@ -356,16 +356,20 @@ void initState() {
     });
   }
 
-  Future uploadImageToFirebase(String countid) async {
+  Future uploadImageToFirebase() async {
     var reference = FirebaseStorage.instance.ref().child('users/$id/$id');
     var uploadTask = reference.putFile(_foodpic!);
     var url = await (await uploadTask).ref.getDownloadURL();
     print('uploadImageToFirebase URL IMAGE : {$url}');
-   // changeAvatar(url);
+    changeAvatar(url);
   }
-
-
-
+ 
+  // Future changeAvatar(String url) async {
+  //   await FirebaseFirestore.instance
+  //       .collection('users')
+  //       .doc(id)
+  //       .update({'avatar': url});
+  // }
 
  void changeAvatar(String url) async {
     final User? user = auth.currentUser;
