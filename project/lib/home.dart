@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/body.dart';
+import 'package:project/drawer.dart';
 import 'package:project/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:project/pleaselogin.dart';
@@ -95,6 +96,7 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.menu,
@@ -106,7 +108,7 @@ class _HomepageState extends State<Homepage> {
         ),
         backgroundColor: Colors.white,
         title: Text(
-          " Aroy App",
+          " Eat with Me",
          style: GoogleFonts.kanit(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
@@ -148,189 +150,10 @@ class _HomepageState extends State<Homepage> {
         ]
         ),
       key: _drawerKey,
-      drawer: Drawer(
-        child: ListView(
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(top: 0),
-              color: Colors.red[400],
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                                width: 50,
-                                height: 100,
-                          margin: EdgeInsets.only(left: 10),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: CircleAvatar(
-                              backgroundImage: Image.network(avatar!).image,
-                               // radius: 10,
-                              
-                            ),
-                          ),
-                        ),
-                        FirebaseAuth.instance.currentUser != null
-                        ? Container(
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.only(right: 50),
-                                child: Text(
-                                  name.toString(),
-                                  style: GoogleFonts.kanit(
-                                    fontSize: 14,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                               Container(
-                                margin: EdgeInsets.only(left: 10),
-                                child: Text(
-                                  userEmail.toString().length > 28
-                                      ? userEmail.toString().substring(0, 20) + '...'
-                                      : userEmail.toString(),
-                                  overflow: TextOverflow.fade,
-                              //  userEmail.toString().substring(0, userEmail.toString().indexOf('@')),
-                                  style: GoogleFonts.kanit(
-                                    fontSize: 14,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                        : Container(
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.only(left: 10),
-                                child: Text(
-                                  'กรุณาเข้าสู่ระบบ',
-                                  style: GoogleFonts.kanit(
-                                    fontSize: 18,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
+                 drawer: Container(
+              width: MediaQuery.of(context).size.width / 1.3,
+              child: DrawerWidget()
               ),
-            ),
-            FirebaseAuth.instance.currentUser != null
-            ? Column(
-              children: [
-                ListTile(
-                  title: Text('รายการอาหารทั้งหมด',
-                  style: GoogleFonts.kanit(
-                    fontSize: 14,
-                    color: Colors.black)),
-                   leading: Image.asset(
-                    'assets/allfood.png',
-                    width: 25,
-                    height: 25,),
-                  onTap: () {
-                    print("Clicked");
-                    Navigator.pushNamed(context, '/food');
-                  },
-                ),
-                ListTile(
-              title: Text('รายการอาหารของฉัน',
-              style: GoogleFonts.kanit(
-                fontSize: 14,
-                color: Colors.black)),
-               leading: Image.asset(
-                'assets/myfood.png',
-                width: 25,
-                height: 25,),
-              onTap: () {
-                print("Clicked");
-                Navigator.pushNamed(context, '/myfood');
-              },
-             ),
-              ListTile(
-              title: Text('ตั้งค่า',
-              style: GoogleFonts.kanit(
-                fontSize: 14,
-                color: Colors.black)),
-               leading: Image.asset(
-                'assets/setting.png',
-                width: 25,
-                height: 25,),
-              onTap: () {
-                print("Clicked");
-                Navigator.pushNamed(context, '/setting');
-              },
-             ),
-              ListTile(
-              title: Text('ออกจากระบบ',
-              style: GoogleFonts.kanit(
-                fontSize: 14,
-                color: Colors.black)),
-               leading: Image.asset(
-                'assets/logout.png',
-                width: 25,
-                height: 25,),
-              onTap: () {
-                _signOut();
-                Navigator.pushNamed(context, '/');
-              },
-             ),
-              ],
-            )
-            : Column(
-              children: [
-                Container(
-                  child: ListTile(
-                    title: Text('เข้าสู่ระบบ',
-                    style: GoogleFonts.kanit(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black87,
-                        ),
-                    ),
-                    leading: Image.asset(
-                      'assets/login.png',
-                      width: 25,
-                      height: 25,
-                    ),
-                    onTap: () {
-                      print("Clicked");
-                      Navigator.pushNamed(context, '/login');
-                    },
-                  ),
-                ),
-                ListTile(
-                title: Text('สมัครสมาชิก',
-                style: GoogleFonts.kanit(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black87,
-                    ),
-                ),
-                leading: Image.asset(
-                  'assets/register.png',
-                  width: 25,
-                  height: 25,
-                ),
-                onTap: () {
-                  print("Clicked");
-                  Navigator.pushNamed(context, '/register');
-                },
-              ),
-              ],
-            ),
-          ],
-        ),
-      ),
 
 
 
@@ -390,7 +213,4 @@ void _doOpenPage(context) {
            Future.delayed(const Duration(milliseconds: 2000), () {
                EasyLoading.dismiss();
             });
- 
-
-
 }
