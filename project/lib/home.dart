@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -36,15 +37,60 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
+  String? name;
+  String? avatar =
+      'https://cdn-icons-png.flaticon.com/512/149/149071.png';
   @override
  final GlobalKey<ScaffoldState> _drawerKey = new GlobalKey<ScaffoldState>();
   void initState() {
+    checkNameWhoCreated();
     super.initState();
     SystemChrome.setEnabledSystemUIMode (SystemUiMode.manual, overlays: []);
     if(FirebaseAuth.instance.currentUser != null){
       userEmail = FirebaseAuth.instance.currentUser?.email;
     }
   }
+
+
+  void checkNameWhoCreated() async {
+    if(FirebaseAuth.instance.currentUser != null){
+    final users = await FirebaseFirestore.instance
+        .collection('users')
+        .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
+        .where('avatar')
+        .get();
+        if(users.docs.isNotEmpty){
+          print('พบข้อมูลชื่อผู้โพส');
+          print(users.docs[0].data()['email']);
+          setState(() {
+            name = users.docs[0].data()['name'];
+            avatar = users.docs[0].data()['avatar'];
+          });
+         // print(avatar);
+          if(avatar == null){
+            setState(() {
+               print('ไม่พบรูปภาพ');
+               avatar = 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+            });
+            print(avatar);
+          }
+          else {
+            print('พบภาพโปรไฟล์');
+          }
+        }else if(users.docs.isEmpty){
+          print('ไม่พบข้อมูลชื่อผู้โพส');
+          setState(() {
+            name = 'ไม่พบชื่อผู้โพส';
+          });
+        }}
+        else{
+          print('ไม่พบข้อมูล');
+          setState(() {
+            name = 'ไม่พบชื่อ';
+          });
+        }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -114,11 +160,16 @@ class _HomepageState extends State<Homepage> {
                     child: Row(
                       children: <Widget>[
                         Container(
+                                width: 50,
+                                height: 100,
                           margin: EdgeInsets.only(left: 10),
-                          child: Image.network(
-                            "https://cdn-icons-png.flaticon.com/512/2397/2397697.png",
-                            width: 50,
-                            height: 100,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: CircleAvatar(
+                              backgroundImage: Image.network(avatar!).image,
+                               // radius: 10,
+                              
+                            ),
                           ),
                         ),
                         FirebaseAuth.instance.currentUser != null
