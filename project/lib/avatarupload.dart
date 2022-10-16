@@ -65,8 +65,21 @@ void initState() {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Upload Image'),
-        
+        backgroundColor: Colors.white,
+        title: Text('Upload Image',
+        style: GoogleFonts.kanit(
+          fontSize: 20,
+          color: Colors.black87,
+        ),
+        ),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new_outlined,
+                color: Colors.black87, size: 20),
+            color: Colors.black87,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
       ),
       body: Center(
         child: Column(
