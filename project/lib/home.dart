@@ -179,7 +179,7 @@ class _HomepageState extends State<Homepage> {
                               Container(
                                 margin: EdgeInsets.only(right: 50),
                                 child: Text(
-                                  FirebaseAuth.instance.currentUser!.displayName.toString(),
+                                  name.toString(),
                                   style: GoogleFonts.kanit(
                                     fontSize: 14,
                                     color: Colors.white,
