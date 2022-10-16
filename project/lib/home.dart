@@ -211,7 +211,7 @@ class _HomepageState extends State<Homepage> {
                                 child: Text(
                                   'กรุณาเข้าสู่ระบบ',
                                   style: GoogleFonts.kanit(
-                                    fontSize: 14,
+                                    fontSize: 18,
                                     color: Colors.white,
                                   ),
                                 ),

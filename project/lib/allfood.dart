@@ -107,7 +107,7 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                             (snapshot.data!).docs[index]['id'] == '') {
                           return SizedBox.shrink();
                         } else {
-                          print((snapshot.data!).docs[index]['uploadImageUrl']);
+                        
                           return Container(
                             width: 240,
                             height: 160,
