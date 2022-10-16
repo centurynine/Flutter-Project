@@ -10,6 +10,7 @@ import 'package:project/ShowMenu.dart';
 import 'package:project/editpage.dart';
 import 'package:project/home.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firbaseStorage;
+import 'package:project/notfound.dart';
 import 'package:project/searchpage.dart';
 import 'package:project/searchpagemyfood.dart';
 
@@ -79,9 +80,13 @@ class _MyFoodState extends State<MyFood> {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       EasyLoading.show(status: 'กำลังโหลด...');
                       print('Loading');
-                      return Text("",
+                      return Text("กำลังโหลด...",
                           textAlign: TextAlign.center,
                           style: GoogleFonts.kanit(fontSize: 20));
+                    }
+                    if(snapshot.data!.docs.isEmpty){
+                      EasyLoading.dismiss();
+                      return NotFound();
                     }
                     EasyLoading.dismiss();
                     return ListView.builder(
@@ -91,8 +96,11 @@ class _MyFoodState extends State<MyFood> {
                             (snapshot.data!).docs[index]['uploadImageUrl'] ==
                                 '' ||
                             (snapshot.data!).docs[index]['id'] == '') {
+                              print('Not Found');
                           return SizedBox.shrink();
-                        } else {
+                  
+                        } 
+                        else {
                           return Container(
                             width: 240,
                             height: 160,
@@ -257,7 +265,9 @@ class _MyFoodState extends State<MyFood> {
                               ),
                             ),
                           );
+                          
                         }
+                        
                       },
                     );
                   })),
