@@ -15,16 +15,11 @@ class Setting extends StatefulWidget {
 class _SettingState extends State<Setting> {
   final prefs = SharedPreferences.getInstance();
   bool fullScreen = false;
-  String? name;
+  String? name = 'กรุณาเข้าสู่ระบบ';
   String? avatar = 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
 
 @override
 void initState() {
-  if(name == null) {
-    setState(() {
-      name = 'ไม่พบชื่อผู้ใช้';
-    });
-  }
   super.initState();
   checkInfo();
 }
@@ -35,23 +30,26 @@ void initState() {
      await FirebaseFirestore.instance
         .collection('users')
         .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
+    //    .where('avatar')
         .get()
        .then((value) => value.docs.forEach((element) {
         setState(() {
           name = element.data()['name'];
           avatar = element.data()['avatar'];
-        });
-      }));
-      }
+        }); }));
+    }
       else {
-        setState(() {
-          name = 'กรุณาเข้าสู่ระบบ';
-          avatar = 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
-        });
       }
+      checkImageNull();
       }
         
-
+  void checkImageNull() {
+    if (avatar == null) {
+      setState(() {
+        avatar = 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+      });
+    }
+  }
 
 
 //   void checkInfo() async {
