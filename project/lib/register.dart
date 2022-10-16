@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project/drawer.dart';
 import 'package:project/home.dart';
 import 'package:project/login.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +44,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer:  DrawerWidget(),
         appBar: AppBar(
           backgroundColor: Colors.white,
           title: const Text('Register',

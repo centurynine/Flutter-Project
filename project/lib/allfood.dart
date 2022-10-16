@@ -9,6 +9,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:project/ShowMenu.dart';
+import 'package:project/drawer.dart';
 import 'package:project/editpage.dart';
 import 'package:project/home.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firbaseStorage;
@@ -52,6 +53,7 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
       children: [
         Expanded(
           child: Scaffold(
+drawer:  DrawerWidget(),
               appBar: AppBar(
                 backgroundColor: Colors.white,
                 automaticallyImplyLeading: false,

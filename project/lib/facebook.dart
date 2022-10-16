@@ -8,6 +8,7 @@ import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:project/drawer.dart';
 import 'package:project/home.dart';
 import 'package:project/login.dart';
 
@@ -23,6 +24,7 @@ class _FacebookLoginState extends State<FacebookLogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer:  DrawerWidget(),
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: const Text(

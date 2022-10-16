@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project/drawer.dart';
 import 'package:project/facebook.dart';
 import 'package:project/home.dart';
 
@@ -48,6 +49,8 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+ 
+drawer:  DrawerWidget(),
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.white,

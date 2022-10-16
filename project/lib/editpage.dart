@@ -7,6 +7,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:project/drawer.dart';
 
 class EditData extends StatefulWidget {
   final DocumentSnapshot docs;
@@ -34,6 +35,7 @@ class _EditDataState extends State<EditData> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer:  DrawerWidget(),
         appBar: AppBar(
           backgroundColor: Colors.white,
           title: Text(

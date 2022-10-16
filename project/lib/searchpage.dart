@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/ShowMenu.dart';
+import 'package:project/drawer.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -18,6 +19,7 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer:  DrawerWidget(),
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: IconButton(

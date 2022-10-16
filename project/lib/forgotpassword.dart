@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/body.dart';
+import 'package:project/drawer.dart';
 class forgotPassword extends StatefulWidget {
   const forgotPassword({super.key});
   @override
@@ -13,6 +14,7 @@ class _forgotPasswordState extends State<forgotPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer:  DrawerWidget(),
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: const Text('Forgot Password',

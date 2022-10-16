@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:project/ShowMenu.dart';
+import 'package:project/drawer.dart';
 import 'package:project/editpage.dart';
 import 'package:project/home.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firbaseStorage;
@@ -38,6 +39,7 @@ class _MyFoodState extends State<MyFood> {
       children: [
         Expanded(
           child: Scaffold(
+         drawer:  DrawerWidget(),
               appBar: AppBar(
                 automaticallyImplyLeading: false,
                 actions: [
@@ -277,6 +279,7 @@ class _MyFoodState extends State<MyFood> {
   }
 
   void checkCreate() async {
+    if(FirebaseAuth.instance.currentUser != null){
     QuerySnapshot query = await FirebaseFirestore.instance
         .collection('foods')
         .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
@@ -286,6 +289,9 @@ class _MyFoodState extends State<MyFood> {
     } else {
       isCreate = false;
     }
+  } else {
+    print('ไม่พบการเข้าสู่ระบบ');
+  }
   }
 
 }

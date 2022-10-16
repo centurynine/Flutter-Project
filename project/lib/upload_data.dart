@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:project/drawer.dart';
 
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -45,6 +46,7 @@ class _UploadDataState extends State<UploadData> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       drawer:  DrawerWidget(),
         appBar: AppBar(
           backgroundColor: Colors.white,
           title: Text(
@@ -388,13 +390,17 @@ class _UploadDataState extends State<UploadData> {
   }
 
   void countDocuments() async {
+    if(FirebaseAuth.instance.currentUser != null) {
     QuerySnapshot _myDoc =
         await FirebaseFirestore.instance.collection('foods').get();
     List<DocumentSnapshot> _myDocCount = _myDoc.docs;
     docslength = _myDocCount.length.toString();
     print('จำนวนข้อมูลก่อนเพิ่ม $docslength');
     updateDocuments();
+  } else {
+    print('ไม่พบการเข้าสู่ระบบ');
   }
+   }
 
   void updateDocuments() async {
     QuerySnapshot query = await FirebaseFirestore.instance
@@ -511,6 +517,7 @@ class _UploadDataState extends State<UploadData> {
   }
 
   _showImage() {
+    if(FirebaseAuth.instance.currentUser != null) {
     // AlertBox options
     showDialog(
         context: context,
@@ -558,6 +565,9 @@ class _UploadDataState extends State<UploadData> {
             ),
           );
         });
+  } else {
+    print('ไม่พบการเข้าสู่ระบบ');
+  }
   }
 
   _pictureCrop(imagePath) async {

@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/body.dart';
+import 'package:project/drawer.dart';
 import 'package:project/setting.dart';
 
 class Changedisplayname extends StatefulWidget {
@@ -21,6 +22,7 @@ class _ChangedisplaynameState extends State<Changedisplayname> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer:  DrawerWidget(),
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: const Text(' Change Displayname',

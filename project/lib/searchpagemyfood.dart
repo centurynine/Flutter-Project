@@ -4,6 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/ShowMenu.dart';
+import 'package:project/drawer.dart';
 import 'package:project/editpage.dart';
 CollectionReference users = FirebaseFirestore.instance.collection('users');
 class SearchPageMyFood extends StatefulWidget {
@@ -21,6 +22,7 @@ class _SearchPageMyFoodState extends State<SearchPageMyFood> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer:  DrawerWidget(),
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: IconButton(
