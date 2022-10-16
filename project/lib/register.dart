@@ -19,7 +19,8 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController password = TextEditingController();
   TextEditingController confirmPassword = TextEditingController();
   TextEditingController name = TextEditingController();
-
+  String? countUser;
+  String? countID;
   @override
   void initState() {
     super.initState();
@@ -146,26 +147,26 @@ class _RegisterPageState extends State<RegisterPage> {
           );
            print(_user.user!.uid);
            FirebaseAuth.instance.currentUser!.updateProfile(displayName: name.text.trim());
-           uploadUser();
+           countDocuments();
           _user.user!.sendEmailVerification();
-          _signOut();
-                            ScaffoldMessenger.of(context)
-                  .showMaterialBanner(MaterialBanner(
-                    content: Text("ลงทะเบียนสำเร็จ โปรดยืนยันอีเมลล์"),
-                    leading: Icon(Icons.info),
-                    actions: [
-                      TextButton(
-                        child: Text("ปิด"),
-                        onPressed: () {
-                          ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-                        },
-                      ),
-                    ],
-                  ));
-              Future.delayed(Duration(milliseconds: 3000), () {
-                ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-              });
-          Navigator.pushNamed(context, '/');
+        //  _signOut();
+              //               ScaffoldMessenger.of(context)
+              //     .showMaterialBanner(MaterialBanner(
+              //       content: Text("ลงทะเบียนสำเร็จ โปรดยืนยันอีเมลล์"),
+              //       leading: Icon(Icons.info),
+              //       actions: [
+              //         TextButton(
+              //           child: Text("ปิด"),
+              //           onPressed: () {
+              //             ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+              //           },
+              //         ),
+              //       ],
+              //     ));
+              // Future.delayed(Duration(milliseconds: 3000), () {
+              //   ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+              // });
+         // Navigator.pushNamed(context, '/');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
@@ -281,18 +282,91 @@ class _RegisterPageState extends State<RegisterPage> {
     } else {
       return false;
     }
+
   }
 
-  void uploadUser() async {
+  void countDocuments() async {
+    QuerySnapshot _allUser =
+        await FirebaseFirestore.instance.collection('users').get();
+    List<DocumentSnapshot> _myDocCount = _allUser.docs;
+    countUser = _myDocCount.length.toString();
+    print('จำนวนข้อมูลก่อนเพิ่ม $countUser');
+    updateDocuments();
+  }
+  
+
+  void updateDocuments() async {
+    QuerySnapshot query = await FirebaseFirestore.instance
+        .collection('users_count')
+        .where('userallcount')
+        .get();
+    if (query.docs.isNotEmpty) {
+      FirebaseFirestore.instance
+          .collection('users_count')
+          .where('userallcount')
+          .get()
+          .then((value) => FirebaseFirestore.instance
+              .collection('users_count')
+              .doc(value.docs[0].id)
+              .update({"userallcount": FieldValue.increment(1)}));
+      print('Add 1 to allcount');
+      createID();
+    } else if (query.docs.isEmpty) {
+      print('ไม่สามารถเพิ่มฟอร์มจำนวนได้');
+    }
+  }
+
+
+
+
+  void createID() async {
+    QuerySnapshot createcountid = await FirebaseFirestore.instance
+        .collection('users_count')
+        .where('userallcount')
+        .get();
+    if (createcountid.docs.isNotEmpty) {
+      var countid = (createcountid.docs[0]['userallcount'].toString());
+      print("จำนวนข้อมูล ID ทั้งหมดที่สร้างและ ID ปัจจุบัน : $countid");
+      setState(() {
+        countID = countid;
+      });
+      uploadUser(countID!);
+    }
+  }
+
+
+  // void uploadImageToFirebase(String countid) async {
+  //   String fileName = basename(_image!.path);
+  //   Reference firebaseStorageRef =
+  //       FirebaseStorage.instance.ref().child('users/$countid/$fileName');
+  //   UploadTask uploadTask = firebaseStorageRef.putFile(_image!);
+  //   TaskSnapshot taskSnapshot = await uploadTask;
+  //   taskSnapshot.ref.getDownloadURL().then(
+  //     (value) {
+  //       print("Done: $value");
+  //       setState(() {
+  //         _uploadedFileURL = value;
+  //       });
+  //       addDataToFirebase(countid);
+  //     },
+  //   );
+  // }
+
+  void uploadUser(String countID) async {
           await FirebaseFirestore.instance.collection("users").add(
         {
+          "id": countID,
           "uid": auth.currentUser!.uid,
           "email": email.text,
           "name": name.text,
           "admin": false.toString(),
           "created_at": DateTime.now().toString(),
+          "avatar": 'https://firebasestorage.googleapis.com/v0/b/mainproject-25523.appspot.com/o/avatarnull%2Favatar.png?alt=media&token=14755271-9e58-4710-909c-b10f9c1917e9'
           }
-          );
+    );
+    _signOut();
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => Homepage()));
   }
 
      Future _signOut() async {

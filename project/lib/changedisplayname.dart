@@ -107,7 +107,7 @@ class _ChangedisplaynameState extends State<Changedisplayname> {
   ElevatedButton buildButton() {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: Colors.lightBlue,
+        primary: Colors.red[400],
         onPrimary: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),

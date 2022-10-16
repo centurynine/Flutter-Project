@@ -16,7 +16,8 @@ class FacebookLogin extends StatefulWidget {
   @override
   _FacebookLoginState createState() => _FacebookLoginState();
 }
-
+  String? countUser;
+  String? countID;
 class _FacebookLoginState extends State<FacebookLogin> {
   final auth = FirebaseAuth.instance;
   @override
@@ -164,7 +165,7 @@ class _FacebookLoginState extends State<FacebookLogin> {
             FacebookAuthProvider.credential(result.accessToken!.token);
         final userCredential = await FirebaseAuth.instance
             .signInWithCredential(facebookCredential);
-        uploadUserFB(userEmailfb, userNamefb);
+        uploadUserFB();
         // Navigator.push(
         //   context,
         //   MaterialPageRoute(builder: (context) => Homepage()),
@@ -235,29 +236,88 @@ class _FacebookLoginState extends State<FacebookLogin> {
     );
   }
 
-  void uploadUserFB(String userEmail, String userName) async {
+
+
+  void countDocuments() async {
+    QuerySnapshot _allUser =
+        await FirebaseFirestore.instance.collection('users').get();
+    List<DocumentSnapshot> _myDocCount = _allUser.docs;
+    countUser = _myDocCount.length.toString();
+    print('จำนวนข้อมูลก่อนเพิ่ม $countUser');
+    updateDocuments();
+  }
+  
+
+  void updateDocuments() async {
+    QuerySnapshot query = await FirebaseFirestore.instance
+        .collection('users_count')
+        .where('userallcount')
+        .get();
+    if (query.docs.isNotEmpty) {
+      FirebaseFirestore.instance
+          .collection('users_count')
+          .where('userallcount')
+          .get()
+          .then((value) => FirebaseFirestore.instance
+              .collection('users_count')
+              .doc(value.docs[0].id)
+              .update({"userallcount": FieldValue.increment(1)}));
+      print('Add 1 to allcount');
+      createID();
+    } else if (query.docs.isEmpty) {
+      print('ไม่สามารถเพิ่มฟอร์มจำนวนได้');
+    }
+  }
+
+
+
+
+  void createID() async {
+    QuerySnapshot createcountid = await FirebaseFirestore.instance
+        .collection('users_count')
+        .where('userallcount')
+        .get();
+    if (createcountid.docs.isNotEmpty) {
+      var countID = (createcountid.docs[0]['userallcount'].toString());
+      print("จำนวนข้อมูล ID ทั้งหมดที่สร้างและ ID ปัจจุบัน : $countID");
+      createDatabase(countID);
+    }
+  }
+
+  void createDatabase(String countID) async {
+
+    await FirebaseFirestore.instance.collection("users").add({
+        "id": countID,
+        "uid": auth.currentUser!.uid,
+        "email": userEmail.toString(),
+        "name": userName.toString(),
+        "admin": false.toString(),
+        "created_at": DateTime.now().toString(),
+        "avatar": 'https://firebasestorage.googleapis.com/v0/b/mainproject-25523.appspot.com/o/avatarnull%2Favatar.png?alt=media&token=14755271-9e58-4710-909c-b10f9c1917e9'
+      });
+      EasyLoading.dismiss();
+
+  }
+
+  void uploadUserFB() async {
     QuerySnapshot query = await FirebaseFirestore.instance
         .collection('users')
         .where('email', isEqualTo: userEmail)
         .get();
     if (query.docs.isNotEmpty) {
+      // print(userEmail);
+      // print(userName);
       print("User already exists");
       EasyLoading.showSuccess('เข้าสู่ระบบสำเร็จ!');
       Future.delayed(const Duration(milliseconds: 2500), () {
         EasyLoading.dismiss();
       });
     } else if (query.docs.isEmpty) {
+      countDocuments();
       EasyLoading.showError('กำลังสร้างบัญชีผู้ใช้');
       Future.delayed(const Duration(milliseconds: 2500), () {
-        EasyLoading.dismiss();
       });
-      await FirebaseFirestore.instance.collection("users").add({
-        "uid": auth.currentUser!.uid,
-        "email": userEmail.toString(),
-        "name": userName.toString(),
-        "admin": false.toString(),
-        "created_at": DateTime.now().toString(),
-      });
+
     }
   }
 }
