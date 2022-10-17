@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:project/ShowMenu.dart';
-import 'package:project/drawer.dart';
+import 'package:project/food/ShowMenu.dart';
+import 'package:project/widget/drawer.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});

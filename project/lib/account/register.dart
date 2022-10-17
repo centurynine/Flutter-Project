@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:project/drawer.dart';
-import 'package:project/home.dart';
-import 'package:project/login.dart';
+import 'package:project/widget/drawer.dart';
+import 'package:project/homepage/home.dart';
+import 'package:project/account/login.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -142,6 +143,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
  Future<void> registerWithEmailPassword() async {
+  if(FirebaseAuth.instance.currentUser == null) {
     try {
       final _user = await auth.createUserWithEmailAndPassword(
           email: email.text.trim(), 
@@ -184,6 +186,9 @@ class _RegisterPageState extends State<RegisterPage> {
         print('auth error ' + e.toString());
         print(e);
       }
+    }}
+    else {
+      Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => Homepage()));
     }
   }
 

@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:project/body.dart';
-import 'package:project/drawer.dart';
-import 'package:project/login.dart';
+import 'package:project/homepage/body.dart';
+import 'package:project/widget/drawer.dart';
+import 'package:project/account/login.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:project/pleaselogin.dart';
-import 'allfood.dart';
+import 'package:project/homepage/pleaselogin.dart';
+import '../food/allfood.dart';
 
 bool fullScreen = false;
 String screenText = 'Full Screen';

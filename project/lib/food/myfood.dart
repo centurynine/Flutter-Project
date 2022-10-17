@@ -6,14 +6,14 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:project/ShowMenu.dart';
-import 'package:project/drawer.dart';
-import 'package:project/editpage.dart';
-import 'package:project/home.dart';
+import 'package:project/food/ShowMenu.dart';
+import 'package:project/widget/drawer.dart';
+import 'package:project/food/editpage.dart';
+import 'package:project/homepage/home.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firbaseStorage;
-import 'package:project/notfound.dart';
-import 'package:project/searchpage.dart';
-import 'package:project/searchpagemyfood.dart';
+import 'package:project/food/notfound.dart';
+import 'package:project/search/searchpage.dart';
+import 'package:project/search/searchpagemyfood.dart';
 
 class MyFood extends StatefulWidget {
   const MyFood({super.key});

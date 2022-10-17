@@ -7,9 +7,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:project/drawer.dart';
-import 'package:project/facebook.dart';
-import 'package:project/home.dart';
+import 'package:project/widget/drawer.dart';
+import 'package:project/account/facebook.dart';
+import 'package:project/homepage/home.dart';
 
 int status = 0;
 dynamic userEmail = "No Email";
@@ -219,6 +219,7 @@ class _LoginPageState extends State<LoginPage> {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         ),
         onPressed: () async {
+        if(FirebaseAuth.instance.currentUser == null){
           if (_formstate.currentState!.validate()) {
             print('Valid Form');
             _formstate.currentState!.save();
@@ -305,7 +306,13 @@ class _LoginPageState extends State<LoginPage> {
             print('Invalid Form');
             _showMyDialog();
           }
-        });
+        } else {
+          Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => Homepage()));
+        }
+        
+        }
+
+        );
   }
 
   TextFormField passwordTextFormField() {

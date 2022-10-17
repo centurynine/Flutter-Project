@@ -5,14 +5,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:project/allfood.dart';
-import 'package:project/login.dart';
-import 'package:project/facebook.dart';
-import 'package:project/recommend_widget.dart';
-import 'package:project/searchpage.dart';
-import 'package:project/upload_widget.dart';
-import 'List.dart';
-
+import 'package:project/food/allfood.dart';
+import 'package:project/account/login.dart';
+import 'package:project/account/facebook.dart';
+import 'package:project/homepage/recommend_widget.dart';
+import 'package:project/search/searchpage.dart';
+import 'package:project/homepage/upload_widget.dart';
 class Body extends StatefulWidget {
   const Body({super.key});
   @override

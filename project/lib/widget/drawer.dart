@@ -4,9 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:project/home.dart';
-import 'package:project/login.dart';
-import 'package:project/setting.dart';
+import 'package:project/homepage/home.dart';
+import 'package:project/account/login.dart';
+import 'package:project/account/setting.dart';
 
 class DrawerWidget extends StatefulWidget {
   const DrawerWidget({super.key});

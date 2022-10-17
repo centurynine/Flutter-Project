@@ -8,9 +8,9 @@ import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:project/drawer.dart';
-import 'package:project/home.dart';
-import 'package:project/login.dart';
+import 'package:project/widget/drawer.dart';
+import 'package:project/homepage/home.dart';
+import 'package:project/account/login.dart';
 
 class FacebookLogin extends StatefulWidget {
   const FacebookLogin({Key? key}) : super(key: key);

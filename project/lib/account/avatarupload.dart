@@ -8,8 +8,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:project/drawer.dart';
-import 'package:project/setting.dart';
+import 'package:project/widget/drawer.dart';
+import 'package:project/account/setting.dart';
 
 class AvatarUpload extends StatefulWidget {
   const AvatarUpload({super.key});

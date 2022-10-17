@@ -5,22 +5,21 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:project/HomePageWidget.dart';
-import 'package:project/ShowMenu.dart';
-import 'package:project/allfood.dart';
-import 'package:project/avatarupload.dart';
-import 'package:project/changedisplayname.dart';
-import 'package:project/facebook.dart';
-import 'package:project/forgotpassword.dart';
-import 'package:project/home.dart';
-import 'package:project/login.dart';
-import 'package:project/myfood.dart';
-import 'package:project/register.dart';
+import 'package:project/food/ShowMenu.dart';
+import 'package:project/food/allfood.dart';
+import 'package:project/account/avatarupload.dart';
+import 'package:project/account/changedisplayname.dart';
+import 'package:project/account/facebook.dart';
+import 'package:project/account/forgotpassword.dart';
+import 'package:project/homepage/home.dart';
+import 'package:project/account/login.dart';
+import 'package:project/food/myfood.dart';
+import 'package:project/account/register.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:project/searchpage.dart';
-import 'package:project/searchpagemyfood.dart';
-import 'package:project/setting.dart';
-import 'package:project/upload_data.dart';
+import 'package:project/search/searchpage.dart';
+import 'package:project/search/searchpagemyfood.dart';
+import 'package:project/account/setting.dart';
+import 'package:project/food/upload_data.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -61,7 +60,6 @@ class MyApp extends StatelessWidget {
         '/forgotpassword': (context) => forgotPassword(),
         '/fb': (context) => FacebookLogin(),
         '/setting': (context) => Setting(),
-        '/widget': (context) => HomePageWidget(),
         '/food': (context) => BodyAfterLogin(),
     //    '/showmenu': (context) => ShowMenu(docs:),
         '/upload': (context) => UploadData(),

@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:project/drawer.dart';
+import 'package:project/widget/drawer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
 

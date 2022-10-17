@@ -7,7 +7,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:project/drawer.dart';
+import 'package:project/widget/drawer.dart';
 
 class EditData extends StatefulWidget {
   final DocumentSnapshot docs;

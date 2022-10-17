@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:project/body.dart';
-import 'package:project/drawer.dart';
-import 'package:project/setting.dart';
+import 'package:project/homepage/body.dart';
+import 'package:project/widget/drawer.dart';
+import 'package:project/account/setting.dart';
 
 class Changedisplayname extends StatefulWidget {
   const Changedisplayname({super.key});
