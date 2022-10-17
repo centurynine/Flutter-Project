@@ -141,6 +141,7 @@ class _FacebookLoginState extends State<FacebookLogin> {
   }
 
   void signInWithFacebook() async {
+    if(FirebaseAuth.instance.currentUser == null){
     try {
       EasyLoading.show(status: 'กำลังโหลด...');
       final LoginResult result = await FacebookAuth.instance
@@ -195,6 +196,9 @@ class _FacebookLoginState extends State<FacebookLogin> {
       print(e.toString());
       EasyLoading.dismiss();
     }
+  } else {
+    Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => Homepage()));
+  }
   }
 
   Future<void> signOut() async {
