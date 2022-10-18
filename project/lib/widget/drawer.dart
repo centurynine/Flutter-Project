@@ -58,13 +58,13 @@ class _DrawerWidgetState extends State<DrawerWidget> {
         }else if(users.docs.isEmpty){
           print('ไม่พบข้อมูลชื่อผู้โพส');
           setState(() {
-            name = 'ไม่พบชื่อผู้โพส';
+            name = 'ไม่พบชื่อผู้ใช้';
           });
         }}
         else{
           print('ไม่พบข้อมูล');
           setState(() {
-            name = 'ไม่พบชื่อ';
+            name = 'ไม่พบชื่อผู้ใช้';
           });
         }
   }

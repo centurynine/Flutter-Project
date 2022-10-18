@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project/account/changepassword.dart';
 import 'package:project/food/ShowMenu.dart';
 import 'package:project/food/allfood.dart';
 import 'package:project/account/avatarupload.dart';
@@ -38,7 +39,9 @@ class MyApp extends StatelessWidget {
   }
 
   MaterialApp buildMaterialApp() {
+    
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -61,13 +64,13 @@ class MyApp extends StatelessWidget {
         '/fb': (context) => FacebookLogin(),
         '/setting': (context) => Setting(),
         '/food': (context) => BodyAfterLogin(),
-    //    '/showmenu': (context) => ShowMenu(docs:),
         '/upload': (context) => UploadData(),
         '/changedisplayname': (context) => Changedisplayname(),
         '/searchpage': (context) => SearchPage(),
         '/searchpagemyfood': (context) => SearchPageMyFood(),
         '/myfood': (context) => MyFood(),
         '/avatarupload': (context) => AvatarUpload(),
+        '/changepassword': (context) => ChangePassword(),
       },
     );
   }

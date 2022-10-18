@@ -1,23 +1,223 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:project/homepage/body.dart';
-import 'package:project/account/login.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:project/widget/drawer.dart';
+import 'package:project/account/setting.dart';
+
+class ChangePassword extends StatefulWidget {
+  const ChangePassword({super.key});
+  @override
+  State<ChangePassword> createState() => _ChangePasswordState();
+}
+
+class _ChangePasswordState extends State<ChangePassword> {
+  final formKey = GlobalKey<FormState>();
+  final nameController = TextEditingController();
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final userEmail = FirebaseAuth.instance.currentUser?.email;
+  String? currentPassword;
+  String? newPassword;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      drawer:  DrawerWidget(),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: const Text(' Change Password',
+            style: TextStyle(color: Colors.black87)
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new_outlined),
+          color: Colors.black87,
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
+      body: Form(
+        key: formKey,
+        child: ListView(children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(top: 30.0),
+            child: SizedBox(
+              height: 100,
+              child: Image.asset(
+                  "assets/images/passwordchange.png"),
+            ),
+          ),
+          SizedBox(height: 80),
+          Text(
+            "           Password change",
+            style: GoogleFonts.kanit(
+              fontSize: 20,
+              color: Colors.black,
+            ),
+          ),
+          Text(
+            "             กรอกรหัสผ่าน",
+            style: GoogleFonts.kanit(
+              fontSize: 14,
+              color: Colors.black,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 20.0),
+            child: Container(
+                margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+                child: passwordText()),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 20.0),
+            child: Container(
+                margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+                child: newPasswordText()),
+          ),
+          SizedBox(height: 20),
+          Container(
+              margin: const EdgeInsets.only(left: 100.0, right: 100.0),
+              child: buildButton()),
+        ]),
+      ),
+    );
+  }
+
+  TextFormField passwordText() {
+    return TextFormField(
+      onSaved: (value) {
+        currentPassword = value!.trim();
+      },
+      validator: (value) {
+        if (!validatePassword(value!))
+          return 'กรุณากรอกรหัสผ่านให้มากกว่า 8 ตัวอักษร';
+        else
+        setState(() {
+          currentPassword = value;
+        });
+          return null;
+      },
+      keyboardType: TextInputType.emailAddress,
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(22.0)),
+        ),
+        labelText: 'รหัสผ่านเก่า',
+        prefixIcon: Icon(Icons.email),
+        hintText: '@examplepassword',
+        labelStyle: GoogleFonts.kanit(
+          fontSize: 14,
+        ),
+      ),
+    );
+  }
+
+
+  TextFormField newPasswordText() {
+    return TextFormField(
+      onSaved: (value) {
+        newPassword = value!.trim();
+      },
+      validator: (value) {
+        if (!validatePassword(value!))
+          return 'กรุณากรอกรหัสผ่านให้มากกว่า 8 ตัวอักษร';
+        else
+        setState(() {
+          newPassword = value;
+        }
+        );
+          return null;
+      },
+      keyboardType: TextInputType.emailAddress,
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(22.0)),
+        ),
+        labelText: 'รหัสผ่านใหม่',
+        prefixIcon: Icon(Icons.email),
+        hintText: '@examplepassword',
+        labelStyle: GoogleFonts.kanit(
+          fontSize: 14,
+        ),
+      ),
+    );
+  }
+
+
+  ElevatedButton buildButton() {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        minimumSize: const Size(200, 50),
+        primary: Colors.red[400],
+        onPrimary: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+      ),
+      onPressed: () async {
+        _changePassword();
+      },
+      child: Text('เปลี่ยนรหัสผ่าน',
+      style: GoogleFonts.kanit(
+        fontSize: 20,
+        color: Colors.white,
+      ),
+      ),
+    );
+  }
+
+ Future _changePassword() async {
+    var user = FirebaseAuth.instance.currentUser!;
+    if (formKey.currentState!.validate()) {
+      try {
+    final cred =  EmailAuthProvider.credential(email: userEmail!, password: currentPassword!);
+    await user.reauthenticateWithCredential(cred).then((value) async {
+      try {
+        await user.updatePassword(newPassword!);
+        EasyLoading.showSuccess('เปลี่ยนรหัสผ่านสำเร็จแล้ว');
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Setting()),
+        );
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'weak-password') {
+          EasyLoading.showError('รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร');
+        } else if (e.code == 'wrong-password') {
+          EasyLoading.showError('รหัสผ่านไม่ถูกต้อง');
+        }
+      } catch (e) {
+        print(e);
+      }
+    });
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'wrong-password') {
+        EasyLoading.showError('รหัสผ่านไม่ถูกต้อง');
+      }
+    }
+    }
+ }
+ }
 
 
 
- 
+
+  // bool validatePassword(String value) {
+  //   String pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$';
+  //   RegExp regExp = new RegExp(pattern);
+  //   return regExp.hasMatch(value);
+  // }
+
+  bool validatePassword(String value) {
+    if (value.length < 8) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
 
-// void _changePassword(String password) async{
-//    //Create an instance of the current user. 
-//     FirebaseUser user = await FirebaseAuth.instance.currentUser();
-//     user.updatePassword(password).then((_){
-//       print("Successfully changed password");
-//     }).catchError((error){
-//       print("Password can't be changed" + error.toString());
 
-//     });
-//   }
+    

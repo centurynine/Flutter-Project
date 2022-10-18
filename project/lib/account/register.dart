@@ -341,24 +341,6 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
-
-  // void uploadImageToFirebase(String countid) async {
-  //   String fileName = basename(_image!.path);
-  //   Reference firebaseStorageRef =
-  //       FirebaseStorage.instance.ref().child('users/$countid/$fileName');
-  //   UploadTask uploadTask = firebaseStorageRef.putFile(_image!);
-  //   TaskSnapshot taskSnapshot = await uploadTask;
-  //   taskSnapshot.ref.getDownloadURL().then(
-  //     (value) {
-  //       print("Done: $value");
-  //       setState(() {
-  //         _uploadedFileURL = value;
-  //       });
-  //       addDataToFirebase(countid);
-  //     },
-  //   );
-  // }
-
   void uploadUser(String countID) async {
           await FirebaseFirestore.instance.collection("users").add(
         {

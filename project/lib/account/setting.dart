@@ -16,7 +16,7 @@ class Setting extends StatefulWidget {
 class _SettingState extends State<Setting> {
   final prefs = SharedPreferences.getInstance();
   bool fullScreen = false;
-  String? name = 'กรุณาเข้าสู่ระบบ';
+  String? name = 'ไม่พบชื่อผู้ใช้';
   String? avatar = 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
 
 @override
@@ -187,6 +187,22 @@ void initState() {
                       backgroundColor: Colors.red[400],
                     ),
                     title: "ลืมรหัสผ่าน",
+                    titleStyle: GoogleFonts.kanit(
+                      fontSize: 18,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  SettingsItem(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/changepassword');
+                    },
+                    icons: Icons.near_me,
+                    iconStyle: IconStyle(
+                      withBackground: true,
+                      borderRadius: 50,
+                      backgroundColor: Colors.red[400],
+                    ),
+                    title: "เปลี่ยนรหัสผ่าน",
                     titleStyle: GoogleFonts.kanit(
                       fontSize: 18,
                       color: Colors.black87,

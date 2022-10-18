@@ -36,13 +36,6 @@ class _SearchPageState extends State<SearchPage> {
                 decoration: BoxDecoration(
                   color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(12),
-                  // boxShadow: [
-                  //   BoxShadow(
-                  //     color: Colors.black.withOpacity(0.1),
-                  //     offset: const Offset(0, 10),
-                  //     blurRadius: 10,
-                  //   ),
-                  // ],
                 ),
            
               child: TextField(
