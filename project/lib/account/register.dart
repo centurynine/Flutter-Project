@@ -23,6 +23,22 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController name = TextEditingController();
   String? countUser;
   String? countID;
+  bool hidePassword = true;
+  bool hideConfirmPassword = true;
+
+  void togglePasswordView() {
+    setState(() {
+      hidePassword = !hidePassword;
+    });
+  }
+
+  void toggleConfirmPasswordView() {
+    setState(() {
+      hideConfirmPassword = !hideConfirmPassword;
+    });
+  }
+
+
   @override
   void initState() {
     super.initState();
@@ -202,14 +218,22 @@ class _RegisterPageState extends State<RegisterPage> {
         else
           return null;
       },
-      obscureText: true,
+      obscureText: hidePassword,
       keyboardType: TextInputType.text,
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(22.0)),
         ),
         prefixIcon: Icon(Icons.lock),
         labelText: 'Password',
+        suffixIcon: IconButton(
+          onPressed: togglePasswordView,
+          icon: Icon(
+            hidePassword 
+            ? Icons.visibility_off 
+            : Icons.visibility,
+          ),
+        ),
       ),
     );
   }
@@ -224,14 +248,22 @@ class _RegisterPageState extends State<RegisterPage> {
            return 'รหัสผ่านไม่ตรงกัน';
          return null;
       },
-      obscureText: true,
+      obscureText: hideConfirmPassword,
       keyboardType: TextInputType.text,
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(22.0)),
         ),
         prefixIcon: Icon(Icons.lock),
         labelText: 'Confirm Password',
+        suffixIcon: IconButton(
+          onPressed: toggleConfirmPasswordView,
+          icon: Icon(
+            hideConfirmPassword 
+            ? Icons.visibility_off 
+            : Icons.visibility,
+          ),
+        ),
       ),
     );
   }

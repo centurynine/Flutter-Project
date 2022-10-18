@@ -27,7 +27,7 @@ class _LoginPageState extends State<LoginPage> {
   String? email;
   String? password;
   final auth = FirebaseAuth.instance;
- 
+  bool hideCurrentPassword = true;
   @override
   void initState() {
     super.initState();    
@@ -45,6 +45,11 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  void toggleCurrentPasswordView() {
+    setState(() {
+      hideCurrentPassword = !hideCurrentPassword;
+    });
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -326,15 +331,23 @@ class _LoginPageState extends State<LoginPage> {
         else
           return null;
       },
-      obscureText: true,
+      obscureText: hideCurrentPassword,
       keyboardType: TextInputType.text,
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(22.0)),
         ),
         hintText: 'รหัสผ่าน',
         labelText: 'Password',
         prefixIcon: Icon(Icons.lock),
+        suffixIcon: IconButton(
+          onPressed: toggleCurrentPasswordView,
+          icon: Icon(
+            hideCurrentPassword 
+            ? Icons.visibility_off 
+            : Icons.visibility,
+          ),
+        ),
       ),
     );
   }

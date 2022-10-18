@@ -23,7 +23,27 @@ class _ChangePasswordState extends State<ChangePassword> {
   final userEmail = FirebaseAuth.instance.currentUser?.email;
   String? currentPassword;
   String? newPassword;
+  bool hideCurrentPassword = true;
+  bool hideNewPassword = true;
+  bool hideNewConfirmPassword = true;
 
+  void toggleCurrentPasswordView() {
+    setState(() {
+      hideCurrentPassword = !hideCurrentPassword;
+    });
+  }
+
+  void toggleNewPasswordView() {
+    setState(() {
+      hideNewPassword = !hideNewPassword;
+    });
+  }
+
+  void toggleNewConfirmPasswordView() {
+    setState(() {
+      hideNewConfirmPassword = !hideNewConfirmPassword;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,7 +128,7 @@ class _ChangePasswordState extends State<ChangePassword> {
         });
           return null;
       },
-      obscureText: true,
+      obscureText: hideCurrentPassword,
       keyboardType: TextInputType.visiblePassword,
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
@@ -117,6 +137,14 @@ class _ChangePasswordState extends State<ChangePassword> {
         ),
         labelText: 'รหัสผ่านเก่า',
         prefixIcon: Icon(Icons.password_outlined),
+        suffixIcon: IconButton(
+          onPressed: toggleCurrentPasswordView,
+          icon: Icon(
+            hideCurrentPassword 
+            ? Icons.visibility_off 
+            : Icons.visibility,
+          ),
+        ),
         hintText: '@examplepassword',
         labelStyle: GoogleFonts.kanit(
           fontSize: 14,
@@ -144,13 +172,21 @@ class _ChangePasswordState extends State<ChangePassword> {
       },
       keyboardType: TextInputType.visiblePassword,
       textInputAction: TextInputAction.next,
-      obscureText: true,
+      obscureText: hideNewPassword,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(22.0)),
         ),
         labelText: 'รหัสผ่านใหม่',
         prefixIcon: Icon(Icons.password_outlined),
+        suffixIcon: IconButton(
+          onPressed: toggleNewPasswordView,
+          icon: Icon(
+            hideNewPassword 
+            ? Icons.visibility_off 
+            : Icons.visibility,
+          ),
+        ),
         hintText: '@newpassword',
         labelStyle: GoogleFonts.kanit(
           fontSize: 14,
@@ -175,13 +211,21 @@ class _ChangePasswordState extends State<ChangePassword> {
       },
       keyboardType: TextInputType.visiblePassword,
       textInputAction: TextInputAction.next,
-      obscureText: true,
+      obscureText: hideNewConfirmPassword,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(22.0)),
         ),
         labelText: 'ยืนยันรหัสผ่านใหม่',
         prefixIcon: Icon(Icons.password_outlined),
+        suffixIcon: IconButton(
+          onPressed: toggleNewConfirmPasswordView,
+          icon: Icon(
+            hideNewConfirmPassword 
+            ? Icons.visibility_off 
+            : Icons.visibility,
+          ),
+        ),
         hintText: '@newpassword',
         labelStyle: GoogleFonts.kanit(
           fontSize: 14,
@@ -248,8 +292,11 @@ class _ChangePasswordState extends State<ChangePassword> {
           context,
           MaterialPageRoute(builder: (context) => LoginPage()),
         );
-  }
  }
+  
+ }
+
+
  }
 
 
