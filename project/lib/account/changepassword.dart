@@ -14,6 +14,8 @@ class ChangePassword extends StatefulWidget {
 }
 
 class _ChangePasswordState extends State<ChangePassword> {
+  TextEditingController newPasswordSave = TextEditingController();
+  TextEditingController confirmNewPasswordSave = TextEditingController();
   final formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -76,6 +78,12 @@ class _ChangePasswordState extends State<ChangePassword> {
                 margin: const EdgeInsets.only(left: 20.0, right: 20.0),
                 child: newPasswordText()),
           ),
+                    Padding(
+            padding: const EdgeInsets.only(top: 20.0),
+            child: Container(
+                margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+                child: confirmNewPasswordText()),
+          ),
           SizedBox(height: 20),
           Container(
               margin: const EdgeInsets.only(left: 100.0, right: 100.0),
@@ -99,14 +107,15 @@ class _ChangePasswordState extends State<ChangePassword> {
         });
           return null;
       },
-      keyboardType: TextInputType.emailAddress,
+      obscureText: true,
+      keyboardType: TextInputType.visiblePassword,
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(22.0)),
         ),
         labelText: 'รหัสผ่านเก่า',
-        prefixIcon: Icon(Icons.email),
+        prefixIcon: Icon(Icons.password_outlined),
         hintText: '@examplepassword',
         labelStyle: GoogleFonts.kanit(
           fontSize: 14,
@@ -118,6 +127,7 @@ class _ChangePasswordState extends State<ChangePassword> {
 
   TextFormField newPasswordText() {
     return TextFormField(
+      controller: newPasswordSave,
       onSaved: (value) {
         newPassword = value!.trim();
       },
@@ -131,15 +141,16 @@ class _ChangePasswordState extends State<ChangePassword> {
         );
           return null;
       },
-      keyboardType: TextInputType.emailAddress,
+      keyboardType: TextInputType.visiblePassword,
       textInputAction: TextInputAction.next,
+      obscureText: true,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(22.0)),
         ),
         labelText: 'รหัสผ่านใหม่',
-        prefixIcon: Icon(Icons.email),
-        hintText: '@examplepassword',
+        prefixIcon: Icon(Icons.password_outlined),
+        hintText: '@newpassword',
         labelStyle: GoogleFonts.kanit(
           fontSize: 14,
         ),
@@ -147,6 +158,36 @@ class _ChangePasswordState extends State<ChangePassword> {
     );
   }
 
+
+  TextFormField confirmNewPasswordText() {
+    return TextFormField(
+      controller: confirmNewPasswordSave,
+      onSaved: (value) {
+        newPassword = value!.trim();
+      },
+      validator: (value) {
+        if(value!.isEmpty)
+           return 'กรุณากรอกรหัสผ่านอีกครั้ง';
+         if(value != newPasswordSave.text)
+           return 'รหัสผ่านไม่ตรงกัน';
+         return null;
+      },
+      keyboardType: TextInputType.visiblePassword,
+      textInputAction: TextInputAction.next,
+      obscureText: true,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(22.0)),
+        ),
+        labelText: 'ยืนยันรหัสผ่านใหม่',
+        prefixIcon: Icon(Icons.password_outlined),
+        hintText: '@newpassword',
+        labelStyle: GoogleFonts.kanit(
+          fontSize: 14,
+        ),
+      ),
+    );
+  }
 
   ElevatedButton buildButton() {
     return ElevatedButton(

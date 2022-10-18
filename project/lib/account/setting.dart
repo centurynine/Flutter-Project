@@ -52,6 +52,9 @@ void initState() {
     }
   }
 
+  // void checkFbLogin() async {
+    
+  // }
 
 //   void checkInfo() async {
 //     if(FirebaseAuth.instance.currentUser != null){
@@ -109,7 +112,10 @@ void initState() {
               Stack(
                 children: [
                   Column(
-                    children: [BigUserCard(
+                    children: [
+                    BigUserCard(
+                      userProfilePic: const AssetImage("assets/images/grey.png"),
+                      cardRadius: 20,
                       cardColor: Colors.black54,
                       userName: name.toString(),
                       cardActionWidget: SettingsItem(
@@ -132,11 +138,13 @@ void initState() {
                         onTap: () {
                           Navigator.pushNamed(context, '/avatarupload');
                         },
-                      ), userProfilePic: AssetImage('assets/images/transparent.png',),
+                      ),
                     ),
                 ]
                 ),
                    Positioned(
+                    // top: 15,
+                    // left: 50,
                     top: 15,
                     left: 50,
                     child: ClipRRect(
