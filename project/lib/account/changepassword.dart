@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project/account/login.dart';
 import 'package:project/widget/drawer.dart';
 import 'package:project/account/setting.dart';
 
@@ -170,6 +171,7 @@ class _ChangePasswordState extends State<ChangePassword> {
   }
 
  Future _changePassword() async {
+  if (FirebaseAuth.instance.currentUser != null) {
     var user = FirebaseAuth.instance.currentUser!;
     if (formKey.currentState!.validate()) {
       try {
@@ -198,6 +200,13 @@ class _ChangePasswordState extends State<ChangePassword> {
       }
     }
     }
+ } else {
+    EasyLoading.showError('กรุณาเข้าสู่ระบบ');
+          Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => LoginPage()),
+        );
+  }
  }
  }
 
