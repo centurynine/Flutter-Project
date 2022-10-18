@@ -87,10 +87,11 @@ class _ChangedisplaynameState extends State<Changedisplayname> {
       validator: (value) {
         if (!validateUsername(value!))
           return 'กรุณากรอกชื่อให้มากกว่า 6 ตัวอักษร';
-        else
-        setState(() {
+        else {
+          setState(() {
           nameNew = value;
         });
+        }
           return null;
       },
       keyboardType: TextInputType.emailAddress,
@@ -137,8 +138,8 @@ class _ChangedisplaynameState extends State<Changedisplayname> {
         changeName();
       }
       else {
-         print('ไม่สามารถเปลี่ยนชื่อได้');
-         EasyLoading.showError('ไม่สามารถใช้ชื่อนี้ได้');
+         print('ไม่สามารถใช้ชื่อนี้ได้');
+         EasyLoading.showError('ชื่อนี้ถูกใช้ไปแล้ว');
       }
     }
   }

@@ -92,7 +92,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10.0),
                             child: CircleAvatar(
-                              backgroundImage: Image.network(avatar!).image,
+                              
+                              backgroundImage: Image.network(avatar!).image
                                // radius: 10,
                               
                             ),

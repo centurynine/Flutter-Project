@@ -62,7 +62,6 @@ void initState() {
       setState(() {
         isFB = true;
       });
-      print(isFB);
     }
   }
 

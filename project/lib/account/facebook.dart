@@ -303,7 +303,7 @@ class _FacebookLoginState extends State<FacebookLogin> {
         "avatar": 'https://firebasestorage.googleapis.com/v0/b/mainproject-25523.appspot.com/o/avatarnull%2Favatar.png?alt=media&token=14755271-9e58-4710-909c-b10f9c1917e9'
       });
       EasyLoading.dismiss();
-
+      EasyLoading.showSuccess('สร้างบัญชีผู้ใช้สำเร็จ');
   }
 
   void uploadUserFB() async {
@@ -321,7 +321,7 @@ class _FacebookLoginState extends State<FacebookLogin> {
       });
     } else if (query.docs.isEmpty) {
       countDocuments();
-      EasyLoading.showError('กำลังสร้างบัญชีผู้ใช้');
+      EasyLoading.show(status: 'กำลังสร้างบัญชีผู้ใช้');
       Future.delayed(const Duration(milliseconds: 2500), () {
       });
 
