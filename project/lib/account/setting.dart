@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/widget/drawer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,13 +17,15 @@ class Setting extends StatefulWidget {
 class _SettingState extends State<Setting> {
   final prefs = SharedPreferences.getInstance();
   bool fullScreen = false;
+  bool isFB = false;
   String? name = 'ไม่พบชื่อผู้ใช้';
   String? avatar = 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+  String? loginWith;
 
 @override
 void initState() {
-  super.initState();
   checkInfo();
+  super.initState();
 }
 
 
@@ -32,16 +35,18 @@ void initState() {
         .collection('users')
         .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
     //    .where('avatar')
-        .get()
+       .get()
        .then((value) => value.docs.forEach((element) {
         setState(() {
           name = element.data()['name'];
           avatar = element.data()['avatar'];
+          loginWith = element.data()['loginwith'];
         }); }));
+        checkImageNull();
+        checkFbLogin();
     }
       else {
       }
-      checkImageNull();
       }
         
   void checkImageNull() {
@@ -52,9 +57,14 @@ void initState() {
     }
   }
 
-  // void checkFbLogin() async {
-    
-  // }
+  void checkFbLogin() async {
+    if(loginWith == 'Facebook'){
+      setState(() {
+        isFB = true;
+      });
+      print(isFB);
+    }
+  }
 
 //   void checkInfo() async {
 //     if(FirebaseAuth.instance.currentUser != null){
@@ -200,11 +210,12 @@ void initState() {
                       color: Colors.black87,
                     ),
                   ),
-                  SettingsItem(
+                  isFB == false
+                  ? SettingsItem(
                     onTap: () {
                       Navigator.pushNamed(context, '/changepassword');
                     },
-                    icons: Icons.near_me,
+                    icons: Icons.lock,
                     iconStyle: IconStyle(
                       withBackground: true,
                       borderRadius: 50,
@@ -215,7 +226,23 @@ void initState() {
                       fontSize: 18,
                       color: Colors.black87,
                     ),
-                  ),
+                  )
+                  : SettingsItem(
+                    trailing: Icon(Icons.lock),
+                    onTap: () {
+                      EasyLoading.showInfo('ไม่สามารถเปลี่ยนรหัสผ่านได้');
+                    },
+                    icons: Icons.lock,
+                    iconStyle: IconStyle(
+                      withBackground: true,
+                      borderRadius: 50,
+                      backgroundColor: Colors.red[400],
+                    ),
+                    title: "เปลี่ยนรหัสผ่าน",
+                    titleStyle: GoogleFonts.kanit(
+                      fontSize: 18,
+                      color: Colors.black87,
+                    ),)
                   // SettingsItem(
                   //   onTap: () {},
                   //   icons: Icons.settings,

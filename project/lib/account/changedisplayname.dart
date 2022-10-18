@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -32,7 +33,7 @@ class _ChangedisplaynameState extends State<Changedisplayname> {
           icon: const Icon(Icons.arrow_back_ios_new_outlined),
           color: Colors.black87,
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => Setting()));
           },
         ),
       ),

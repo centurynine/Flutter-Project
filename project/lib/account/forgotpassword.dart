@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project/account/setting.dart';
 import 'package:project/homepage/body.dart';
 import 'package:project/widget/drawer.dart';
 class forgotPassword extends StatefulWidget {
@@ -26,7 +28,7 @@ class _forgotPasswordState extends State<forgotPassword> {
           icon: const Icon(Icons.arrow_back_ios_new_outlined),
           color: Colors.black87,
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => Setting()));
           },
         ),
       ),

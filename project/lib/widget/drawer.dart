@@ -40,10 +40,11 @@ class _DrawerWidgetState extends State<DrawerWidget> {
         if(users.docs.isNotEmpty){
           print('พบข้อมูลชื่อผู้โพส');
           print(users.docs[0].data()['email']);
+          if (mounted) { 
           setState(() {
             name = users.docs[0].data()['name'];
             avatar = users.docs[0].data()['avatar'];
-          });
+          });}
          // print(avatar);
           if(avatar == null){
             setState(() {
