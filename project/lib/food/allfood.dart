@@ -9,6 +9,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:project/food/ShowMenu.dart';
+import 'package:project/food/notfound.dart';
 import 'package:project/widget/drawer.dart';
 import 'package:project/food/editpage.dart';
 import 'package:project/homepage/home.dart';
@@ -98,6 +99,10 @@ drawer:  DrawerWidget(),
                       return Text("",
                           textAlign: TextAlign.center,
                           style: GoogleFonts.kanit(fontSize: 20));
+                    }
+                    if(snapshot.data!.docs.isEmpty){
+                      EasyLoading.dismiss();
+                      return NotFound();
                     }
                     EasyLoading.dismiss();
                     return ListView.builder(
