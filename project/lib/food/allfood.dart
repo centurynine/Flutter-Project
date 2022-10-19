@@ -233,7 +233,7 @@ drawer:  DrawerWidget(),
                                       var reference = FirebaseStorage.instance.ref().child('foods/$imageID');
                                       var delete = reference.delete();
                                       Navigator.of(context).pop();
-                                      EasyLoading.show(status: 'ลบรายการอาหารแล้ว');
+                                      EasyLoading.showSuccess('ลบรายการอาหารแล้ว');
                                       Future.delayed(const Duration(milliseconds: 2000), () {
                                         EasyLoading.dismiss();
                                       });
