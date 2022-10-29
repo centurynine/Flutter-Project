@@ -117,7 +117,7 @@ class _UploadDataState extends State<UploadData> {
                 child: ingredientsForm(),
               ),
               const SizedBox(
-                height: 10,
+                height: 20,
               ),
 
               Container(
@@ -127,7 +127,12 @@ class _UploadDataState extends State<UploadData> {
               const SizedBox(
                 height: 10,
               ),
-              selectType(context),
+              Container(
+                child: selectType(context),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
               Container(
                   margin: const EdgeInsets.only(
                       left: 100.0, right: 100.0, bottom: 20.0),
@@ -147,7 +152,8 @@ class _UploadDataState extends State<UploadData> {
   margin: EdgeInsets.all(20),
   child: DropdownButtonHideUnderline(
   child: GFDropdown(
-    hint: Text('เลือกประเภทอาหาร'),
+    hint: Text('เลือกประเภทอาหาร',
+  style: GoogleFonts.kanit(),),
     padding: const EdgeInsets.all(15),
     borderRadius: BorderRadius.circular(5),
     border: const BorderSide(
@@ -162,7 +168,6 @@ class _UploadDataState extends State<UploadData> {
       });
       
     },
-    
     items: [
       'อาหารไทย',
       'อาหารอีสาน',
@@ -173,7 +178,9 @@ class _UploadDataState extends State<UploadData> {
     ]
         .map((value) => DropdownMenuItem(
       value: value,
-      child: Text(value),
+      child: Text(value,
+          style: GoogleFonts.kanit(
+              fontSize: 16, color: Colors.black87)),
     ))
         .toList(),
   ),
@@ -252,7 +259,7 @@ class _UploadDataState extends State<UploadData> {
       maxLength: 30,
       decoration: const InputDecoration(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(22.0)),
+          borderRadius: BorderRadius.all(Radius.circular(5.0)),
         ),
         hintText: 'หัวข้อ',
         labelText: 'ชื่ออาหาร',
@@ -281,7 +288,7 @@ class _UploadDataState extends State<UploadData> {
       maxLines: 6,
       decoration: const InputDecoration(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(22.0)),
+          borderRadius: BorderRadius.all(Radius.circular(5.0)),
         ),
         hintText: 'แสดงรายละเอียดเล็กน้อย',
         labelText: 'คำอธิบาย',
@@ -306,7 +313,7 @@ class _UploadDataState extends State<UploadData> {
       keyboardType: TextInputType.multiline,
       decoration: const InputDecoration(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(22.0)),
+          borderRadius: BorderRadius.all(Radius.circular(5.0)),
         ),
         hintText: 'รายละเอียด',
         labelText: 'ขั้นตอนการทำ',
@@ -332,7 +339,7 @@ class _UploadDataState extends State<UploadData> {
       keyboardType: TextInputType.multiline,
       decoration: const InputDecoration(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+          borderRadius: BorderRadius.all(Radius.circular(5.0)),
         ),
         hintText: '',
         labelText: 'ส่วนผสม',

@@ -50,24 +50,19 @@ void initState(){
 
 Future<File> urlToFile() async {
 try {
-print(widget.docs['uploadImageUrl']);
 var imageUrl = '${widget.docs['uploadImageUrl']}.png';
 print(imageUrl);
 Uri uri = Uri.parse(imageUrl);
-// generate random number.
+// สุ่มชื่อสำหรับเก็บไฟล์
 var rng = new Random();
-// get temporary directory of device.
+// เก็บค่าตำแหน่งที่จะจัดเก็บไฟล์
 Directory tempDir = await getTemporaryDirectory();
-// get temporary path from temporary directory.
+// เรียกตำแหน่งที่จะเก็บไฟล์
 String tempPath = tempDir.path;
-// create a new file in temporary path with random file name.
+// สร้างไฟล์ใหม่พร้อมกับสุ่มชื่อ
 File file = new File('$tempPath'+ (rng.nextInt(100)).toString() +'.png');
-// call http.get method and pass imageUrl into it to get response.
 http.Response response = await http.get(uri);
-// write bodyBytes received in response to file.
 await file.writeAsBytes(response.bodyBytes);
-// now return the file which is created with random name in 
-// temporary directory and image bytes from response is written to // that file.
 setState(() {
   _foodpic = file;
   imageUpload = true;
@@ -234,7 +229,7 @@ return file;
       maxLength: 30,
       decoration: const InputDecoration(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(22.0)),
+          borderRadius: BorderRadius.all(Radius.circular(5.0)),
         ),
         hintText: 'หัวข้อ',
         labelText: 'ชื่ออาหาร',
@@ -259,7 +254,7 @@ return file;
       maxLength: 200,
       decoration: const InputDecoration(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(22.0)),
+          borderRadius: BorderRadius.all(Radius.circular(5.0)),
         ),
         hintText: 'แสดงรายละเอียดเล็กน้อย',
         labelText: 'คำอธิบาย',
@@ -285,7 +280,7 @@ return file;
       keyboardType: TextInputType.multiline,
       decoration: const InputDecoration(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(22.0)),
+          borderRadius: BorderRadius.all(Radius.circular(5.0)),
         ),
         hintText: 'รายละเอียด',
         labelText: 'ขั้นตอนการทำ',
@@ -311,7 +306,7 @@ return file;
       keyboardType: TextInputType.multiline,
       decoration: const InputDecoration(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+          borderRadius: BorderRadius.all(Radius.circular(5.0)),
         ),
         hintText: '',
         labelText: 'ส่วนผสม',
