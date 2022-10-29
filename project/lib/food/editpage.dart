@@ -49,6 +49,7 @@ void initState(){
 
 
 Future<File> urlToFile() async {
+try {
 print(widget.docs['uploadImageUrl']);
 var imageUrl = '${widget.docs['uploadImageUrl']}.png';
 print(imageUrl);
@@ -71,7 +72,10 @@ setState(() {
   _foodpic = file;
   imageUpload = true;
 });
-return file;
+return file; 
+} catch (e) {
+  throw Exception("Error " + e.toString());
+ }
 }
 
 
