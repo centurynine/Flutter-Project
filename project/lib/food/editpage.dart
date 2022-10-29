@@ -39,7 +39,7 @@ class _EditDataState extends State<EditData> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           title: Text(
-            'Upload Data',
+            'แก้ไขรายการอาหาร',
             style: GoogleFonts.kanit(
               fontSize: 20,
               color: Colors.black,

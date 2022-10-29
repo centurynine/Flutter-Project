@@ -284,16 +284,19 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                                             children: <Widget>[
                                               Flexible(
                                                 child: RichText(
+                                                  maxLines: 1,
                                                   overflow: TextOverflow.ellipsis,
                                                   strutStyle:
                                                       StrutStyle(fontSize: 12.0),
                                                   text: TextSpan(
+                                                    
                                                     style: GoogleFonts.kanit(
                                                       fontSize: 13,
                                                       color: Colors.black,
                                                     ),
                                                     text: (snapshot.data!)
                                                         .docs[index]['subtitle'],
+                                                        
                                                   ),
                                                 ),
                                               ),
@@ -301,15 +304,15 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                                           ),
                                           (snapshot.data!).docs[index]
                                                       ['displayname'] ==
-                                                  null
+                                                  null || (snapshot.data!).docs[index]['displayname'] == ''
                                               ? Row(
                                                   children: <Widget>[
                                                     Text(
                                                       'แชร์โดย : ',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 10),
+                                                      style: GoogleFonts.kanit(
+                                                          fontSize: 13, 
+                                                          color: Colors.black),
+                                                          
                                                     ),
                                                     Text(
                                                       "ไม่พบบัญชีผู้ใช้",
@@ -324,7 +327,9 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                                                     Text(
                                                       'แชร์โดย : ',
                                                       style: GoogleFonts.kanit(
-                                                          fontSize: 12),
+                                                          fontSize: 13, 
+                                                          color: Colors.black),
+                                                          
                                                     ),
                                                     Text(
                                                       (snapshot.data!).docs[index]
