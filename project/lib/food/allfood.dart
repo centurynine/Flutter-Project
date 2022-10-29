@@ -92,12 +92,6 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                     Navigator.pushReplacementNamed(context, '/');
                   },
                 ),
-                 bottom: PreferredSize(
-                  child: Container(
-                    color: Colors.orange,
-                    height: 4.0,
-                  ),
-                  preferredSize: Size.fromHeight(30.0)),
               ),
               body: StreamBuilder<QuerySnapshot>(
                   stream: data.snapshots(),
