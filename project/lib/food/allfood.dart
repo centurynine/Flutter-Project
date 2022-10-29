@@ -156,9 +156,9 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                                       ),
                                     ),
                                   ),
-                                  Spacer(
-                                    flex: 1,
-                                  ),
+                                  // Spacer(
+                                  //   flex: 0,
+                                  // ),
                                   Expanded(
                                     flex: 14,
                                     child: Container(
