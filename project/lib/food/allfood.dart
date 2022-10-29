@@ -18,6 +18,7 @@ import 'package:project/account/login.dart';
 import 'package:project/search/searchpage.dart';
 
 class BodyAfterLogin extends StatefulWidget {
+  
   const BodyAfterLogin({super.key});
 
   @override
@@ -33,6 +34,10 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
   firbaseStorage.Reference storageRef =
       firbaseStorage.FirebaseStorage.instance.ref().child('foods/');
   bool isAdmin = false;
+
+
+
+
 
   @override
   void initState() {
@@ -120,223 +125,237 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                             child: Container(
                               height: 120,
                               padding: const EdgeInsets.all(0),
-                              child: Row(
-                                children: [
-                                Expanded(
-                                  flex: 6,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(7),
-                                        image: DecorationImage(
-                                            image: NetworkImage((snapshot.data!)
-                                                .docs[index]['uploadImageUrl']),
-                                            fit: BoxFit.cover),
+                              child: InkWell(
+                                onTap: () {
+                                                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ShowMenu(
+                                              docs:
+                                                  (snapshot.data!).docs[index],
+                                            )));
+                                },
+                                child: Row(
+                                  
+                                  children: [
+                                  Expanded(
+                                    flex: 6,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(7),
+                                          image: DecorationImage(
+                                              image: NetworkImage((snapshot.data!)
+                                                  .docs[index]['uploadImageUrl']),
+                                              fit: BoxFit.cover),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Spacer(
-                                  flex: 1,
-                                ),
-                                Expanded(
-                                  flex: 14,
-                                  child: Container(
-                                    padding: const EdgeInsets.only(
-                                        top: 10, bottom: 40),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: <Widget>[
-                                        Row(
-                                          children: [
-                                            Text(
-                                              (snapshot.data!).docs[index]['title'],
-                                              maxLines: 1,
-                                              style: GoogleFonts.notoSansThai(
-                                                  fontSize: 20),
-                                            ),
-                                           FutureBuilder(
-                                          future: users.doc().get(),
-                                          builder: (ctx, futureSnapshot) {
-                                            if (futureSnapshot
-                                                    .connectionState ==
-                                                ConnectionState.waiting) {
-                                              checkAdmin();
-                                            }
-                                            if (isAdmin == true) {
-                                              return GestureDetector(
-                                                child: Icon(Icons.edit),
-                                                onTap: () {
-                                                  showDialog(
-                                                      context: context,
-                                                      builder: (BuildContext
-                                                          context) {
-                                                        return AlertDialog(
-                                                          title: Text(
-                                                              'แก้ไขรายการอาหาร'),
-                                                          content: Text(''),
-                                                          actions: [
-                                                            TextButton(
-                                                              child:
-                                                                  Text('แก้ไข'),
-                                                              onPressed: () {
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .pop();
-                                                                Navigator.push(
-                                                                    context,
-                                                                    MaterialPageRoute(
-                                                                        builder: (context) =>
-                                                                            EditData(
-                                                                              docs: (snapshot.data!).docs[index],
-                                                                            )));
-                                                              },
-                                                            ),
-                                                            TextButton(
-                                                              child: Text(
-                                                                  'ยกเลิก'),
-                                                              onPressed: () {
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .pop();
-                                                              },
-                                                            ),
-                                                            TextButton(
-                                                              child: Text('ลบ'),
-                                                              onPressed: () {
-                                                                FirebaseFirestore
-                                                                    .instance
-                                                                    .collection(
-                                                                        'foods')
-                                                                    .doc((snapshot
-                                                                            .data!)
-                                                                        .docs[
-                                                                            index]
-                                                                        .id)
-                                                                    .delete();
-                                                                print(
-                                                                    'Database ID ${(snapshot.data!).docs[index]['id']} Deledted');
-                                                                var imageID =
-                                                                    (snapshot.data!)
-                                                                            .docs[
-                                                                        index]['id'];
-                                                                print(
-                                                                    'Picture ID : $imageID Deleted');
-                                                                var reference =
-                                                                    FirebaseStorage
-                                                                        .instance
-                                                                        .ref()
-                                                                        .child(
-                                                                            'foods/$imageID');
-                                                                var delete =
-                                                                    reference
-                                                                        .delete();
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .pop();
-                                                                EasyLoading
-                                                                    .showSuccess(
-                                                                        'ลบรายการอาหารแล้ว');
-                                                                Future.delayed(
-                                                                    const Duration(
-                                                                        milliseconds:
-                                                                            2000),
-                                                                    () {
-                                                                  EasyLoading
-                                                                      .dismiss();
-                                                                });
-                                                              },
-                                                            ),
-                                                          ],
-                                                        );
-                                                      });
-                                                },
-                                              );
-                                            } else {
-                                              return SizedBox.shrink();
-                                            }
-                                          },
-                                        )
-                                          ],
-                                        ),
-                                        Row(
-                                          children: <Widget>[
-                                            Flexible(
-                                              child: RichText(
-                                                overflow: TextOverflow.ellipsis,
-                                                strutStyle:
-                                                    StrutStyle(fontSize: 12.0),
-                                                text: TextSpan(
-                                                  style: GoogleFonts.kanit(
-                                                    fontSize: 13,
-                                                    color: Colors.black,
-                                                  ),
-                                                  text: (snapshot.data!)
-                                                      .docs[index]['subtitle'],
+                                  Spacer(
+                                    flex: 1,
+                                  ),
+                                  Expanded(
+                                    flex: 14,
+                                    child: Container(
+                                      padding: const EdgeInsets.only(
+                                          top: 10, bottom: 40),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: <Widget>[
+                                          Row(
+                                            children: [
+                                              Flexible(
+                                                child: Text(
+                                                  (snapshot.data!).docs[index]['title'],
+                                                  maxLines: 1,
+                                                  style: GoogleFonts.notoSansThai(
+                                                      fontSize: 20),
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                        (snapshot.data!).docs[index]
-                                                    ['displayname'] ==
-                                                null
-                                            ? Row(
-                                                children: <Widget>[
-                                                  Text(
-                                                    'แชร์โดย : ',
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 10),
-                                                  ),
-                                                  Text(
-                                                    "ไม่พบบัญชีผู้ใช้",
-                                                    maxLines: 1,
+                                             FutureBuilder(
+                                            future: users.doc().get(),
+                                            builder: (ctx, futureSnapshot) {
+                                              if (futureSnapshot
+                                                      .connectionState ==
+                                                  ConnectionState.waiting) {
+                                                checkAdmin();
+                                              }
+                                              if (isAdmin == true) {
+                                                return GestureDetector(
+                                                  child: Icon(Icons.edit),
+                                                  onTap: () {
+                                                    showDialog(
+                                                        context: context,
+                                                        builder: (BuildContext
+                                                            context) {
+                                                          return AlertDialog(
+                                                            title: Text(
+                                                                'แก้ไขรายการอาหาร'),
+                                                            content: Text(''),
+                                                            actions: [
+                                                              TextButton(
+                                                                child:
+                                                                    Text('แก้ไข'),
+                                                                onPressed: () {
+                                                                  Navigator.of(
+                                                                          context)
+                                                                      .pop();
+                                                                  Navigator.push(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                          builder: (context) =>
+                                                                              EditData(
+                                                                                docs: (snapshot.data!).docs[index],
+                                                                              )));
+                                                                },
+                                                              ),
+                                                              TextButton(
+                                                                child: Text(
+                                                                    'ยกเลิก'),
+                                                                onPressed: () {
+                                                                  Navigator.of(
+                                                                          context)
+                                                                      .pop();
+                                                                },
+                                                              ),
+                                                              TextButton(
+                                                                child: Text('ลบ'),
+                                                                onPressed: () {
+                                                                  FirebaseFirestore
+                                                                      .instance
+                                                                      .collection(
+                                                                          'foods')
+                                                                      .doc((snapshot
+                                                                              .data!)
+                                                                          .docs[
+                                                                              index]
+                                                                          .id)
+                                                                      .delete();
+                                                                  print(
+                                                                      'Database ID ${(snapshot.data!).docs[index]['id']} Deledted');
+                                                                  var imageID =
+                                                                      (snapshot.data!)
+                                                                              .docs[
+                                                                          index]['id'];
+                                                                  print(
+                                                                      'Picture ID : $imageID Deleted');
+                                                                  var reference =
+                                                                      FirebaseStorage
+                                                                          .instance
+                                                                          .ref()
+                                                                          .child(
+                                                                              'foods/$imageID');
+                                                                  var delete =
+                                                                      reference
+                                                                          .delete();
+                                                                  Navigator.of(
+                                                                          context)
+                                                                      .pop();
+                                                                  EasyLoading
+                                                                      .showSuccess(
+                                                                          'ลบรายการอาหารแล้ว');
+                                                                  Future.delayed(
+                                                                      const Duration(
+                                                                          milliseconds:
+                                                                              2000),
+                                                                      () {
+                                                                    EasyLoading
+                                                                        .dismiss();
+                                                                  });
+                                                                },
+                                                              ),
+                                                            ],
+                                                          );
+                                                        });
+                                                  },
+                                                );
+                                              } else {
+                                                return SizedBox.shrink();
+                                              }
+                                            },
+                                          )
+                                            ],
+                                          ),
+                                          Row(
+                                            children: <Widget>[
+                                              Flexible(
+                                                child: RichText(
+                                                  overflow: TextOverflow.ellipsis,
+                                                  strutStyle:
+                                                      StrutStyle(fontSize: 12.0),
+                                                  text: TextSpan(
                                                     style: GoogleFonts.kanit(
-                                                        fontSize: 10),
+                                                      fontSize: 13,
+                                                      color: Colors.black,
+                                                    ),
+                                                    text: (snapshot.data!)
+                                                        .docs[index]['subtitle'],
                                                   ),
-                                                ],
-                                              )
-                                            : Row(
-                                                children: <Widget>[
-                                                  Text(
-                                                    'แชร์โดย : ',
-                                                    style: GoogleFonts.kanit(
-                                                        fontSize: 12),
-                                                  ),
-                                                  Text(
-                                                    (snapshot.data!).docs[index]
-                                                        ['displayname'],
-                                                    maxLines: 1,
-                                                    style: GoogleFonts.kanit(
-                                                        fontSize: 12),
-                                                  ),
-                                                ],
+                                                ),
                                               ),
+                                            ],
+                                          ),
+                                          (snapshot.data!).docs[index]
+                                                      ['displayname'] ==
+                                                  null
+                                              ? Row(
+                                                  children: <Widget>[
+                                                    Text(
+                                                      'แชร์โดย : ',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 10),
+                                                    ),
+                                                    Text(
+                                                      "ไม่พบบัญชีผู้ใช้",
+                                                      maxLines: 1,
+                                                      style: GoogleFonts.kanit(
+                                                          fontSize: 10),
+                                                    ),
+                                                  ],
+                                                )
+                                              : Row(
+                                                  children: <Widget>[
+                                                    Text(
+                                                      'แชร์โดย : ',
+                                                      style: GoogleFonts.kanit(
+                                                          fontSize: 12),
+                                                    ),
+                                                    Text(
+                                                      (snapshot.data!).docs[index]
+                                                          ['displayname'],
+                                                      maxLines: 1,
+                                                      style: GoogleFonts.kanit(
+                                                          fontSize: 12),
+                                                    ),
+                                                  ],
+                                                ),
+                                        
+                                          // Align(
+                                          //   alignment: Alignment.bottomRight,
+                                          //   child: Row(
+                                          //     mainAxisAlignment: MainAxisAlignment.end,
+                                          //     children: <Widget>[
+                                          //       ElevatedButton(
+                                          //           onPressed: null,
+                                          //           child: Text("DETAIL ITEM")),
+                                          //       ElevatedButton(
+                                          //           onPressed: null, child: Text("BELI")),
+                                          //     ],
+                                          //   ),
+                                          // )
+                                        ],
+                                      ),
                                       
-                                        // Align(
-                                        //   alignment: Alignment.bottomRight,
-                                        //   child: Row(
-                                        //     mainAxisAlignment: MainAxisAlignment.end,
-                                        //     children: <Widget>[
-                                        //       ElevatedButton(
-                                        //           onPressed: null,
-                                        //           child: Text("DETAIL ITEM")),
-                                        //       ElevatedButton(
-                                        //           onPressed: null, child: Text("BELI")),
-                                        //     ],
-                                        //   ),
-                                        // )
-                                      ],
                                     ),
-                                    
                                   ),
-                                ),
-                              ]),
+                                ]),
+                              ),
                             ),
                           );
                         }
@@ -345,6 +364,9 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                   })))
     ]);
   }
+
+
+
 
   Future<void> checkAdmin() async {
     if (FirebaseAuth.instance.currentUser != null) {
