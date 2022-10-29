@@ -8,7 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:project/widget/drawer.dart';
-
+import 'package:getwidget/getwidget.dart';
 class EditData extends StatefulWidget {
   final DocumentSnapshot docs;
   const EditData({Key? key, required this.docs}) : super(key: key);
@@ -31,6 +31,9 @@ class _EditDataState extends State<EditData> {
   String? countid;
   File? _foodpic;
   File? imageFile;
+  String? dropdown;
+  String? dropdownValue;
+  String foodType = 'ไม่ระบุ';
 
   @override
   Widget build(BuildContext context) {
@@ -110,6 +113,13 @@ class _EditDataState extends State<EditData> {
                 margin: const EdgeInsets.only(left: 20.0, right: 20.0),
                 child:  descriptionForm(),
               ),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+                child:  selectType(context),
+              ),
               Container(
                   margin: const EdgeInsets.only(left: 100.0, right: 100.0, bottom: 20.0),
                   child: submitButton()),
@@ -120,6 +130,48 @@ class _EditDataState extends State<EditData> {
           ),
         ));
   }
+
+  Container selectType(BuildContext context) {
+    return Container(
+  height: 50,
+  width: MediaQuery.of(context).size.width,
+  margin: EdgeInsets.all(20),
+  child: DropdownButtonHideUnderline(
+  child: GFDropdown(
+    hint: Text('เลือกประเภทอาหาร'),
+    padding: const EdgeInsets.all(15),
+    borderRadius: BorderRadius.circular(5),
+    border: const BorderSide(
+        color: Colors.black12, width: 1),
+    dropdownButtonColor: Colors.white,
+    value: dropdownValue,
+    onChanged: (value) {
+      setState(() {
+        dropdownValue = value.toString();
+        foodType = value.toString();
+        print(foodType);
+      });
+      
+    },
+    
+    items: [
+      'อาหารไทย',
+      'อาหารอีสาน',
+      'อาหารฝรั่ง',
+      'อาหารญี่ปุ่น',
+      'อาหารเกาหลี',
+      'ไม่ระบุ'
+    ]
+        .map((value) => DropdownMenuItem(
+      value: value,
+      child: Text(value),
+    ))
+        .toList(),
+  ),
+),
+);
+  }
+
 
   TextFormField titleForm() {
     return TextFormField(
@@ -351,6 +403,7 @@ class _EditDataState extends State<EditData> {
                 "description": description,
                 "ingredients": ingredients,
                 "created_at": DateTime.now(),
+                "food_type": foodType,
                 "uploadImageUrl": url,
           }
           )
@@ -386,6 +439,9 @@ class _EditDataState extends State<EditData> {
           ),
         ));
   }
+
+
+
 
   ElevatedButton uploadImageButton() {
     return ElevatedButton(

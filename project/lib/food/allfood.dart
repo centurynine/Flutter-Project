@@ -58,6 +58,7 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
     return Column(children: [
       Expanded(
           child: Scaffold(
+            
               drawer: DrawerWidget(),
               appBar: AppBar(
                 backgroundColor: Colors.white,
@@ -121,6 +122,7 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                           return SizedBox.shrink();
                         } else {
                           return Card(
+                            margin: EdgeInsets.all(5),
                             clipBehavior: Clip.antiAlias,
                             child: Container(
                               height: 120,
@@ -147,7 +149,8 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                                           borderRadius: BorderRadius.circular(7),
                                           image: DecorationImage(
                                               image: NetworkImage((snapshot.data!)
-                                                  .docs[index]['uploadImageUrl']),
+                                                  .docs[index]['uploadImageUrl'],
+                                                  ),
                                               fit: BoxFit.cover),
                                         ),
                                       ),
@@ -160,7 +163,7 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                                     flex: 14,
                                     child: Container(
                                       padding: const EdgeInsets.only(
-                                          top: 10, bottom: 40),
+                                          top: 10, bottom: 20),
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -176,6 +179,7 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                                                       fontSize: 20),
                                                 ),
                                               ),
+                                              
                                              FutureBuilder(
                                             future: users.doc().get(),
                                             builder: (ctx, futureSnapshot) {
@@ -279,7 +283,9 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                                             },
                                           )
                                             ],
+                                            
                                           ),
+                                          
                                           Row(
                                             children: <Widget>[
                                               Flexible(
@@ -305,42 +311,72 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                                           (snapshot.data!).docs[index]
                                                       ['displayname'] ==
                                                   null || (snapshot.data!).docs[index]['displayname'] == ''
-                                              ? Row(
-                                                  children: <Widget>[
-                                                    Text(
-                                                      'แชร์โดย : ',
-                                                      style: GoogleFonts.kanit(
-                                                          fontSize: 13, 
-                                                          color: Colors.black),
-                                                          
-                                                    ),
-                                                    Text(
-                                                      "ไม่พบบัญชีผู้ใช้",
-                                                      maxLines: 1,
-                                                      style: GoogleFonts.kanit(
-                                                          fontSize: 10),
-                                                    ),
-                                                  ],
-                                                )
-                                              : Row(
-                                                  children: <Widget>[
-                                                    Text(
-                                                      'แชร์โดย : ',
-                                                      style: GoogleFonts.kanit(
-                                                          fontSize: 13, 
-                                                          color: Colors.black),
-                                                          
-                                                    ),
-                                                    Text(
-                                                      (snapshot.data!).docs[index]
-                                                          ['displayname'],
-                                                      maxLines: 1,
-                                                      style: GoogleFonts.kanit(
-                                                          fontSize: 12),
-                                                    ),
-                                                  ],
+                                              ? Expanded(
+                                                child: Row(
+                                                    children: <Widget>[
+                                                      Text(
+                                                        'แชร์โดย : ',
+                                                        style: GoogleFonts.kanit(
+                                                            fontSize: 13, 
+                                                            color: Colors.black),
+                                                            
+                                                      ),
+                                                      Text(
+                                                        "ไม่พบบัญชีผู้ใช้",
+                                                        maxLines: 1,
+                                                        style: GoogleFonts.kanit(
+                                                            fontSize: 10),
+                                                      ),
+                                                      
+                                                    ],
+                                                  ),
+                                              )
+                                              : Expanded(
+                                                child: Row(
+                                                    children: <Widget>[
+                                                      Text(
+                                                        'แชร์โดย : ',
+                                                        style: GoogleFonts.kanit(
+                                                            fontSize: 13, 
+                                                            color: Colors.black),
+                                                            
+                                                      ),
+                                                      Text(
+                                                        (snapshot.data!).docs[index]
+                                                            ['displayname'],
+                                                        maxLines: 1,
+                                                        style: GoogleFonts.kanit(
+                                                            fontSize: 12),
+                                                      ),
+                                                      
+                                                    ],
+                                                    
+                                                  ),
+                                              ),
+                                                Flexible(
+                                                child: Container(
+                                                  decoration: 
+                                                   BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius: BorderRadius.circular(10),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: Colors.grey.withOpacity(0.5),
+                                                        spreadRadius: 1,
+                                                        blurRadius: 1,
+                                                        offset: Offset(0, 1), // changes position of shadow
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  child: Text(
+                                                    textAlign: TextAlign.center,
+                                                    ' ประเภท : ${(snapshot.data!).docs[index]['food_type']}      ',
+                                                    maxLines: 1,
+                                                    style: GoogleFonts.kanit(
+                                                        fontSize: 13),
+                                                  ),
                                                 ),
-                                        
+                                              ),
                                           // Align(
                                           //   alignment: Alignment.bottomRight,
                                           //   child: Row(
@@ -355,6 +391,7 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                                           //   ),
                                           // )
                                         ],
+                                        
                                       ),
                                       
                                     ),

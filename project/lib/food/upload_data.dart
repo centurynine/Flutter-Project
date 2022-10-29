@@ -9,7 +9,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:project/widget/drawer.dart';
-
+import 'package:getwidget/getwidget.dart';
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
@@ -37,7 +37,9 @@ class _UploadDataState extends State<UploadData> {
   String channelId = "1000";
   String channelName = "FLUTTER_NOTIFICATION_CHANNEL";
   String channelDescription = "FLUTTER_NOTIFICATION_CHANNEL_DETAIL";
-
+  String? dropdown;
+  String? dropdownValue;
+  String foodType = 'ไม่ระบุ';
   String? titlenoti;
   String? subtitlenoti;
 
@@ -117,10 +119,15 @@ class _UploadDataState extends State<UploadData> {
               const SizedBox(
                 height: 10,
               ),
+
               Container(
                 margin: const EdgeInsets.only(left: 20.0, right: 20.0),
                 child: descriptionForm(),
               ),
+              const SizedBox(
+                height: 10,
+              ),
+              selectType(context),
               Container(
                   margin: const EdgeInsets.only(
                       left: 100.0, right: 100.0, bottom: 20.0),
@@ -131,6 +138,47 @@ class _UploadDataState extends State<UploadData> {
             ],
           ),
         ));
+  }
+
+  Container selectType(BuildContext context) {
+    return Container(
+  height: 50,
+  width: MediaQuery.of(context).size.width,
+  margin: EdgeInsets.all(20),
+  child: DropdownButtonHideUnderline(
+  child: GFDropdown(
+    hint: Text('เลือกประเภทอาหาร'),
+    padding: const EdgeInsets.all(15),
+    borderRadius: BorderRadius.circular(5),
+    border: const BorderSide(
+        color: Colors.black12, width: 1),
+    dropdownButtonColor: Colors.white,
+    value: dropdownValue,
+    onChanged: (value) {
+      setState(() {
+        dropdownValue = value.toString();
+        foodType = value.toString();
+        print(foodType);
+      });
+      
+    },
+    
+    items: [
+      'อาหารไทย',
+      'อาหารอีสาน',
+      'อาหารฝรั่ง',
+      'อาหารญี่ปุ่น',
+      'อาหารเกาหลี',
+      'ไม่ระบุ'
+    ]
+        .map((value) => DropdownMenuItem(
+      value: value,
+      child: Text(value),
+    ))
+        .toList(),
+  ),
+),
+);
   }
 
   initState() {
@@ -449,6 +497,7 @@ class _UploadDataState extends State<UploadData> {
       "description": description,
       "ingredients": ingredients,
       "created_at": DateTime.now(),
+      "food_type": foodType,
       "uploadImageUrl": url,
     });
     sendNotification();
