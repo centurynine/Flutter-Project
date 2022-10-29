@@ -156,6 +156,20 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             ? Column(
               children: [
                 ListTile(
+                  title: Text('หน้าแรก',
+                  style: GoogleFonts.kanit(
+                    fontSize: 14,
+                    color: Colors.black)),
+                   leading: Image.asset(
+                    'assets/images/house.png',
+                    width: 25,
+                    height: 25,),
+                  onTap: () {
+                    print("Clicked");
+                    Navigator.pushNamed(context, '/');
+                  },
+                ),
+                ListTile(
                   title: Text('รายการอาหารทั้งหมด',
                   style: GoogleFonts.kanit(
                     fontSize: 14,
