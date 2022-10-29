@@ -21,9 +21,9 @@ class _RecommendgetState extends State<Recommendget> {
   String index2 = '';
   String index3 = '';
   final List<String> tips = ['รายการอาหารแนะนำ'];
-  final List<String> subtips = ['สุ่มเมนูสุดอร่อย'];
+  final List<String> subtips = ['สุ่มเมนูช่วยในการตัดสินใจ'];
   final List<String> imagetips = [
-    'https://cdn-icons-png.flaticon.com/512/673/673938.png'
+    'https://cdn-icons-png.flaticon.com/512/2401/2401460.png'
   ];
   final List<String> foodID = [];
   @override
@@ -139,6 +139,17 @@ class _RecommendgetState extends State<Recommendget> {
               child: Container(
                 height: 120,
                 width: 120,
+                decoration: BoxDecoration(
+                  color: Colors.blue.withOpacity(0.2),
+                  shape: BoxShape.circle,
+                ),
+              )),
+           Positioned(
+              bottom: -20,
+              left: 20,
+              child: Container(
+                height: 60,
+                width: 70,
                 decoration: BoxDecoration(
                   color: Colors.blue.withOpacity(0.2),
                   shape: BoxShape.circle,
