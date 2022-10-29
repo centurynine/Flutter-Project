@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:ffi';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project/food/ShowMenu.dart';
 
 class Recommendget extends StatefulWidget {
   const Recommendget({super.key});
@@ -12,6 +14,7 @@ class Recommendget extends StatefulWidget {
 }
 
 class _RecommendgetState extends State<Recommendget> {
+
   var selectIndex = 0;
 
   String index1 = '';
@@ -107,6 +110,8 @@ class _RecommendgetState extends State<Recommendget> {
               subtips.add(element.data()['subtitle']);
               imagetips.add(element.data()['uploadImageUrl']);
             }));
+ 
+    
   }
 
   @override
@@ -157,7 +162,11 @@ class _RecommendgetState extends State<Recommendget> {
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black))
-                              : const Text(''),
+                              : Text(tips[0],
+                                  style: GoogleFonts.kanit(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black)),
                           // Text(tips[selectIndex],
                           // style: GoogleFonts.kanit(
                           //   fontSize: 20,
@@ -180,7 +189,19 @@ class _RecommendgetState extends State<Recommendget> {
                                   ),
                             ),)
                           
-                              : const Text(''),
+                              : Flexible(
+                            child: RichText(
+                              overflow: TextOverflow.ellipsis,
+                              strutStyle: StrutStyle(fontSize: 12.0),
+                              text: 
+                              TextSpan(
+                                  style: GoogleFonts.kanit(
+                                    fontSize: 13,
+                                    color: Colors.black,
+                                  ),
+                                  text: subtips[0]
+                                  ),
+                            ),),
                           // Flexible(
                           //   child: RichText(
                           //     overflow: TextOverflow.ellipsis,
@@ -198,13 +219,13 @@ class _RecommendgetState extends State<Recommendget> {
 
 
                           ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/searchpage');
+                              },
                               child: Text(
-                                'ดูรายละเอียด',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.white,
-                                ),
+                                'ค้นหาอาหาร',
+                                style: GoogleFonts.kanit(
+                                    fontSize: 12, color: Colors.white),
                               ))
                         ],
                       ),
