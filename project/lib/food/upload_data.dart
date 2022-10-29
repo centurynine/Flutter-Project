@@ -153,7 +153,11 @@ class _UploadDataState extends State<UploadData> {
   child: DropdownButtonHideUnderline(
   child: GFDropdown(
     hint: Text('เลือกประเภทอาหาร',
-  style: GoogleFonts.kanit(),),
+    style: GoogleFonts.kanit(
+      fontSize: 16,
+      color: Colors.grey,
+    ),
+    ),
     padding: const EdgeInsets.all(15),
     borderRadius: BorderRadius.circular(5),
     border: const BorderSide(

@@ -175,10 +175,14 @@ return file;
     return Container(
   height: 50,
   width: MediaQuery.of(context).size.width,
-  margin: EdgeInsets.all(20),
   child: DropdownButtonHideUnderline(
   child: GFDropdown(
-    hint: Text('เลือกประเภทอาหาร'),
+    hint: Text('เลือกประเภทอาหาร',
+    style: GoogleFonts.kanit(
+      fontSize: 16,
+      color: Colors.grey,
+    ),
+    ),
     padding: const EdgeInsets.all(15),
     borderRadius: BorderRadius.circular(5),
     border: const BorderSide(
@@ -204,7 +208,9 @@ return file;
     ]
         .map((value) => DropdownMenuItem(
       value: value,
-      child: Text(value),
+      child: Text(value,
+          style: GoogleFonts.kanit(
+              fontSize: 16, color: Colors.black87)),
     ))
         .toList(),
   ),
