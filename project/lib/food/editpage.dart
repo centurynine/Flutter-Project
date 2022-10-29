@@ -9,6 +9,11 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:project/widget/drawer.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:uri_to_file/uri_to_file.dart';
+import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
+import 'dart:math'; 
+
 class EditData extends StatefulWidget {
   final DocumentSnapshot docs;
   const EditData({Key? key, required this.docs}) : super(key: key);
@@ -34,6 +39,42 @@ class _EditDataState extends State<EditData> {
   String? dropdown;
   String? dropdownValue;
   String foodType = 'ไม่ระบุ';
+
+@override
+void initState(){
+  super.initState();
+  urlToFile();
+}
+
+
+
+Future<File> urlToFile() async {
+print(widget.docs['uploadImageUrl']);
+var imageUrl = '${widget.docs['uploadImageUrl']}.png';
+print(imageUrl);
+Uri uri = Uri.parse(imageUrl);
+// generate random number.
+var rng = new Random();
+// get temporary directory of device.
+Directory tempDir = await getTemporaryDirectory();
+// get temporary path from temporary directory.
+String tempPath = tempDir.path;
+// create a new file in temporary path with random file name.
+File file = new File('$tempPath'+ (rng.nextInt(100)).toString() +'.png');
+// call http.get method and pass imageUrl into it to get response.
+http.Response response = await http.get(uri);
+// write bodyBytes received in response to file.
+await file.writeAsBytes(response.bodyBytes);
+// now return the file which is created with random name in 
+// temporary directory and image bytes from response is written to // that file.
+setState(() {
+  _foodpic = file;
+  imageUpload = true;
+});
+return file;
+}
+
+
 
   @override
   Widget build(BuildContext context) {
