@@ -38,7 +38,6 @@ void initState() {
   checkInfo();
 }
 
-
   void checkInfo() async {
     if(FirebaseAuth.instance.currentUser != null){
      await FirebaseFirestore.instance

@@ -262,7 +262,7 @@ drawer:  DrawerWidget(),
     );
   }
 
-  void checkAdmin() async {
+  Future<void> checkAdmin() async {
     if(FirebaseAuth.instance.currentUser != null){
     QuerySnapshot query = await FirebaseFirestore.instance
         .collection('users')
