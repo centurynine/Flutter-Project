@@ -67,183 +67,206 @@ class _ShowMenuState extends State<ShowMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //backgroundColor: Colors.white,
+      backgroundColor: Colors.white,
       drawer:  DrawerWidget(),
-        
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          automaticallyImplyLeading: false,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new_outlined,
-                color: Colors.black87, size: 20),
-            color: Colors.black87,
-            onPressed: () {
-              //   Navigator.pop(context);
-              Navigator.pop(context);
-            },
-          ),
-          title: Text(
-            widget.docs['title'],
-            style: GoogleFonts.kanit(
-              fontSize: 20,
-              color: Colors.black87
-            ),
-          ),
-          actions: [IconButton(onPressed: () {}, icon: Icon(Icons.search, color: Colors.black87,))],
-        ),
-        body: GestureDetector(
-          onTap: () {
-            
-          },
-          child: Stack(
-            children: [ 
-              Container(
-                height: 200,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(widget.docs['uploadImageUrl']),
-                    fit: BoxFit.cover,
-                  ),
-                ),
+      body: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) => 
+        [
+        SliverAppBar(
+          iconTheme: IconThemeData(color: Colors.black),
+          backgroundColor: Colors.white,
+          expandedHeight: 240,
+          flexibleSpace: Stack(
+            children: [FlexibleSpaceBar(
+              background: Image.network(
+                widget.docs['uploadImageUrl'],
+                fit: BoxFit.cover,
               ),
-              Column(
-              children: <Widget>[
-                Expanded(
+            ),
+                Positioned(
                   child: Container(
-                    padding: const EdgeInsets.all(15),
-                    margin: EdgeInsets.only(top: 150),
-                    height: 200,
-                    decoration: 
-                    BoxDecoration(
+                    height: 33,
+                    decoration: const BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(50),
-                        topRight: Radius.circular(50),
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(40),
                       ),
                     ),
-                    child: ListView(
-                      
-                      children: [
-                        
-                      Column(
-                        children: [
-                          SizedBox(
-                            height: 20,
-                          ),
-                
-                          Container(
-                            alignment: Alignment.center,
-                            child: Text(
-                              widget.docs['title'],
-                              style: GoogleFonts.kanit(fontSize: 23),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                           Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Divider(
-                              thickness: 1,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              '         รายละเอียดอาหาร',
-                              style: GoogleFonts.kanit(fontSize: 20),
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            margin: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Text(
-                              widget.docs['subtitle'],
-                              style: GoogleFonts.kanit(fontSize: 14),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Divider(
-                              thickness: 1,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              '         วัตถุดิบ',
-                              style: GoogleFonts.kanit(fontSize: 20),
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            margin: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Text(
-                              widget.docs['ingredients'],
-                              style: GoogleFonts.kanit(fontSize: 14),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Divider(
-                              thickness: 1,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              '         ขั้นตอนการทำ',
-                              style: GoogleFonts.kanit(fontSize: 20),
-                            ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Text(
-                              widget.docs['description'],
-                              style: GoogleFonts.kanit(fontSize: 14),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                            ClipRRect(
-                                  borderRadius: BorderRadius.circular(35.0),
-                                  child: Image.network(avatar.toString(),
-                                      width: 95, height: 95, fit: BoxFit.cover
-                                  ),
-                                ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Text(
-                              'แชร์เมนูโดย $name',
-                              style: GoogleFonts.kanit(fontSize: 14),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                        ],
-                      ),
-                    ]),
+                  ),
+                  bottom: -7,
+                  left: 0,
+                  right: 0,
+                )
+
+        ],
+        
+        ),
+          floating: true,
+          pinned: true,
+        ), ],
+        
+      
+      //backgroundColor: Colors.white,
+      
+       
+        //    appBar: AppBar(
+        //     backgroundColor: Colors.transparent,
+        //     automaticallyImplyLeading: false,
+        //     leading: IconButton(
+        //       icon: const Icon(Icons.arrow_back_ios_new_outlined,
+        //           color: Colors.black87, size: 20),
+        //       color: Colors.black87,
+        //       onPressed: () {
+        //         //   Navigator.pop(context);
+        //         Navigator.pop(context);
+        //       },
+        //     ),
+        //     title: Text(
+        //       widget.docs['title'],
+        //       style: GoogleFonts.kanit(
+        //         fontSize: 20,
+        //         color: Colors.black87
+        //       ),
+        //     ),
+        //     actions: [IconButton(onPressed: () {}, icon: Icon(Icons.search, color: Colors.black87,))],
+        //          ),
+        //  ),
+        body: GestureDetector(
+          onTap: () {
+          },
+          child: Column(
+          children: <Widget>[
+            Expanded(
+              child: Container(
+
+                decoration: 
+                BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(50),
+                    topRight: Radius.circular(50),
                   ),
                 ),
-              ],
+                child: ListView(
+                  
+                  children: [
+                    
+                  Column(
+                    children: [
+                      SizedBox(
+                        height: 20,
+                      ),
+            
+                      Container(
+                        alignment: Alignment.center,
+                        child: Text(
+                          widget.docs['title'],
+                          style: GoogleFonts.kanit(fontSize: 23),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                       Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Divider(
+                          thickness: 1,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          '         รายละเอียดอาหาร',
+                          style: GoogleFonts.kanit(fontSize: 20),
+                        ),
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        margin: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Text(
+                          widget.docs['subtitle'],
+                          style: GoogleFonts.kanit(fontSize: 14),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Divider(
+                          thickness: 1,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          '         วัตถุดิบ',
+                          style: GoogleFonts.kanit(fontSize: 20),
+                        ),
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        margin: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Text(
+                          widget.docs['ingredients'],
+                          style: GoogleFonts.kanit(fontSize: 14),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Divider(
+                          thickness: 1,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          '         ขั้นตอนการทำ',
+                          style: GoogleFonts.kanit(fontSize: 20),
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Text(
+                          widget.docs['description'],
+                          style: GoogleFonts.kanit(fontSize: 14),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                        ClipRRect(
+                              borderRadius: BorderRadius.circular(35.0),
+                              child: Image.network(avatar.toString(),
+                                  width: 95, height: 95, fit: BoxFit.cover
+                              ),
+                            ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Text(
+                          'แชร์เมนูโดย $name',
+                          style: GoogleFonts.kanit(fontSize: 14),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  ),
+                ]),
+              ),
             ),
-          ]
-          ),
-        ));
+          ],
+            ),
+        )));
   }
 }

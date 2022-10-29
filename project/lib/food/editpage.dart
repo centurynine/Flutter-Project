@@ -9,7 +9,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:project/widget/drawer.dart';
 import 'package:getwidget/getwidget.dart';
-import 'package:uri_to_file/uri_to_file.dart';
+// import 'package:uri_to_file/uri_to_file.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'dart:math'; 
