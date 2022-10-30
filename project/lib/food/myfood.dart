@@ -353,7 +353,7 @@ class _MyFoodState extends State<MyFood> {
                                                   ),
                                                   child: Text(
                                                     textAlign: TextAlign.center,
-                                                    ' ประเภท : ${(snapshot.data!).docs[index]['food_type']}      ',
+                                                    ' ${(snapshot.data!).docs[index]['food_type']}      ',
                                                     maxLines: 1,
                                                     style: GoogleFonts.kanit(
                                                         fontSize: 13),
