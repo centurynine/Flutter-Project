@@ -168,11 +168,15 @@ class _RecommendgetState extends State<Recommendget> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           (tips.length > 1)
-                              ? Text(tips[selectIndex],
-                                  style: GoogleFonts.kanit(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black))
+                              ? Flexible(
+                                fit: FlexFit.loose,
+                                child: Text(tips[selectIndex],
+                                maxLines: 1,
+                                    style: GoogleFonts.kanit(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black)),
+                              )
                               : Text(tips[0],
                                   style: GoogleFonts.kanit(
                                       fontSize: 20,
