@@ -352,6 +352,10 @@ class _ShowMenuState extends State<ShowMenu> {
       if(users.docs.isEmpty){
         await FirebaseFirestore.instance.collection('users_like').add({
           'email': FirebaseAuth.instance.currentUser?.email,
+          '${widget.docs['id']}': true,
+        });
+        setState(() {
+          userLiked = true;
         });
            print('Create email Like field');
       }
