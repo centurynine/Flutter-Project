@@ -54,7 +54,6 @@ class _RecommendgetState extends State<Recommendget> {
         .then((value) => value.docs.forEach((element) {
               foodID.add(element.data()['id']);
             }));
-    print(foodID);
     randomFoodID();
   }
 
@@ -63,9 +62,7 @@ class _RecommendgetState extends State<Recommendget> {
     final index1 = random.nextInt(foodID.length);
     final index2 = random.nextInt(foodID.length);
     final index3 = random.nextInt(foodID.length);
-    print(foodID[index1]);
-    print(foodID[index2]);
-    print(foodID[index3]);
+
     setState(() {
       this.index1 = foodID[index1];
       this.index2 = foodID[index2];
@@ -182,11 +179,6 @@ class _RecommendgetState extends State<Recommendget> {
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black)),
-                          // Text(tips[selectIndex],
-                          // style: GoogleFonts.kanit(
-                          //   fontSize: 20,
-                          // ),
-                          // ),
 
                           const SizedBox(height: 10),
                           (subtips.length > 1)
