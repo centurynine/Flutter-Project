@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ffi';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/food/ShowMenu.dart';
@@ -224,10 +225,19 @@ class _RecommendgetState extends State<Recommendget> {
                           //   ),
                           // ),
 
-
-                          ElevatedButton(
+                          FirebaseAuth.instance.currentUser != null
+                          ? ElevatedButton(
                               onPressed: () {
                                 Navigator.pushNamed(context, '/searchpage');
+                              },
+                              child: Text(
+                                'ค้นหาอาหาร',
+                                style: GoogleFonts.kanit(
+                                    fontSize: 12, color: Colors.white),
+                              ))
+                          :ElevatedButton(
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/login');
                               },
                               child: Text(
                                 'ค้นหาอาหาร',
