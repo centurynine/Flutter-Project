@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:project/food/ShowMenu.dart';
+import 'package:project/food/editpage.dart';
 import 'package:project/widget/drawer.dart';
 import 'package:project/homepage/home.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firbaseStorage;
@@ -22,6 +23,7 @@ class ShowMenu extends StatefulWidget {
 }
 
 class _ShowMenuState extends State<ShowMenu> {
+  bool? isCreate = false;
   String counted = '0';
   CollectionReference data = FirebaseFirestore.instance.collection('foods');
 
@@ -93,6 +95,7 @@ class _ShowMenuState extends State<ShowMenu> {
     checkNameWhoCreated();
     checkLike();
     updateCountLike();
+   // checkCreate();
   }
 
   @override
@@ -118,7 +121,40 @@ class _ShowMenuState extends State<ShowMenu> {
                         },
                       ),
                     ),
-                
+                    actions: [
+                      FirebaseAuth.instance.currentUser?.email == widget.docs['email']
+                      ? Container(
+                        margin: const EdgeInsets.only(right: 10, top: 10),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: IconButton(
+                          color: Colors.black87,
+                          icon: const Icon(Icons.edit),
+                          onPressed: () {
+                            if (FirebaseAuth.instance.currentUser != null) {
+                              if (FirebaseAuth.instance.currentUser?.email ==
+                                  widget.docs['email']) {
+                                // Navigator.pushNamed(context, '/EditData',
+                                //     arguments: widget.docs);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => EditData(
+                                              docs: widget.docs,
+                                            )));
+                              } else {
+                                EasyLoading.showError('ไม่สามารถแก้ไขได้');
+                              }
+                            } else {
+                              Navigator.pushNamed(context, '/');
+                            }
+                          },
+                        ),
+                      )
+                      : Container(),
+                    ],
                     iconTheme: const IconThemeData(color: Colors.black),
                     backgroundColor: Colors.white,
                     expandedHeight: 240,
@@ -426,39 +462,28 @@ class _ShowMenuState extends State<ShowMenu> {
     }
   }
 
-  }
-
+  // Future<void> checkCreate() async {
+  //   if(FirebaseAuth.instance.currentUser != null){
+  //   QuerySnapshot query = await FirebaseFirestore.instance
+  //       .collection('foods')
+  //       .where('id', isEqualTo: '${widget.docs['id']}')
+  //       .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
+  //       .get();
+  //   if (query.docs.isNotEmpty) {
+  //     isCreate = true;
+  //     print('พบชื่อเจ้าของโพส');
+  //   } else {
+  //     isCreate = false;
+  //     print('ไม่พบชื่อเจ้าของโพส');
+  //   }
+  // } else {
+  //   print('ไม่พบการเข้าสู่ระบบ');
+  // }
+  
+  // }
+ 
+}
 
 
 
  
-
-//   Future<void> pressLike() async {
-//     if (FirebaseAuth.instance.currentUser != null) {
-//     final users = await FirebaseFirestore.instance
-//         .collection('users_like')
-//         .where('email', isEqualTo: FirebaseAuth.instance.currentUser?.email)
-//         .where('${widget.docs['id']}', isEqualTo: false)
-//         .get();
-//     if (users.docs.isNotEmpty) {
-//       print('ผู้ใช้กดถูกใจแล้ว');
-//       setState(() {
-//         userLiked = true;
-//       });
-//       // print(avatar);
-//     } else if (users.docs.isEmpty) {
-//       final users = await FirebaseFirestore.instance
-//           .collection('users_like')
-//           .where('email', isEqualTo: FirebaseAuth.instance.currentUser?.email)
-//           .where('${widget.docs['id']}', isEqualTo: false)
-//           .get();
-//       print('ผู้ใช้ไม่กดถูกใจ');
-//       setState(() {
-//         userLiked = false;
-//       });
-//     }
-//   }else {
-//     Navigator.pushNamed(context, '/');
-//   }
-//   }  
-// }

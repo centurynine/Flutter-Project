@@ -369,12 +369,25 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                                                       ),
                                                     ],
                                                   ),
-                                                  child: Text(
-                                                    textAlign: TextAlign.center,
-                                                    ' ${(snapshot.data!).docs[index]['food_type']}      ',
-                                                    maxLines: 1,
-                                                    style: GoogleFonts.kanit(
-                                                        fontSize: 13),
+                                                  child: Container(
+                                                    child: IntrinsicWidth(
+                                                      child: Row(
+                                                        children: [
+                                                          Text(' '),
+                                                          Icon(
+                                                            Icons.store,
+                                                            size: 15,
+                                                          ),
+                                                          Text(
+                                                            textAlign: TextAlign.center,
+                                                            '${(snapshot.data!).docs[index]['food_type']}     ',
+                                                            maxLines: 1,
+                                                            style: GoogleFonts.kanit(
+                                                                fontSize: 13),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
                                               ),
