@@ -509,6 +509,7 @@ class _UploadDataState extends State<UploadData> {
       "ingredients": ingredients,
       "created_at": DateTime.now(),
       "food_type": foodType,
+      "like": '0',
       "uploadImageUrl": url,
     });
     sendNotification();

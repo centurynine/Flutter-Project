@@ -18,7 +18,6 @@ import 'package:project/account/login.dart';
 import 'package:project/search/searchpage.dart';
 
 class BodyAfterLogin extends StatefulWidget {
-  
   const BodyAfterLogin({super.key});
 
   @override
@@ -34,10 +33,8 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
   firbaseStorage.Reference storageRef =
       firbaseStorage.FirebaseStorage.instance.ref().child('foods/');
   bool isAdmin = false;
-
-
-
-
+  int? countLike = 0;
+  String? counted = '0';
 
   @override
   void initState() {
@@ -58,7 +55,6 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
     return Column(children: [
       Expanded(
           child: Scaffold(
-            
               drawer: DrawerWidget(),
               appBar: AppBar(
                 backgroundColor: Colors.white,
@@ -111,14 +107,14 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                       EasyLoading.dismiss();
                       return NotFound();
                     }
+
                     EasyLoading.dismiss();
                     return ListView.builder(
                       itemCount: (snapshot.data!).docs.length,
                       itemBuilder: (context, index) {
                         if ((snapshot.data!).docs[index]['title'] == '' ||
                             (snapshot.data!).docs[index]['uploadImageUrl'] ==
-                                '' ||
-                            (snapshot.data!).docs[index]['id'] == '') {
+                                '' ||(snapshot.data!).docs[index]['id'] == '' || (snapshot.data!).docs[index]['like'] == '') {
                           return SizedBox.shrink();
                         } else {
                           return Card(
@@ -129,28 +125,28 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                               padding: const EdgeInsets.all(0),
                               child: InkWell(
                                 onTap: () {
-                                                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => ShowMenu(
-                                              docs:
-                                                  (snapshot.data!).docs[index],
-                                            )));
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ShowMenu(
+                                                docs: (snapshot.data!)
+                                                    .docs[index],
+                                              )));
                                 },
-                                child: Row(
-                                  
-                                  children: [
+                                child: Row(children: [
                                   Expanded(
                                     flex: 6,
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Container(
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(7),
+                                          borderRadius:
+                                              BorderRadius.circular(7),
                                           image: DecorationImage(
-                                              image: NetworkImage((snapshot.data!)
-                                                  .docs[index]['uploadImageUrl'],
-                                                  ),
+                                              image: NetworkImage(
+                                                (snapshot.data!).docs[index]
+                                                    ['uploadImageUrl'],
+                                              ),
                                               fit: BoxFit.cover),
                                         ),
                                       ),
@@ -167,196 +163,209 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
                                         children: <Widget>[
                                           Row(
                                             children: [
                                               Flexible(
                                                 child: Text(
-                                                  (snapshot.data!).docs[index]['title'],
+                                                  (snapshot.data!).docs[index]
+                                                      ['title'],
                                                   maxLines: 1,
-                                                  style: GoogleFonts.notoSansThai(
-                                                      fontSize: 20),
+                                                  style:
+                                                      GoogleFonts.notoSansThai(
+                                                          fontSize: 20),
                                                 ),
                                               ),
-                                              
-                                             FutureBuilder(
-                                            future: users.doc().get(),
-                                            builder: (ctx, futureSnapshot) {
-                                              if (futureSnapshot
-                                                      .connectionState ==
-                                                  ConnectionState.waiting) {
-                                                checkAdmin();
-                                              }
-                                              if (isAdmin == true) {
-                                                return GestureDetector(
-                                                  child: Icon(Icons.edit),
-                                                  onTap: () {
-                                                    showDialog(
-                                                        context: context,
-                                                        builder: (BuildContext
-                                                            context) {
-                                                          return AlertDialog(
-                                                            title: Text(
-                                                                'แก้ไขรายการอาหาร'),
-                                                            content: Text(''),
-                                                            actions: [
-                                                              TextButton(
-                                                                child:
-                                                                    Text('แก้ไข'),
-                                                                onPressed: () {
-                                                                  Navigator.of(
-                                                                          context)
-                                                                      .pop();
-                                                                  Navigator.push(
-                                                                      context,
-                                                                      MaterialPageRoute(
-                                                                          builder: (context) =>
-                                                                              EditData(
-                                                                                docs: (snapshot.data!).docs[index],
-                                                                              )));
-                                                                },
-                                                              ),
-                                                              TextButton(
-                                                                child: Text(
-                                                                    'ยกเลิก'),
-                                                                onPressed: () {
-                                                                  Navigator.of(
-                                                                          context)
-                                                                      .pop();
-                                                                },
-                                                              ),
-                                                              TextButton(
-                                                                child: Text('ลบ'),
-                                                                onPressed: () {
-                                                                  FirebaseFirestore
-                                                                      .instance
-                                                                      .collection(
-                                                                          'foods')
-                                                                      .doc((snapshot
-                                                                              .data!)
-                                                                          .docs[
-                                                                              index]
-                                                                          .id)
-                                                                      .delete();
-                                                                  print(
-                                                                      'Database ID ${(snapshot.data!).docs[index]['id']} Deledted');
-                                                                  var imageID =
-                                                                      (snapshot.data!)
-                                                                              .docs[
-                                                                          index]['id'];
-                                                                  print(
-                                                                      'Picture ID : $imageID Deleted');
-                                                                  var reference =
-                                                                      FirebaseStorage
+                                              FutureBuilder(
+                                                future: users.doc().get(),
+                                                builder: (ctx, futureSnapshot) {
+                                                  if (futureSnapshot
+                                                          .connectionState ==
+                                                      ConnectionState.waiting) {
+                                                    checkAdmin();
+                                                  }
+                                                  if (isAdmin == true) {
+                                                    return GestureDetector(
+                                                      child: Icon(Icons.edit),
+                                                      onTap: () {
+                                                        showDialog(
+                                                            context: context,
+                                                            builder:
+                                                                (BuildContext
+                                                                    context) {
+                                                              return AlertDialog(
+                                                                title: Text(
+                                                                    'แก้ไขรายการอาหาร'),
+                                                                content:
+                                                                    Text(''),
+                                                                actions: [
+                                                                  TextButton(
+                                                                    child: Text(
+                                                                        'แก้ไข'),
+                                                                    onPressed:
+                                                                        () {
+                                                                      Navigator.of(
+                                                                              context)
+                                                                          .pop();
+                                                                      Navigator.push(
+                                                                          context,
+                                                                          MaterialPageRoute(
+                                                                              builder: (context) => EditData(
+                                                                                    docs: (snapshot.data!).docs[index],
+                                                                                  )));
+                                                                    },
+                                                                  ),
+                                                                  TextButton(
+                                                                    child: Text(
+                                                                        'ยกเลิก'),
+                                                                    onPressed:
+                                                                        () {
+                                                                      Navigator.of(
+                                                                              context)
+                                                                          .pop();
+                                                                    },
+                                                                  ),
+                                                                  TextButton(
+                                                                    child: Text(
+                                                                        'ลบ'),
+                                                                    onPressed:
+                                                                        () {
+                                                                      FirebaseFirestore
+                                                                          .instance
+                                                                          .collection(
+                                                                              'foods')
+                                                                          .doc((snapshot.data!)
+                                                                              .docs[index]
+                                                                              .id)
+                                                                          .delete();
+                                                                      print(
+                                                                          'Database ID ${(snapshot.data!).docs[index]['id']} Deledted');
+                                                                      var imageID =
+                                                                          (snapshot.data!).docs[index]
+                                                                              [
+                                                                              'id'];
+                                                                      print(
+                                                                          'Picture ID : $imageID Deleted');
+                                                                      var reference = FirebaseStorage
                                                                           .instance
                                                                           .ref()
                                                                           .child(
                                                                               'foods/$imageID');
-                                                                  var delete =
-                                                                      reference
-                                                                          .delete();
-                                                                  Navigator.of(
-                                                                          context)
-                                                                      .pop();
-                                                                  EasyLoading
-                                                                      .showSuccess(
-                                                                          'ลบรายการอาหารแล้ว');
-                                                                },
-                                                              ),
-                                                            ],
-                                                          );
-                                                        });
-                                                  },
-                                                );
-                                              } else {
-                                                return SizedBox.shrink();
-                                              }
-                                            },
-                                          )
+                                                                      var delete =
+                                                                          reference
+                                                                              .delete();
+                                                                      Navigator.of(
+                                                                              context)
+                                                                          .pop();
+                                                                      EasyLoading
+                                                                          .showSuccess(
+                                                                              'ลบรายการอาหารแล้ว');
+                                                                    },
+                                                                  ),
+                                                                ],
+                                                              );
+                                                            });
+                                                      },
+                                                    );
+                                                  } else {
+                                                    return SizedBox.shrink();
+                                                  }
+                                                },
+                                              )
                                             ],
-                                            
                                           ),
-                                          
+
                                           Row(
                                             children: <Widget>[
                                               Flexible(
                                                 child: RichText(
                                                   maxLines: 1,
-                                                  overflow: TextOverflow.ellipsis,
-                                                  strutStyle:
-                                                      StrutStyle(fontSize: 12.0),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  strutStyle: StrutStyle(
+                                                      fontSize: 12.0),
                                                   text: TextSpan(
-                                                    
                                                     style: GoogleFonts.kanit(
                                                       fontSize: 13,
                                                       color: Colors.black,
                                                     ),
                                                     text: (snapshot.data!)
-                                                        .docs[index]['subtitle'],
-                                                        
+                                                            .docs[index]
+                                                        ['subtitle'],
                                                   ),
                                                 ),
                                               ),
                                             ],
                                           ),
                                           (snapshot.data!).docs[index]
-                                                      ['displayname'] ==
-                                                  null || (snapshot.data!).docs[index]['displayname'] == ''
+                                                          ['displayname'] ==
+                                                      null ||
+                                                  (snapshot.data!).docs[index]
+                                                          ['displayname'] ==
+                                                      ''
                                               ? Expanded(
-                                                child: Row(
+                                                  child: Row(
                                                     children: <Widget>[
                                                       Text(
                                                         'แชร์โดย : ',
-                                                        style: GoogleFonts.kanit(
-                                                            fontSize: 13, 
-                                                            color: Colors.black),
-                                                            
+                                                        style:
+                                                            GoogleFonts.kanit(
+                                                                fontSize: 13,
+                                                                color: Colors
+                                                                    .black),
                                                       ),
                                                       Text(
                                                         "ไม่พบบัญชีผู้ใช้",
                                                         maxLines: 1,
-                                                        style: GoogleFonts.kanit(
-                                                            fontSize: 10),
+                                                        style:
+                                                            GoogleFonts.kanit(
+                                                                fontSize: 10),
                                                       ),
-                                                      
                                                     ],
                                                   ),
-                                              )
+                                                )
                                               : Expanded(
-                                                child: Row(
+                                                  child: Row(
                                                     children: <Widget>[
                                                       Text(
                                                         'แชร์โดย : ',
-                                                        style: GoogleFonts.kanit(
-                                                            fontSize: 13, 
-                                                            color: Colors.black),
-                                                            
+                                                        style:
+                                                            GoogleFonts.kanit(
+                                                                fontSize: 13,
+                                                                color: Colors
+                                                                    .black),
                                                       ),
                                                       Text(
-                                                        (snapshot.data!).docs[index]
+                                                        (snapshot.data!)
+                                                                .docs[index]
                                                             ['displayname'],
                                                         maxLines: 1,
-                                                        style: GoogleFonts.kanit(
-                                                            fontSize: 12),
+                                                        style:
+                                                            GoogleFonts.kanit(
+                                                                fontSize: 12),
                                                       ),
-                                                      
                                                     ],
-                                                    
                                                   ),
-                                              ),
-                                                Flexible(
+                                                ),
+                                          Row(
+                                            children: [
+                                              Flexible(
                                                 child: Container(
-                                                  decoration: 
-                                                   BoxDecoration(
+                                                  decoration: BoxDecoration(
                                                     color: Colors.white,
-                                                    borderRadius: BorderRadius.circular(10),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
                                                     boxShadow: [
                                                       BoxShadow(
-                                                        color: Colors.grey.withOpacity(0.5),
+                                                        color: Colors.grey
+                                                            .withOpacity(0.5),
                                                         spreadRadius: 1,
                                                         blurRadius: 1,
-                                                        offset: Offset(0, 1), // changes position of shadow
+                                                        offset: Offset(0,
+                                                            1), // changes position of shadow
                                                       ),
                                                     ],
                                                   ),
@@ -369,6 +378,38 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                                                   ),
                                                 ),
                                               ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Flexible(
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: Colors.grey
+                                                            .withOpacity(0.5),
+                                                        spreadRadius: 1,
+                                                        blurRadius: 1,
+                                                        offset: Offset(0,
+                                                            1), // changes position of shadow
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  child: Text(
+                                                    textAlign: TextAlign.center,
+                                                    ' ถูกใจ : ${(snapshot.data!).docs[index]['like']}      ',
+                                                    maxLines: 1,
+                                                    style: GoogleFonts.kanit(
+                                                        fontSize: 13),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                           // Align(
                                           //   alignment: Alignment.bottomRight,
                                           //   child: Row(
@@ -383,9 +424,7 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                                           //   ),
                                           // )
                                         ],
-                                        
                                       ),
-                                      
                                     ),
                                   ),
                                 ]),
@@ -399,8 +438,22 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
     ]);
   }
 
-
-
+  // checkLike(String id) async {
+  //   if (FirebaseAuth.instance.currentUser != null) {
+  //     QuerySnapshot _myDoc = await FirebaseFirestore.instance
+  //         .collection('users_like')
+  //         .where('${id}', isEqualTo: true)
+  //         .get();
+  //     List<DocumentSnapshot> _myDocCount = _myDoc.docs;
+  //     counted = _myDocCount.length.toString();
+  //     return counted;
+  //   } else {
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => Homepage()),
+  //     );
+  //   }
+  // }
 
   Future<void> checkAdmin() async {
     if (FirebaseAuth.instance.currentUser != null) {

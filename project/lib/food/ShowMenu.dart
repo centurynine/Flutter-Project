@@ -22,6 +22,7 @@ class ShowMenu extends StatefulWidget {
 }
 
 class _ShowMenuState extends State<ShowMenu> {
+  String counted = '0';
   CollectionReference data = FirebaseFirestore.instance.collection('foods');
 
   firbaseStorage.Reference storageRef =
@@ -91,6 +92,7 @@ class _ShowMenuState extends State<ShowMenu> {
     super.initState();
     checkNameWhoCreated();
     checkLike();
+    updateCountLike();
   }
 
   @override
@@ -101,6 +103,7 @@ class _ShowMenuState extends State<ShowMenu> {
         body: NestedScrollView(
             headerSliverBuilder: (context, innerBoxIsScrolled) => [
                   SliverAppBar(
+                    
                     leading: Container(
                       margin: const EdgeInsets.only(left: 10, top: 10),
                       decoration: BoxDecoration(
@@ -115,6 +118,7 @@ class _ShowMenuState extends State<ShowMenu> {
                         },
                       ),
                     ),
+                
                     iconTheme: const IconThemeData(color: Colors.black),
                     backgroundColor: Colors.white,
                     expandedHeight: 240,
@@ -180,7 +184,7 @@ class _ShowMenuState extends State<ShowMenu> {
                                       GestureDetector(
                                         onTap: () {
                                           pressLike();
-                                          print('Pressed To Un Like');
+                                          print('Pressed UnLike');
                                         },
                                         child: Icon(
                                           Icons.favorite,
@@ -195,7 +199,7 @@ class _ShowMenuState extends State<ShowMenu> {
                                     children: <Widget>[
                                       GestureDetector(
                                         onTap: () {
-                                          print('Pressed To Like');
+                                          print('Pressed Like');
                                           pressLike();
                                         },
                                         child: Icon(
@@ -205,16 +209,6 @@ class _ShowMenuState extends State<ShowMenu> {
                                         ),
                                       ),
                                     ],
-
-
-                                  
-
-                                  // IconButton(onPressed: (() {
-                                  // }), 
-                                  // icon: Icon(Icons.favorite_border, color: Colors.white, size: 30,),
-                                  // color: Colors.black,
-                                  // ),
-
 
                                 )
                               ],
@@ -303,6 +297,24 @@ class _ShowMenuState extends State<ShowMenu> {
                           const SizedBox(
                             height: 20,
                           ),
+                                                    Container(
+                            margin:
+                                const EdgeInsets.symmetric(horizontal: 20),
+                            child: const Divider(
+                              thickness: 1,
+                              color: Colors.grey,
+                            ),
+                          ),
+                            Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              '         ถูกใจ : ${counted}',
+                              style: GoogleFonts.kanit(fontSize: 14),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
                           ClipRRect(
                             borderRadius: BorderRadius.circular(35.0),
                             child: Image.network(avatar.toString(),
@@ -363,20 +375,59 @@ class _ShowMenuState extends State<ShowMenu> {
           await FirebaseFirestore.instance.collection('users_like').doc(users.docs[0].id).update({
           '${widget.docs['id']}': false,
         });
-                setState(() {
+        setState(() {
           userLiked = false;
         });
         print('usersLike.docs.isNotEmpty');
         }
-        }}
-
- 
+        }
+        updateCountLike();
+        }
   else {
     Navigator.pushNamed(context, '/');
   }}  
 
-}
 
+  Future<void> updateCountLike() async {
+    QuerySnapshot _myDoc = await FirebaseFirestore.instance
+    .collection('users_like')
+    .where('${widget.docs['id']}' , isEqualTo: true)
+    .get();
+    List<DocumentSnapshot> _myDocCount = _myDoc.docs;
+    counted = _myDocCount.length.toString();
+    print('จำนวนกดถูกใจ : $counted');
+    setState(() {
+      counted = counted;
+    });
+    updateDocuement();
+  }
+
+  Future<void> updateDocuement() async {
+    final users = await FirebaseFirestore.instance
+        .collection('foods')
+        .where('id', isEqualTo: '${widget.docs['id']}')
+        .where('like')
+        .get();
+    if(users.docs.isNotEmpty){
+              await FirebaseFirestore.instance.collection('foods').doc(users.docs[0].id).update({
+          'like': counted,
+          }
+          );
+    }
+    else if (users.docs.isEmpty){
+      await FirebaseFirestore.instance.collection('foods').add({
+          'like': counted,
+          }
+          );
+    }
+  }
+
+  }
+
+
+
+
+ 
 
 //   Future<void> pressLike() async {
 //     if (FirebaseAuth.instance.currentUser != null) {
