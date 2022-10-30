@@ -73,6 +73,7 @@ class _ShowMenuState extends State<ShowMenu> {
         headerSliverBuilder: (context, innerBoxIsScrolled) => 
         [
         SliverAppBar(
+          
           leading: Container(
             margin: EdgeInsets.only(left: 10, top: 10),
             decoration: BoxDecoration(
@@ -104,7 +105,7 @@ class _ShowMenuState extends State<ShowMenu> {
                     decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(40),
+                        top: Radius.circular(30),
                       ),
                     ),
                   ),
