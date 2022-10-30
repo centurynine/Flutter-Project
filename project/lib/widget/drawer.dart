@@ -73,13 +73,44 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(30),
+          bottomRight: Radius.circular(30),
+        ),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ],
+      )
+
+        ,
         width: MediaQuery.of(context).size.width / 1.3,
-      color: Colors.white,
+      // color: Colors.white,
       child: ListView(
           children: <Widget>[
             Container(
               margin: EdgeInsets.only(top: 0),
-              color: Colors.red[400],
+
+              decoration: const BoxDecoration(
+                color: Colors.redAccent,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(30),
+                  topRight:  Radius.circular(30),
+                ),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                    color: Colors.black54,
+                    blurRadius: 5.0,
+                    offset: Offset(0.0, 0.75)
+                    )
+                  ],
+              ),
               child: Column(
                 children: <Widget>[
                   Container(

@@ -39,10 +39,9 @@ class MyApp extends StatelessWidget {
   }
 
   MaterialApp buildMaterialApp() {
-    
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Eat With Me',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         fontFamily: 'josefinSans',
