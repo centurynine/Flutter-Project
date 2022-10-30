@@ -1,6 +1,8 @@
+
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -27,262 +29,381 @@ class _ShowMenuState extends State<ShowMenu> {
   String? id;
   String? name;
   String? avatar = 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+  bool? userLiked = false;
   void checkNameWhoCreated() async {
     final users = await FirebaseFirestore.instance
         .collection('users')
         .where('email', isEqualTo: widget.docs['email'])
         .where('avatar')
         .get();
-        if(users.docs.isNotEmpty){
-          print('พบข้อมูลชื่อผู้โพส');
-          print(users.docs[0].data()['email']);
-          setState(() {
-            name = users.docs[0].data()['name'];
-            avatar = users.docs[0].data()['avatar'];
-          });
-         // print(avatar);
-          if(avatar == null){
-            setState(() {
-               print('ไม่พบรูปภาพ');
-               avatar = 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
-            });
-            print(avatar);
-          }
-          else {
-            print('พบภาพโปรไฟล์');
-          }
-        }else if(users.docs.isEmpty){
-          print('ไม่พบข้อมูลชื่อผู้โพส');
-          setState(() {
-            name = 'ไม่พบชื่อผู้โพส';
-          });
-        }
+    if (users.docs.isNotEmpty) {
+      print('พบข้อมูลชื่อผู้โพส');
+      print(users.docs[0].data()['email']);
+      setState(() {
+        name = users.docs[0].data()['name'];
+        avatar = users.docs[0].data()['avatar'];
+      });
+      // print(avatar);
+      if (avatar == null) {
+        setState(() {
+          print('ไม่พบรูปภาพ');
+          avatar = 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+        });
+        print(avatar);
+      } else {
+        print('พบภาพโปรไฟล์');
+      }
+    } else if (users.docs.isEmpty) {
+      print('ไม่พบข้อมูลชื่อผู้โพส');
+      setState(() {
+        name = 'ไม่พบชื่อผู้โพส';
+      });
+    }
+  }
+
+
+  Future<void> checkLike() async {
+    if (FirebaseAuth.instance.currentUser != null) {
+    final users = await FirebaseFirestore.instance
+        .collection('users_like')
+        .where('email', isEqualTo: FirebaseAuth.instance.currentUser?.email)
+        .where('${widget.docs['id']}', isEqualTo: true)
+        .get();
+    if (users.docs.isNotEmpty) {
+      print('ผู้ใช้กดถูกใจแล้ว');
+      setState(() {
+        userLiked = true;
+      });
+      // print(avatar);
+    } else if (users.docs.isEmpty) {
+      print('ผู้ใช้ไม่กดถูกใจ');
+      setState(() {
+        userLiked = false;
+      });
+    }
+  }else {
+    Navigator.pushNamed(context, '/');
+  }
   }
 
   @override
   void initState() {
     super.initState();
     checkNameWhoCreated();
+    checkLike();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      drawer:  DrawerWidget(),
-      body: NestedScrollView(
-        headerSliverBuilder: (context, innerBoxIsScrolled) => 
-        [
-        SliverAppBar(
-          
-          leading: Container(
-            margin: EdgeInsets.only(left: 10, top: 10),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(30),
-            ),
-            child: IconButton(
-              color: Colors.black87,
-              icon: Icon(Icons.arrow_back_ios_new_outlined),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ),
-          iconTheme: IconThemeData(color: Colors.black),
-          backgroundColor: Colors.white,
-          expandedHeight: 240,
-          flexibleSpace: Stack(
-            children: [
-              FlexibleSpaceBar(
-              background: Image.network(
-                widget.docs['uploadImageUrl'],
-                fit: BoxFit.cover,
-              ),
-            ),
-                Positioned(
-                  child: Container(
-                    height: 33,
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(30),
+        backgroundColor: Colors.white,
+        drawer: const DrawerWidget(),
+        body: NestedScrollView(
+            headerSliverBuilder: (context, innerBoxIsScrolled) => [
+                  SliverAppBar(
+                    leading: Container(
+                      margin: const EdgeInsets.only(left: 10, top: 10),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: IconButton(
+                        color: Colors.black87,
+                        icon: const Icon(Icons.arrow_back_ios_new_outlined),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
                       ),
                     ),
-                  ),
-                  bottom: -7,
-                  left: 0,
-                  right: 0,
-                )
-
-        ],
-        
-        ),
-          floating: true,
-          pinned: true,
-        ), ],
-        
-      
-      //backgroundColor: Colors.white,
-      
-       
-        //    appBar: AppBar(
-        //     backgroundColor: Colors.transparent,
-        //     automaticallyImplyLeading: false,
-        //     leading: IconButton(
-        //       icon: const Icon(Icons.arrow_back_ios_new_outlined,
-        //           color: Colors.black87, size: 20),
-        //       color: Colors.black87,
-        //       onPressed: () {
-        //         //   Navigator.pop(context);
-        //         Navigator.pop(context);
-        //       },
-        //     ),
-        //     title: Text(
-        //       widget.docs['title'],
-        //       style: GoogleFonts.kanit(
-        //         fontSize: 20,
-        //         color: Colors.black87
-        //       ),
-        //     ),
-        //     actions: [IconButton(onPressed: () {}, icon: Icon(Icons.search, color: Colors.black87,))],
-        //          ),
-        //  ),
-        body: GestureDetector(
-          onTap: () {
-          },
-          child: Column(
-          children: <Widget>[
-            Expanded(
-              child: Container(
-
-                decoration: 
-                BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(50),
-                    topRight: Radius.circular(50),
-                  ),
-                ),
-                child: ListView(
-                  
-                  children: [
-                    
-                  Column(
-                    children: [
-                      SizedBox(
-                        height: 20,
-                      ),
-            
-                      Container(
-                        alignment: Alignment.center,
-                        child: Text(
-                          widget.docs['title'],
-                          style: GoogleFonts.kanit(fontSize: 23),
+                    iconTheme: const IconThemeData(color: Colors.black),
+                    backgroundColor: Colors.white,
+                    expandedHeight: 240,
+                    flexibleSpace: Stack(
+                      children: [
+                        FlexibleSpaceBar(
+                          background: Image.network(
+                            widget.docs['uploadImageUrl'],
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                       Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Divider(
-                          thickness: 1,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          '         รายละเอียดอาหาร',
-                          style: GoogleFonts.kanit(fontSize: 20),
-                        ),
-                      ),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Text(
-                          widget.docs['subtitle'],
-                          style: GoogleFonts.kanit(fontSize: 14),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Divider(
-                          thickness: 1,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          '         วัตถุดิบ',
-                          style: GoogleFonts.kanit(fontSize: 20),
-                        ),
-                      ),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Text(
-                          widget.docs['ingredients'],
-                          style: GoogleFonts.kanit(fontSize: 14),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Divider(
-                          thickness: 1,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          '         ขั้นตอนการทำ',
-                          style: GoogleFonts.kanit(fontSize: 20),
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Text(
-                          widget.docs['description'],
-                          style: GoogleFonts.kanit(fontSize: 14),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                        ClipRRect(
-                              borderRadius: BorderRadius.circular(35.0),
-                              child: Image.network(avatar.toString(),
-                                  width: 95, height: 95, fit: BoxFit.cover
+                        Positioned(
+                          bottom: -7,
+                          left: 0,
+                          right: 0,
+                          child: Container(
+                            height: 33,
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(30),
                               ),
                             ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Text(
-                          'แชร์เมนูโดย $name',
-                          style: GoogleFonts.kanit(fontSize: 14),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                    ],
+                          ),
+                        )
+                      ],
+                    ),
+                    floating: true,
+                    pinned: false,
+
                   ),
-                ]),
-              ),
-            ),
-          ],
-            ),
-        )));
+                ],
+            body: Column(
+              children: <Widget>[
+                Expanded(
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(50),
+                        topRight: Radius.circular(50),
+                      ),
+                    ),
+                    child: ListView(children: [
+                      Column(
+                        children: [
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            alignment: Alignment.center,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  widget.docs['title'],
+                                  style: GoogleFonts.kanit(fontSize: 23),
+                                ),
+                                userLiked == true
+                                ? Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: <Widget>[
+                                      GestureDetector(
+                                        onTap: () {
+                                          pressLike();
+                                          print('Pressed To Un Like');
+                                        },
+                                        child: Icon(
+                                          Icons.favorite,
+                                          color: Colors.pinkAccent,
+                                          size: 24.0,
+                                        ),
+                                      ),
+                                    ],
+                                )
+                                : Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: <Widget>[
+                                      GestureDetector(
+                                        onTap: () {
+                                          print('Pressed To Like');
+                                          pressLike();
+                                        },
+                                        child: Icon(
+                                          Icons.favorite,
+                                          color: Colors.grey,
+                                          size: 24.0,
+                                        ),
+                                      ),
+                                    ],
+
+
+                                  
+
+                                  // IconButton(onPressed: (() {
+                                  // }), 
+                                  // icon: Icon(Icons.favorite_border, color: Colors.white, size: 30,),
+                                  // color: Colors.black,
+                                  // ),
+
+
+                                )
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            margin:
+                                const EdgeInsets.symmetric(horizontal: 20),
+                            child: const Divider(
+                              thickness: 1,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              '         รายละเอียดอาหาร',
+                              style: GoogleFonts.kanit(fontSize: 20),
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            margin:
+                                const EdgeInsets.symmetric(horizontal: 20),
+                            child: Text(
+                              widget.docs['subtitle'],
+                              style: GoogleFonts.kanit(fontSize: 14),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            margin:
+                                const EdgeInsets.symmetric(horizontal: 20),
+                            child: const Divider(
+                              thickness: 1,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              '         วัตถุดิบ',
+                              style: GoogleFonts.kanit(fontSize: 20),
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            margin:
+                                const EdgeInsets.symmetric(horizontal: 20),
+                            child: Text(
+                              widget.docs['ingredients'],
+                              style: GoogleFonts.kanit(fontSize: 14),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            margin:
+                                const EdgeInsets.symmetric(horizontal: 20),
+                            child: const Divider(
+                              thickness: 1,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              '         ขั้นตอนการทำ',
+                              style: GoogleFonts.kanit(fontSize: 20),
+                            ),
+                          ),
+                          Container(
+                            margin:
+                                const EdgeInsets.symmetric(horizontal: 20),
+                            child: Text(
+                              widget.docs['description'],
+                              style: GoogleFonts.kanit(fontSize: 14),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(35.0),
+                            child: Image.network(avatar.toString(),
+                                width: 95, height: 95, fit: BoxFit.cover),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            margin:
+                                const EdgeInsets.symmetric(horizontal: 20),
+                            child: Text(
+                              'แชร์เมนูโดย $name',
+                              style: GoogleFonts.kanit(fontSize: 14),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                        ],
+                      ),
+                    ]),
+                  ),
+                ),
+              ],
+            )));
   }
+
+  Future<void> pressLike() async {
+    if (FirebaseAuth.instance.currentUser != null) {
+    final users = await FirebaseFirestore.instance
+        .collection('users_like')
+        .where('email', isEqualTo: FirebaseAuth.instance.currentUser?.email)
+        .get();
+      if(users.docs.isEmpty){
+        await FirebaseFirestore.instance.collection('users_like').add({
+          'email': FirebaseAuth.instance.currentUser?.email,
+        });
+           print('Create email Like field');
+      }
+      else if (users.docs.isNotEmpty) {
+         final usersLike = await FirebaseFirestore.instance
+        .collection('users_like')
+        .where('email', isEqualTo: FirebaseAuth.instance.currentUser?.email)
+        .where('${widget.docs['id']}' , isEqualTo: true)
+        .get();
+        if(usersLike.docs.isEmpty){
+          await FirebaseFirestore.instance.collection('users_like').doc(users.docs[0].id).update({
+          '${widget.docs['id']}': true,
+        
+        });
+        setState(() {
+          userLiked = true;
+        });
+        print('usersLike.docs.isEmpty');
+        }
+        else if(usersLike.docs.isNotEmpty){
+          await FirebaseFirestore.instance.collection('users_like').doc(users.docs[0].id).update({
+          '${widget.docs['id']}': false,
+        });
+                setState(() {
+          userLiked = false;
+        });
+        print('usersLike.docs.isNotEmpty');
+        }
+        }}
+
+ 
+  else {
+    Navigator.pushNamed(context, '/');
+  }}  
+
 }
+
+
+//   Future<void> pressLike() async {
+//     if (FirebaseAuth.instance.currentUser != null) {
+//     final users = await FirebaseFirestore.instance
+//         .collection('users_like')
+//         .where('email', isEqualTo: FirebaseAuth.instance.currentUser?.email)
+//         .where('${widget.docs['id']}', isEqualTo: false)
+//         .get();
+//     if (users.docs.isNotEmpty) {
+//       print('ผู้ใช้กดถูกใจแล้ว');
+//       setState(() {
+//         userLiked = true;
+//       });
+//       // print(avatar);
+//     } else if (users.docs.isEmpty) {
+//       final users = await FirebaseFirestore.instance
+//           .collection('users_like')
+//           .where('email', isEqualTo: FirebaseAuth.instance.currentUser?.email)
+//           .where('${widget.docs['id']}', isEqualTo: false)
+//           .get();
+//       print('ผู้ใช้ไม่กดถูกใจ');
+//       setState(() {
+//         userLiked = false;
+//       });
+//     }
+//   }else {
+//     Navigator.pushNamed(context, '/');
+//   }
+//   }  
+// }

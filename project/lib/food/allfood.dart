@@ -262,14 +262,6 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                                                                   EasyLoading
                                                                       .showSuccess(
                                                                           'ลบรายการอาหารแล้ว');
-                                                                  Future.delayed(
-                                                                      const Duration(
-                                                                          milliseconds:
-                                                                              2000),
-                                                                      () {
-                                                                    EasyLoading
-                                                                        .dismiss();
-                                                                  });
                                                                 },
                                                               ),
                                                             ],
