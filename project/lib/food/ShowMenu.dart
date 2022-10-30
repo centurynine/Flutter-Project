@@ -174,7 +174,7 @@ class _ShowMenuState extends State<ShowMenu> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  widget.docs['title'],
+                                  '${widget.docs['title']} ',
                                   style: GoogleFonts.kanit(fontSize: 23),
                                 ),
                                 userLiked == true

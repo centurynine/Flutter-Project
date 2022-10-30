@@ -64,6 +64,8 @@ File file = new File('$tempPath'+ (rng.nextInt(100)).toString() +'.png');
 http.Response response = await http.get(uri);
 await file.writeAsBytes(response.bodyBytes);
 setState(() {
+  foodType = widget.docs['food_type'];
+  dropdownValue = widget.docs['food_type'];
   _foodpic = file;
   imageUpload = true;
 });
@@ -189,7 +191,7 @@ return file;
         color: Colors.black12, width: 1),
     dropdownButtonColor: Colors.white,
     value: dropdownValue,
-    onChanged: (value) {
+    onChanged: (value){
       setState(() {
         dropdownValue = value.toString();
         foodType = value.toString();
