@@ -453,9 +453,7 @@ return file;
                 "created_at": DateTime.now(),
                 "food_type": foodType,
                 "uploadImageUrl": url,
-          }
-          )
-          );
+                }));
           }
     print('Edit complete');
     ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
