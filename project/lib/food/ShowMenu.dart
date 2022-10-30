@@ -73,11 +73,26 @@ class _ShowMenuState extends State<ShowMenu> {
         headerSliverBuilder: (context, innerBoxIsScrolled) => 
         [
         SliverAppBar(
+          leading: Container(
+            margin: EdgeInsets.only(left: 10, top: 10),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: IconButton(
+              color: Colors.black87,
+              icon: Icon(Icons.arrow_back_ios_new_outlined),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ),
           iconTheme: IconThemeData(color: Colors.black),
           backgroundColor: Colors.white,
           expandedHeight: 240,
           flexibleSpace: Stack(
-            children: [FlexibleSpaceBar(
+            children: [
+              FlexibleSpaceBar(
               background: Image.network(
                 widget.docs['uploadImageUrl'],
                 fit: BoxFit.cover,
