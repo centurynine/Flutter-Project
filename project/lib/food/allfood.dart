@@ -399,12 +399,24 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                                                       ),
                                                     ],
                                                   ),
-                                                  child: Text(
-                                                    textAlign: TextAlign.center,
-                                                    ' ถูกใจ : ${(snapshot.data!).docs[index]['like']}      ',
-                                                    maxLines: 1,
-                                                    style: GoogleFonts.kanit(
-                                                        fontSize: 13),
+                                                  child: Container(
+                                                    child: IntrinsicWidth(
+                                                      child: Row(
+                                                        children: [
+                                                          Text(' '),
+                                                          Icon(Icons.favorite,
+                                                              color: Colors.red[400],
+                                                              size: 15),
+                                                          Text(
+                                                            textAlign: TextAlign.center,
+                                                            '${(snapshot.data!).docs[index]['like']}    ',
+                                                            maxLines: 1,
+                                                            style: GoogleFonts.kanit(
+                                                                fontSize: 13),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
                                               ),
