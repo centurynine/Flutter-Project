@@ -43,7 +43,7 @@ class _CommentPageState extends State<CommentPage> {
       //            checkCreate();
       // checkAdmin();
                 return Container(
-                  height: 400,
+                  height: 300,
                   child: ListView(
                     shrinkWrap: true,
                     children: snapshot.data!.docs.map((DocumentSnapshot document) {
@@ -54,15 +54,12 @@ class _CommentPageState extends State<CommentPage> {
                           children: [
                             Container(
                                    width: 50,
-                                   height: 100,
+                                   height: 50,
                             margin: EdgeInsets.only(left: 20),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10.0),
                               child: CircleAvatar(
-
                                 backgroundImage: NetworkImage(data['avatar']!),
-
-                                 
                               ),
                             ),
                           ),
@@ -76,6 +73,12 @@ class _CommentPageState extends State<CommentPage> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: ListTile(
+                                    trailing:  isAdmin == true || FirebaseAuth.instance.currentUser!.email == '${data['email']}'
+                            ? IconButton(
+                              icon: Icon(Icons.delete), onPressed: () {
+                                deleteComment('${data['comment_id']}');
+                              },)
+                            : SizedBox.shrink() ,
                                     title: Text(data['name']),
                                     subtitle: Text(data['descript']),
                                   ),
@@ -83,18 +86,14 @@ class _CommentPageState extends State<CommentPage> {
                               ),
                             ),
                             
-                            isAdmin == true || FirebaseAuth.instance.currentUser!.email == '${data['email']}'
-                            ? IconButton(
-                              icon: Icon(Icons.delete), onPressed: () {
-                                deleteComment('${data['comment_id']}');
-                              },)
-                            : SizedBox.shrink() 
+                           
                           ],
                         ),
                       );
                     }).toList(),
                   ),
-                );} else {
+                );
+                } else {
                           return Container(
                             decoration: BoxDecoration(
                               color: Colors.grey[200],

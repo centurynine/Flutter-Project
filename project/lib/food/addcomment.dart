@@ -73,9 +73,12 @@ class _AddcommentState extends State<Addcomment> {
         labelText: 'Comment',
         prefixIcon: Icon(Icons.comment),
         suffixIcon: IconButton(
+          
           icon: Icon(Icons.send),
-          onPressed: () {
+          onPressed: (
+          ) {
             if (descript!.isEmpty) {
+              EasyLoading.showError('กรุณากรอกข้อมูล');
             } else {
               checkName();
             }
@@ -140,6 +143,7 @@ class _AddcommentState extends State<Addcomment> {
       'avatar': avatar,
     });
     descriptionController.clear();
+    descript = '';
     EasyLoading.showSuccess('คอมเม้นสำเร็จ');
   }
 

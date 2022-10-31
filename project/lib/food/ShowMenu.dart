@@ -378,25 +378,28 @@ class _ShowMenuState extends State<ShowMenu> {
                       Text('  Comments',
                           style: GoogleFonts.kanit(fontSize: 20)),
                       Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 20),
-                        child: const Divider(
+                      //  margin: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Divider(
                           thickness: 1,
-                          color: Colors.redAccent,
+                          color: Colors.grey[300],
                         ),
                       ),
 
                       CommentPage(
                         docs: widget.docs,
                       ),
+
                                             Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 20),
-                        child: const Divider(
+                      //  margin: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Divider(
                           thickness: 1,
-                          color: Colors.redAccent,
+                          color: Colors.grey[300],
                         ),
                       ),
-                      Addcomment(
-                        docs: widget.docs,
+                      Container(
+                        child: Addcomment(
+                          docs: widget.docs,
+                        ),
                       ),  
                     ]
                     ),
