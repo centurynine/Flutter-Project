@@ -380,8 +380,8 @@ class _ShowMenuState extends State<ShowMenu> {
                       Text('  Comments',
                           style: GoogleFonts.kanit(fontSize: 20)),
                       Container(
-                      //  margin: const EdgeInsets.symmetric(horizontal: 20),
                         child: Divider(
+                          height: 1,
                           thickness: 1,
                           color: Colors.grey[300],
                         ),
@@ -394,6 +394,7 @@ class _ShowMenuState extends State<ShowMenu> {
                                             Container(
                       //  margin: const EdgeInsets.symmetric(horizontal: 20),
                         child: Divider(
+                          height: 1,
                           thickness: 1,
                           color: Colors.grey[300],
                         ),

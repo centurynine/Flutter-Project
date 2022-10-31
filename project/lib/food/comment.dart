@@ -61,7 +61,10 @@ class _CommentPageState extends State<CommentPage> {
                     EasyLoading.dismiss();
             if (snapshot.hasData) {
                 return Container(
-                  height: 300,
+                    constraints: new BoxConstraints(
+                          minHeight: 110.0,
+                          maxHeight: 300.0,
+                    ),
                   child: ListView(
                     physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
@@ -70,6 +73,7 @@ class _CommentPageState extends State<CommentPage> {
                           document.data()! as Map<String, dynamic>; 
                       return Container(
                         child: Row(
+
                           children: [
                             Container(
                                    width: 50,
@@ -84,7 +88,7 @@ class _CommentPageState extends State<CommentPage> {
                           ),
                             Expanded(
                               child: Container(
-                                margin: EdgeInsets.only(top: 10 , left: 10 , right: 20),
+                                margin: EdgeInsets.only(top: 5 , left: 10 , right: 20, bottom: 5),
                                 decoration: BoxDecoration(
                                   color: Colors.grey[200],
                                   borderRadius: BorderRadius.circular(50),
@@ -118,7 +122,7 @@ class _CommentPageState extends State<CommentPage> {
                               color: Colors.grey[200],
                               borderRadius: BorderRadius.circular(50),
                             ),
-                            child: Text('No Data'),
+                            child: Text(''),
                           );
                         }
                      },
