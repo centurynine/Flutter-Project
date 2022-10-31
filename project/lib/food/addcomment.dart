@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class Addcomment extends StatefulWidget {
   final DocumentSnapshot docs;
@@ -139,6 +140,7 @@ class _AddcommentState extends State<Addcomment> {
       'avatar': avatar,
     });
     descriptionController.clear();
+    EasyLoading.showSuccess('คอมเม้นสำเร็จ');
   }
 
 

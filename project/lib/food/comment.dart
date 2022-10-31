@@ -22,11 +22,11 @@ class _CommentPageState extends State<CommentPage> {
       .where('id', isEqualTo: '89');
   String? avatar = 'https://firebasestorage.googleapis.com/v0/b/mainproject-25523.appspot.com/o/users%2F18%2F18?alt=media&token=f441ac6d-3a63-444f-b694-f5f6f90b14de';
   bool? create = false;
+  bool? isAdmin = false;
  @override
  void initState() {
    super.initState();
-   checkCreate();
-
+   checkAdmin();
  }
 
   @override
@@ -40,6 +40,8 @@ class _CommentPageState extends State<CommentPage> {
             .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
+      //            checkCreate();
+      // checkAdmin();
                 return Container(
                   height: 400,
                   child: ListView(
@@ -80,12 +82,12 @@ class _CommentPageState extends State<CommentPage> {
                                 ),
                               ),
                             ),
-                            create == true
+                            
+                            isAdmin == true || FirebaseAuth.instance.currentUser!.email == '${data['email']}'
                             ? IconButton(
                               icon: Icon(Icons.delete), onPressed: () {
                                 deleteComment('${data['comment_id']}');
-                                },
-                            )
+                              },)
                             : SizedBox.shrink() 
                           ],
                         ),
@@ -118,14 +120,40 @@ class _CommentPageState extends State<CommentPage> {
         .then((value) {
       if (value.docs.isEmpty) {
         print('ไม่พบเจ้าของคอมเม้นต์');
-        create = false;
+        setState(() {
+          create = false;
+        });
       } else if ((value.docs.isNotEmpty)) {
         print('พบเจ้าของคอมเม้นต์');
-        create = true;
+        setState(() {
+          create = true;
+        });
       }
     });
   }
   
+  Future<void> checkAdmin() async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
+        .where('admin', isEqualTo: 'true')
+        .get()
+        .then((value) {
+      if (value.docs.isEmpty) {
+        print('isAdmin = false');
+        setState(() {
+          isAdmin = false;
+        });
+      } else if ((value.docs.isNotEmpty)) {
+        print('isAdmin = true');
+        setState(() {
+          isAdmin = true;
+        });
+      }
+    });
+  }
+
+
   void deleteComment(String comment_id) async {
     await FirebaseFirestore.instance
         .collection('comments')

@@ -374,6 +374,7 @@ class _ShowMenuState extends State<ShowMenu> {
                           ),
                         ],
                       ),
+                      SizedBox( height: 20,),
                       Text('  Comments',
                           style: GoogleFonts.kanit(fontSize: 20)),
                       Container(
@@ -383,6 +384,7 @@ class _ShowMenuState extends State<ShowMenu> {
                           color: Colors.redAccent,
                         ),
                       ),
+
                       CommentPage(
                         docs: widget.docs,
                       ),

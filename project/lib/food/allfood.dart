@@ -186,7 +186,7 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                                                       ConnectionState.waiting) {
                                                     checkAdmin();
                                                   }
-                                                  if (isAdmin == true) {
+                                                  if (isAdmin == true || FirebaseAuth.instance.currentUser!.email == '${(snapshot.data!).docs[index]['email']}') {
                                                     return GestureDetector(
                                                       child: Icon(Icons.edit),
                                                       onTap: () {
