@@ -132,7 +132,8 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                                                     .docs[index],
                                               )));
                                 },
-                                child: Row(children: [
+                                child: Row(
+                                  children: [
                                   Expanded(
                                     flex: 6,
                                     child: Padding(

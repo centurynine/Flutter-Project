@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:project/food/ShowMenu.dart';
+import 'package:project/food/addcomment.dart';
+import 'package:project/food/comment.dart';
 import 'package:project/food/editpage.dart';
 import 'package:project/widget/drawer.dart';
 import 'package:project/homepage/home.dart';
@@ -372,11 +374,37 @@ class _ShowMenuState extends State<ShowMenu> {
                           ),
                         ],
                       ),
-                    ]),
+                      Text('  Comments',
+                          style: GoogleFonts.kanit(fontSize: 20)),
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 20),
+                        child: const Divider(
+                          thickness: 1,
+                          color: Colors.redAccent,
+                        ),
+                      ),
+                      CommentPage(
+                        docs: widget.docs,
+                      ),
+                                            Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 20),
+                        child: const Divider(
+                          thickness: 1,
+                          color: Colors.redAccent,
+                        ),
+                      ),
+                      Addcomment(
+                        docs: widget.docs,
+                      ),  
+                    ]
+                    ),
                   ),
                 ),
+
               ],
-            )));
+            )
+            )
+            );
   }
 
   Future<void> pressLike() async {
