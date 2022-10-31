@@ -20,6 +20,38 @@ class _ChangedisplaynameState extends State<Changedisplayname> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   String? nameNew;
 
+@override
+void initState() {
+  super.initState();
+  getName();
+}
+
+  Future<void> getName() async {
+    if(FirebaseAuth.instance.currentUser != null){
+      await FirebaseFirestore.instance
+      .collection('users')
+      .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
+      .get()
+      .then((value) => value.docs.forEach((element) {
+        setState(() {
+          nameController.text = element['name'];
+        });
+      }));
+    }
+  //   await FirebaseFirestore.instance
+  //       .collection('users')
+  //       .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
+  //       .get()
+  //       .then((value) => value.docs.forEach((element) {
+  //      //       nameController.text = element['name'];
+  //           }));
+  // } 
+  else {
+    Navigator.pushNamed(context, '/');
+  }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,6 +112,7 @@ class _ChangedisplaynameState extends State<Changedisplayname> {
 
   TextFormField nameText() {
     return TextFormField(
+      controller: nameController,
       maxLength: 25,
       onSaved: (value) {
         nameNew = value!.trim();
