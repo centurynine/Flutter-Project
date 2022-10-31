@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:project/food/addcomment.dart';
 
 
@@ -19,9 +21,11 @@ class _CommentPageState extends State<CommentPage> {
       .collection('comments')
       .where('id', isEqualTo: '89');
   String? avatar = 'https://firebasestorage.googleapis.com/v0/b/mainproject-25523.appspot.com/o/users%2F18%2F18?alt=media&token=f441ac6d-3a63-444f-b694-f5f6f90b14de';
+  bool? create = false;
  @override
  void initState() {
    super.initState();
+   checkCreate();
 
  }
 
@@ -76,6 +80,13 @@ class _CommentPageState extends State<CommentPage> {
                                 ),
                               ),
                             ),
+                            create == true
+                            ? IconButton(
+                              icon: Icon(Icons.delete), onPressed: () {
+                                deleteComment('${data['comment_id']}');
+                                },
+                            )
+                            : SizedBox.shrink() 
                           ],
                         ),
                       );
@@ -97,4 +108,40 @@ class _CommentPageState extends State<CommentPage> {
           );
           
       }
+
+  Future<void> checkCreate() async {
+    await FirebaseFirestore.instance
+        .collection('comments')
+        .where('id', isEqualTo: widget.docs['id'])
+        .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
+        .get()
+        .then((value) {
+      if (value.docs.isEmpty) {
+        print('ไม่พบเจ้าของคอมเม้นต์');
+        create = false;
+      } else if ((value.docs.isNotEmpty)) {
+        print('พบเจ้าของคอมเม้นต์');
+        create = true;
+      }
+    });
+  }
+  
+  void deleteComment(String comment_id) async {
+    await FirebaseFirestore.instance
+        .collection('comments')
+        .where('id', isEqualTo: widget.docs['id'])
+        .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
+        .where('comment_id', isEqualTo: comment_id)
+        .get()
+        .then((value) {
+      value.docs.forEach((element) {
+        FirebaseFirestore.instance
+            .collection('comments')
+            .doc(element.id)
+            .delete();
+      });
+    });
+    EasyLoading.showSuccess('ลบคอมเม้นต์สำเร็จ');
+  }
+
 }

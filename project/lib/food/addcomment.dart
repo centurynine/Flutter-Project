@@ -17,7 +17,7 @@ class _AddcommentState extends State<Addcomment> {
   String? descript = '';
   String? avatar = 'https://firebasestorage.googleapis.com/v0/b/mainproject-25523.appspot.com/o/avatarnull%2Favatar.png?alt=media&token=14755271-9e58-4710-909c-b10f9c1917e9';
   TextEditingController descriptionController = TextEditingController();
-
+  String? countID;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -98,14 +98,42 @@ class _AddcommentState extends State<Addcomment> {
         avatar = querySnapshot.docs[0]['avatar'];
       });
     });
-    addcomment();
+    countComment();
+  }
+
+  void countComment() async {
+      await FirebaseFirestore.instance
+          .collection('comments_count')
+          .where('count')
+          .get()
+          .then((value) => FirebaseFirestore.instance
+              .collection('comments_count')
+              .doc(value.docs[0].id)
+              .update({"count": FieldValue.increment(1)}));
+     createCommentID() ;
   }
 
 
-  void addcomment() async {
+  void createCommentID() async {
+    QuerySnapshot createcountid = await FirebaseFirestore.instance
+        .collection('comments_count')
+        .where('count')
+        .get();
+    if (createcountid.docs.isNotEmpty) {
+      var countid = (createcountid.docs[0]['count'].toString());
+      setState(() {
+        countID = countid;
+      });
+      addcomment(countID!);
+    }
+  }
+
+
+  void addcomment(String countID) async {
     await FirebaseFirestore.instance.collection('comments').add({
+      'comment_id': countID,
       'name': name,
-      'emai;': FirebaseAuth.instance.currentUser!.email,
+      'email': FirebaseAuth.instance.currentUser!.email,
       'descript': descript,
       'id': widget.docs['id'],
       'avatar': avatar,
