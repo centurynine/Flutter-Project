@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:project/food/addcomment.dart';
+import 'package:project/food/notfound.dart';
 
 
 class CommentPage extends StatefulWidget {
@@ -39,12 +41,29 @@ class _CommentPageState extends State<CommentPage> {
              .where('id', isEqualTo: widget.docs['id'])
             .snapshots(),
           builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Text('การโหลดข้อมูลผิดพลาด');
+                      print('Something went wrong');
+                    }
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      EasyLoading.show(status: 'กำลังโหลด...');
+                      print('Loading');
+                      return Text("กำลังโหลด...",
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.kanit(fontSize: 20));
+                    }
+                    if(snapshot.data!.docs.isEmpty){
+                      EasyLoading.dismiss();
+                      return Text('ไม่มีคอมเม้นต์',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.kanit(fontSize: 18));
+                    }
+                    EasyLoading.dismiss();
             if (snapshot.hasData) {
-      //            checkCreate();
-      // checkAdmin();
                 return Container(
                   height: 300,
                   child: ListView(
+                    physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
                     children: snapshot.data!.docs.map((DocumentSnapshot document) {
                       Map<String, dynamic> data =
@@ -74,23 +93,23 @@ class _CommentPageState extends State<CommentPage> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: ListTile(
                                     trailing:  isAdmin == true || FirebaseAuth.instance.currentUser!.email == '${data['email']}'
-                            ? IconButton(
-                              icon: Icon(Icons.delete), onPressed: () {
-                                deleteComment('${data['comment_id']}');
-                              },)
-                            : SizedBox.shrink() ,
+                                      ? IconButton(
+                                        icon: Icon(Icons.delete), onPressed: () {
+                                          deleteComment('${data['comment_id']}');
+                                        },)
+                                      : SizedBox.shrink() ,
                                     title: Text(data['name']),
                                     subtitle: Text(data['descript']),
                                   ),
                                 ),
                               ),
                             ),
-                            
-                           
                           ],
                         ),
                       );
-                    }).toList(),
+                    }
+                    ).toList(),
+
                   ),
                 );
                 } else {

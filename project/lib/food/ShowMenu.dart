@@ -200,7 +200,9 @@ class _ShowMenuState extends State<ShowMenu> {
                         topRight: Radius.circular(50),
                       ),
                     ),
-                    child: ListView(children: [
+                    child: ListView(
+                      physics: const BouncingScrollPhysics(),
+                      children: [
                       Column(
                         children: [
                           const SizedBox(

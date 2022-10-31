@@ -92,6 +92,7 @@ class _MyFoodState extends State<MyFood> {
                     }
                     EasyLoading.dismiss();
                     return ListView.builder(
+                      physics: const BouncingScrollPhysics(),
                       itemCount: (snapshot.data!).docs.length,
                       itemBuilder: (context, index) {
                         if ((snapshot.data!).docs[index]['title'] == '' ||
