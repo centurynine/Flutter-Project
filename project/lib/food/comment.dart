@@ -54,9 +54,14 @@ class _CommentPageState extends State<CommentPage> {
                     }
                     if(snapshot.data!.docs.isEmpty){
                       EasyLoading.dismiss();
-                      return Text('ไม่มีคอมเม้นต์',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.kanit(fontSize: 18));
+                      return Container(
+                        child: Padding(
+                          padding: const EdgeInsets.all(11.0),
+                          child: Text('ไม่มีคอมเม้นต์',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.kanit(fontSize: 18)),
+                        ),
+                      );
                     }
                     EasyLoading.dismiss();
             if (snapshot.hasData) {
