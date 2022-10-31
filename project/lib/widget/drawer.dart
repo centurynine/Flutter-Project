@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project/food/allfood.dart';
+import 'package:project/food/myfood.dart';
 import 'package:project/homepage/home.dart';
 import 'package:project/account/login.dart';
 import 'package:project/account/setting.dart';
@@ -211,7 +213,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     height: 25,),
                   onTap: () {
                     print("Clicked");
-                    Navigator.pushNamed(context, '/food');
+                    Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => BodyAfterLogin()));
                   },
                 ),
                 ListTile(
@@ -225,7 +227,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 height: 25,),
               onTap: () {
                 print("Clicked");
-                Navigator.pushNamed(context, '/myfood');
+                Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => MyFood()));
               },
              ),
               ListTile(

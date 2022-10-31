@@ -33,7 +33,6 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
   firbaseStorage.Reference storageRef =
       firbaseStorage.FirebaseStorage.instance.ref().child('foods/');
   bool isAdmin = false;
-  int? countLike = 0;
   String? counted = '0';
 
   @override
