@@ -141,6 +141,7 @@ class _AddcommentState extends State<Addcomment> {
       'descript': descript,
       'id': widget.docs['id'],
       'avatar': avatar,
+      'date': DateTime.now(),
     });
     descriptionController.clear();
     descript = '';

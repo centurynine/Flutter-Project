@@ -91,6 +91,7 @@ void initState() {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        
        drawer:  DrawerWidget(),
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -116,6 +117,7 @@ void initState() {
         body: Padding(
           padding: const EdgeInsets.all(10),
           child: ListView(
+            physics: const BouncingScrollPhysics(),
             children: [
               // user card
               Stack(

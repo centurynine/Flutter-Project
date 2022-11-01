@@ -19,9 +19,6 @@ class CommentPage extends StatefulWidget {
 }
 
 class _CommentPageState extends State<CommentPage> {
-  Query<Map<String, dynamic>> dataComment = FirebaseFirestore.instance
-      .collection('comments')
-      .where('id', isEqualTo: '89');
   String? avatar = 'https://firebasestorage.googleapis.com/v0/b/mainproject-25523.appspot.com/o/users%2F18%2F18?alt=media&token=f441ac6d-3a63-444f-b694-f5f6f90b14de';
   bool? create = false;
   bool? isAdmin = false;
@@ -42,7 +39,14 @@ class _CommentPageState extends State<CommentPage> {
             .snapshots(),
           builder: (context, snapshot) {
                     if (snapshot.hasError) {
-                      return Text('การโหลดข้อมูลผิดพลาด');
+                      return Container(
+                        child: Padding(
+                          padding: const EdgeInsets.all(11.0),
+                          child: Text('การโหลดข้อมูลผิดพลาด',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.kanit(fontSize: 18)),
+                        ),
+                      );
                       print('Something went wrong');
                     }
                     if (snapshot.connectionState == ConnectionState.waiting) {
@@ -181,12 +185,11 @@ class _CommentPageState extends State<CommentPage> {
   }
 
 
-  void deleteComment(String comment_id) async {
+  void deleteComment(String commentId) async {
     await FirebaseFirestore.instance
         .collection('comments')
         .where('id', isEqualTo: widget.docs['id'])
-        .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
-        .where('comment_id', isEqualTo: comment_id)
+        .where('comment_id', isEqualTo: commentId)
         .get()
         .then((value) {
       value.docs.forEach((element) {
