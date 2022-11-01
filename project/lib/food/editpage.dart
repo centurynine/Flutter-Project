@@ -49,30 +49,30 @@ void initState(){
 
 
 Future<File> urlToFile() async {
-try {
-var imageUrl = '${widget.docs['uploadImageUrl']}.png';
-print(imageUrl);
-Uri uri = Uri.parse(imageUrl);
-// สุ่มชื่อสำหรับเก็บไฟล์
-var rng = new Random();
-// เก็บค่าตำแหน่งที่จะจัดเก็บไฟล์
-Directory tempDir = await getTemporaryDirectory();
-// เรียกตำแหน่งที่จะเก็บไฟล์
-String tempPath = tempDir.path;
-// สร้างไฟล์ใหม่พร้อมกับสุ่มชื่อ
-File file = new File('$tempPath'+ (rng.nextInt(100)).toString() +'.png');
-http.Response response = await http.get(uri);
-await file.writeAsBytes(response.bodyBytes);
-setState(() {
-  foodType = widget.docs['food_type'];
-  dropdownValue = widget.docs['food_type'];
-  _foodpic = file;
-  imageUpload = true;
-});
-return file; 
-} catch (e) {
-  throw Exception("Error " + e.toString());
- }
+    try {
+      var imageUrl = '${widget.docs['uploadImageUrl']}.png';
+      print(imageUrl);
+      Uri uri = Uri.parse(imageUrl);
+      // สุ่มชื่อสำหรับเก็บไฟล์
+      var rng = new Random();
+      // เก็บค่าตำแหน่งที่จะจัดเก็บไฟล์
+      Directory tempDir = await getTemporaryDirectory();
+      // เรียกตำแหน่งที่จะเก็บไฟล์
+      String tempPath = tempDir.path;
+      // สร้างไฟล์ใหม่พร้อมกับสุ่มชื่อ
+      File file = new File('$tempPath'+ (rng.nextInt(100)).toString() +'.png');
+      http.Response response = await http.get(uri);
+      await file.writeAsBytes(response.bodyBytes);
+      setState(() {
+        foodType = widget.docs['food_type'];
+        dropdownValue = widget.docs['food_type'];
+        _foodpic = file;
+        imageUpload = true;
+      });
+      return file; 
+    } catch (e) {
+      throw Exception("Error " + e.toString());
+    }
 }
 
 
@@ -642,18 +642,5 @@ return file;
     print('uploadImageToFirebase URL IMAGE : {$url}');
     createDatabase(countid, url);
   }
-
-
-  // void editData() async {
-  //   FirebaseFirestore.instance.collection('foods').get().then((snapshot) {
-  //           for (DocumentSnapshot edit in snapshot.docs) {
-  //             edit.reference.update({
-  //               'isReadyToPlay': true, 
-  //               'totalScore': 254 
-  //             });
-  //           }
-  //         }
-  //         );
-  // }
 
 }

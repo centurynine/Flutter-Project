@@ -28,6 +28,7 @@ class _RecommendgetState extends State<Recommendget> {
   ];
   final List<String> foodID = [];
   @override
+
   void initState() {
     getFoodID();
     Timer.periodic(const Duration(seconds: 3), (timer) {
@@ -36,13 +37,6 @@ class _RecommendgetState extends State<Recommendget> {
           selectIndex = (selectIndex + 1) % tips.length;
         });
       }
-      // setState(() {
-      //   if(selectIndex != tips.length - 1) {
-      //     selectIndex++;
-      //   } else {
-      //     selectIndex = 0;
-      //   }
-      // });
     });
     super.initState();
   }
@@ -63,7 +57,6 @@ class _RecommendgetState extends State<Recommendget> {
     final index1 = random.nextInt(foodID.length);
     final index2 = random.nextInt(foodID.length);
     final index3 = random.nextInt(foodID.length);
-
     setState(() {
       this.index1 = foodID[index1];
       this.index2 = foodID[index2];
@@ -108,8 +101,6 @@ class _RecommendgetState extends State<Recommendget> {
               subtips.add(element.data()['subtitle']);
               imagetips.add(element.data()['uploadImageUrl']);
             }));
- 
-    
   }
 
   @override
@@ -210,20 +201,6 @@ class _RecommendgetState extends State<Recommendget> {
                                   text: subtips[0]
                                   ),
                             ),),
-                          // Flexible(
-                          //   child: RichText(
-                          //     overflow: TextOverflow.ellipsis,
-                          //     strutStyle: StrutStyle(fontSize: 12.0),
-                          //     text: 
-                          //     TextSpan(
-                          //         style: GoogleFonts.kanit(
-                          //           fontSize: 13,
-                          //           color: Colors.black,
-                          //         ),
-                          //         text: subtips[selectIndex]
-                          //         ),
-                          //   ),
-                          // ),
 
                           FirebaseAuth.instance.currentUser != null
                           ? ElevatedButton(
@@ -279,22 +256,6 @@ class _RecommendgetState extends State<Recommendget> {
                         ),
                       ),
                     )
-
-                    // Container(
-                    //   height: 100,
-                    //   width: 100,
-                    //   decoration: BoxDecoration(
-                    //     color: Colors.white,
-                    //     borderRadius: BorderRadius.circular(10),
-                    //   ),
-                    //   child: ClipRRect(
-                    //     borderRadius: BorderRadius.circular(10),
-                    //     child: Image.network(
-                    //       imagetips[selectIndex],
-                    //       fit: BoxFit.cover,
-                    //     ),
-                    //   ),
-                    // ),
                   ],
                 )),
           )

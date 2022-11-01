@@ -25,7 +25,9 @@ class _CommentPageState extends State<CommentPage> {
  @override
  void initState() {
    super.initState();
-   checkAdmin();
+    if (mounted) {
+      checkAdmin();
+    }
  }
 
   @override
@@ -36,8 +38,8 @@ class _CommentPageState extends State<CommentPage> {
           stream: FirebaseFirestore.instance
              .collection('comments')
              .where('id', isEqualTo: widget.docs['id'])
-            .snapshots(),
-          builder: (context, snapshot) {
+             .snapshots(),
+               builder: (context, snapshot) {
                     if (snapshot.hasError) {
                       return Container(
                         child: Padding(
@@ -68,9 +70,9 @@ class _CommentPageState extends State<CommentPage> {
                       );
                     }
                     EasyLoading.dismiss();
-            if (snapshot.hasData) {
+              if (snapshot.hasData) {
                 return Container(
-                    constraints: new BoxConstraints(
+                    constraints: const BoxConstraints(
                           minHeight: 110.0,
                           maxHeight: 300.0,
                     ),
@@ -78,11 +80,9 @@ class _CommentPageState extends State<CommentPage> {
                     physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
                     children: snapshot.data!.docs.map((DocumentSnapshot document) {
-                      Map<String, dynamic> data =
-                          document.data()! as Map<String, dynamic>; 
+                      Map<String, dynamic> data = document.data()! as Map<String, dynamic>; 
                       return Container(
                         child: Row(
-
                           children: [
                             Container(
                                    width: 50,
@@ -171,12 +171,10 @@ class _CommentPageState extends State<CommentPage> {
         .get()
         .then((value) {
       if (value.docs.isEmpty) {
-        print('isAdmin = false');
         setState(() {
           isAdmin = false;
         });
       } else if ((value.docs.isNotEmpty)) {
-        print('isAdmin = true');
         setState(() {
           isAdmin = true;
         });
@@ -192,11 +190,11 @@ class _CommentPageState extends State<CommentPage> {
         .where('comment_id', isEqualTo: commentId)
         .get()
         .then((value) {
-      value.docs.forEach((element) {
-        FirebaseFirestore.instance
-            .collection('comments')
-            .doc(element.id)
-            .delete();
+        value.docs.forEach((element) {
+          FirebaseFirestore.instance
+              .collection('comments')
+              .doc(element.id)
+              .delete();
       });
     });
     EasyLoading.showSuccess('ลบคอมเม้นต์สำเร็จ');

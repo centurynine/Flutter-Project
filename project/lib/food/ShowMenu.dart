@@ -97,7 +97,6 @@ class _ShowMenuState extends State<ShowMenu> {
     checkNameWhoCreated();
     checkLike();
     updateCountLike();
-   // checkCreate();
   }
 
   @override
@@ -438,23 +437,23 @@ class _ShowMenuState extends State<ShowMenu> {
         .where('${widget.docs['id']}' , isEqualTo: true)
         .get();
         if(usersLike.docs.isEmpty){
-          await FirebaseFirestore.instance.collection('users_like').doc(users.docs[0].id).update({
+          await FirebaseFirestore.instance
+          .collection('users_like')
+          .doc(users.docs[0].id).update({
           '${widget.docs['id']}': true,
-        
-        });
-        setState(() {
-          userLiked = true;
-        });
-        print('usersLike.docs.isEmpty');
+            });
+            setState(() {
+              userLiked = true;
+            });
         }
         else if(usersLike.docs.isNotEmpty){
-          await FirebaseFirestore.instance.collection('users_like').doc(users.docs[0].id).update({
+          await FirebaseFirestore.instance.collection('users_like')
+          .doc(users.docs[0].id).update({
           '${widget.docs['id']}': false,
-        });
-        setState(() {
-          userLiked = false;
-        });
-        print('usersLike.docs.isNotEmpty');
+            });
+            setState(() {
+              userLiked = false;
+            });
         }
         }
         updateCountLike();
@@ -485,38 +484,23 @@ class _ShowMenuState extends State<ShowMenu> {
         .where('like')
         .get();
     if(users.docs.isNotEmpty){
-              await FirebaseFirestore.instance.collection('foods').doc(users.docs[0].id).update({
+              await FirebaseFirestore.instance
+              .collection('foods')
+              .doc(users.docs[0].id).update({
           'like': counted,
           }
           );
     }
     else if (users.docs.isEmpty){
-      await FirebaseFirestore.instance.collection('foods').add({
+      await FirebaseFirestore.instance
+      .collection('foods')
+      .add({
           'like': counted,
           }
           );
     }
   }
 
-  // Future<void> checkCreate() async {
-  //   if(FirebaseAuth.instance.currentUser != null){
-  //   QuerySnapshot query = await FirebaseFirestore.instance
-  //       .collection('foods')
-  //       .where('id', isEqualTo: '${widget.docs['id']}')
-  //       .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
-  //       .get();
-  //   if (query.docs.isNotEmpty) {
-  //     isCreate = true;
-  //     print('พบชื่อเจ้าของโพส');
-  //   } else {
-  //     isCreate = false;
-  //     print('ไม่พบชื่อเจ้าของโพส');
-  //   }
-  // } else {
-  //   print('ไม่พบการเข้าสู่ระบบ');
-  // }
-  
-  // }
  
 }
 
