@@ -78,11 +78,10 @@ class _CommentPageState extends State<CommentPage> {
                           minHeight: 110.0,
                           maxHeight: 300.0,
                     ),
-                  child: ListView(
-                    physics: const BouncingScrollPhysics(),
-                    shrinkWrap: true,
-                    children: snapshot.data!.docs.map((DocumentSnapshot document) {
-                      Map<String, dynamic> data = document.data()! as Map<String, dynamic>; 
+                  child: ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: (snapshot.data!).docs.length,
+                      itemBuilder: (context, index) {
                       return Container(
                         child: Row(
                           children: [
@@ -93,7 +92,8 @@ class _CommentPageState extends State<CommentPage> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10.0),
                               child: CircleAvatar(
-                                backgroundImage: NetworkImage(data['avatar']!),
+                                backgroundImage: NetworkImage((snapshot.data!).docs[index]
+                                                    ['avatar']!),
                               ),
                             ),
                           ),
@@ -107,14 +107,16 @@ class _CommentPageState extends State<CommentPage> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: ListTile(
-                                    trailing:  isAdmin == true || FirebaseAuth.instance.currentUser!.email == '${data['email']}'
+                                    trailing:  isAdmin == true || FirebaseAuth.instance.currentUser!.email == '${(snapshot.data!).docs[index]['email']}'
                                       ? IconButton(
                                         icon: Icon(Icons.delete), onPressed: () {
-                                          deleteComment('${data['comment_id']}');
+                                          deleteComment('${(snapshot.data!).docs[index]
+                                                    ['comment_id']}');
                                         },)
                                       : SizedBox.shrink() ,
-                                    title: Text(data['name']),
-                                    subtitle: Text(data['descript']),
+                                    title: Text((snapshot.data!).docs[index]
+                                                    ['name']!),
+                                    subtitle: Text((snapshot.data!).docs[index]['descript']!),
                                   ),
                                 ),
                               ),
@@ -122,10 +124,8 @@ class _CommentPageState extends State<CommentPage> {
                           ],
                         ),
                       );
-                    }
-                    ).toList(),
-
-                  ),
+                    },
+                    ),
                 );
                 } else {
                           return Container(
