@@ -35,11 +35,13 @@ class _CommentPageState extends State<CommentPage> {
     return Column(
       children: [
         StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance
+          stream:
+
+         FirebaseFirestore.instance
              .collection('comments')
              .where('id', isEqualTo: widget.docs['id'])
              .snapshots(),
-               builder: (context, snapshot) {
+               builder: (context, AsyncSnapshot snapshot) {
                     if (snapshot.hasError) {
                       return Container(
                         child: Padding(
@@ -70,7 +72,7 @@ class _CommentPageState extends State<CommentPage> {
                       );
                     }
                     EasyLoading.dismiss();
-              if (snapshot.hasData) {
+                if (snapshot.hasData) {
                 return Container(
                     constraints: const BoxConstraints(
                           minHeight: 110.0,

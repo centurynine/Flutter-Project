@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -8,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:project/food/allfood.dart';
 import 'package:project/account/login.dart';
 import 'package:project/account/facebook.dart';
+import 'package:project/food/myfood.dart';
 import 'package:project/homepage/recommend_widget.dart';
 import 'package:project/search/searchpage.dart';
 import 'package:project/homepage/upload_widget.dart';
@@ -114,13 +116,6 @@ class _BodyState extends State<Body> {
                 decoration: BoxDecoration(
                   color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(12),
-                  // boxShadow: [
-                  //   BoxShadow(
-                  //     color: Colors.black.withOpacity(0.1),
-                  //     offset: const Offset(0, 10),
-                  //     blurRadius: 10,
-                  //   ),
-                  // ],
                 ),
                 alignment: Alignment.center,
                 child: Row(
@@ -188,14 +183,14 @@ class _BodyState extends State<Body> {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.pushNamed(context, '/food');
+                          Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => BodyAfterLogin()));
                         },
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.red[400], backgroundColor: Colors.red[400],
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(22.0),
                           ),
-                          fixedSize: Size(180, 70),
+                          fixedSize: const Size(180, 70),
                           elevation: 15,
                           shadowColor: Colors.white,
                      //     side: BorderSide(color: Colors.red, width: 3),
@@ -211,7 +206,7 @@ class _BodyState extends State<Body> {
                         ),
                         
                         onPressed: () {
-                          Navigator.pushNamed(context, '/myfood');
+                          Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => MyFood()));
                         },
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.red[400], backgroundColor: Colors.red[400],

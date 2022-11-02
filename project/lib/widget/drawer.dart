@@ -24,6 +24,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   @override
  final GlobalKey<ScaffoldState> _drawerKey = new GlobalKey<ScaffoldState>();
   String? userEmail = 'กรุณาเข้าสู่ระบบ';
+  @override
   void initState() {
     checkNameWhoCreated();
     super.initState();
@@ -199,7 +200,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     height: 25,),
                   onTap: () {
                     print("Clicked");
-                    Navigator.pushNamed(context, '/');
+                    Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => Homepage()));
                   },
                 ),
                 ListTile(
