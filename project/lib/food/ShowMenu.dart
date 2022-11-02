@@ -376,8 +376,16 @@ class _ShowMenuState extends State<ShowMenu> {
                         ],
                       ),
                       SizedBox( height: 20,),
-                      Text('  Comments',
-                          style: GoogleFonts.kanit(fontSize: 20)),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Icon(Icons.comment_rounded, color: Colors.pinkAccent,),
+                          ),
+                          Text('  ความคิดเห็น',
+                              style: GoogleFonts.kanit(fontSize: 20)),
+                        ],
+                      ),
                       Container(
                         child: Divider(
                           height: 1,
