@@ -76,7 +76,26 @@ class _MyFoodState extends State<MyFood> {
                   stream: data.snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
-                      return Text('การโหลดข้อมูลผิดพลาด');
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                               child: Icon(Icons.error_outline,
+                                  color: Colors.red, size: 30),
+                              ),
+                              Container(
+                                child: Text(' การโหลดข้อมูลผิดพลาด',
+                                    style: GoogleFonts.kanit(
+                                      fontSize: 20,
+                                    )
+                                )),
+                            ],
+                          ),
+                        ),
+                      );
                       print('Something went wrong');
                     }
                     if (snapshot.connectionState == ConnectionState.waiting) {
@@ -95,9 +114,17 @@ class _MyFoodState extends State<MyFood> {
                       physics: const BouncingScrollPhysics(),
                       itemCount: (snapshot.data!).docs.length,
                       itemBuilder: (context, index) {
-                        if ((snapshot.data!).docs[index]['title'] == '' ||
+                        if ((snapshot.data!).docs[index]['title'] == null ||
                             (snapshot.data!).docs[index]['uploadImageUrl'] ==
-                                '' ||(snapshot.data!).docs[index]['id'] == '' || (snapshot.data!).docs[index]['like'] == '') {
+                                null ||(snapshot.data!).docs[index]['id'] == null || (snapshot.data!).docs[index]['like'] == null 
+                                || (snapshot.data!).docs[index]['created_at'] == null
+                                || (snapshot.data!).docs[index]['description'] == null
+                                || (snapshot.data!).docs[index]['displayname'] == null
+                                || (snapshot.data!).docs[index]['food_type'] == null
+                                || (snapshot.data!).docs[index]['ingredients'] == null
+                                || (snapshot.data!).docs[index]['subtitle'] == null
+                                || (snapshot.data!).docs[index]['uid'] == null
+                                ) { 
                           return SizedBox.shrink();
                         } else {
                           return Card(

@@ -24,6 +24,7 @@ class _UploadDataState extends State<UploadData> {
   final auth = FirebaseFirestore.instance;
   var user = FirebaseAuth.instance.currentUser;
   var uploadUrl;
+
   bool imageUpload = false;
   String? title;
   String? subtitle;
@@ -42,7 +43,10 @@ class _UploadDataState extends State<UploadData> {
   String foodType = 'ไม่ระบุ';
   String? titlenoti;
   String? subtitlenoti;
-
+  TextEditingController titleController = TextEditingController();
+  TextEditingController subtitleController = TextEditingController();
+  TextEditingController ingredientsController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
 
   
   @override
@@ -247,8 +251,9 @@ class _UploadDataState extends State<UploadData> {
 
   TextFormField titleForm() {
     return TextFormField(
-      onSaved: (value) {
-        title = value!.trim();
+      controller: titleController,
+      onChanged: (value) {
+        title = value.trim();
         setState(() {
           titlenoti = title;
         });
@@ -274,8 +279,9 @@ class _UploadDataState extends State<UploadData> {
 
   TextFormField subtitleForm() {
     return TextFormField(
-      onSaved: (value) {
-        subtitle = value!.trim();
+      controller: subtitleController,
+      onChanged: (value) {
+        subtitle = value.trim();
         setState(() {
           subtitlenoti = subtitle;
         });
@@ -303,10 +309,11 @@ class _UploadDataState extends State<UploadData> {
 
   TextFormField descriptionForm() {
     return TextFormField(
+      controller: descriptionController,
       minLines: 1,
       maxLines: 15,
-      onSaved: (value) {
-        description = value!.trim();
+      onChanged: (value) {
+        description = value.trim();
       },
       validator: (value) {
         if (value!.length < 2)
@@ -329,10 +336,11 @@ class _UploadDataState extends State<UploadData> {
 
   TextFormField ingredientsForm() {
     return TextFormField(
+      controller: ingredientsController,
       minLines: 1,
       maxLines: 15,
-      onSaved: (value) {
-        ingredients = value!.trim();
+      onChanged: (value) {
+        ingredients = value.trim();
       },
       validator: (value) {
         if (value!.length < 2)
@@ -436,7 +444,7 @@ class _UploadDataState extends State<UploadData> {
               } else {
                 print('Error');
               }
-            }
+          }
           }
         },
         child: Text(
@@ -503,8 +511,8 @@ class _UploadDataState extends State<UploadData> {
       "uid": FirebaseAuth.instance.currentUser!.uid,
       "email": FirebaseAuth.instance.currentUser!.email,
       "displayname": FirebaseAuth.instance.currentUser!.displayName,
-      "title": title,
-      "subtitle": subtitle,
+      "title": '$title',
+      "subtitle": '$subtitle',
       "description": description,
       "ingredients": ingredients,
       "created_at": DateTime.now(),

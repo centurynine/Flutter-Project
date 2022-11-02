@@ -27,7 +27,7 @@ class BodyAfterLogin extends StatefulWidget {
 class _BodyAfterLoginState extends State<BodyAfterLogin> {
   Query<Map<String, dynamic>> data = FirebaseFirestore.instance
       .collection('foods')
-      .orderBy('id', descending: true);
+      .orderBy('created_at', descending: true);
 
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   firbaseStorage.Reference storageRef =
@@ -112,9 +112,17 @@ class _BodyAfterLoginState extends State<BodyAfterLogin> {
                       physics: const BouncingScrollPhysics(),
                       itemCount: (snapshot.data!).docs.length,
                       itemBuilder: (context, index) {
-                        if ((snapshot.data!).docs[index]['title'] == '' ||
+                        if ((snapshot.data!).docs[index]['title'] == null ||
                             (snapshot.data!).docs[index]['uploadImageUrl'] ==
-                                '' ||(snapshot.data!).docs[index]['id'] == '' || (snapshot.data!).docs[index]['like'] == '') {
+                                null ||(snapshot.data!).docs[index]['id'] == null || (snapshot.data!).docs[index]['like'] == null 
+                                || (snapshot.data!).docs[index]['created_at'] == null
+                                || (snapshot.data!).docs[index]['description'] == null
+                                || (snapshot.data!).docs[index]['displayname'] == null
+                                || (snapshot.data!).docs[index]['food_type'] == null
+                                || (snapshot.data!).docs[index]['ingredients'] == null
+                                || (snapshot.data!).docs[index]['subtitle'] == null
+                                || (snapshot.data!).docs[index]['uid'] == null
+                                ) { 
                           return SizedBox.shrink();
                         } else {
                           return Card(
