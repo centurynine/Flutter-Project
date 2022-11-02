@@ -29,7 +29,7 @@ class _MyFoodState extends State<MyFood> {
 
   CollectionReference users = FirebaseFirestore.instance
   .collection('users');
-
+   
   firbaseStorage.Reference storageRef =
       firbaseStorage.FirebaseStorage.instance.ref().child('foods/');
   bool isCreate = false;
@@ -101,9 +101,26 @@ class _MyFoodState extends State<MyFood> {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       EasyLoading.show(status: 'กำลังโหลด...');
                       print('Loading');
-                      return Text("กำลังโหลด...",
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.kanit(fontSize: 20));
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                               child: Icon(Icons.arrow_circle_down_rounded,
+                                  color: Colors.red, size: 30),
+                              ),
+                              Container(
+                                child: Text(' กำลังโหลด',
+                                    style: GoogleFonts.kanit(
+                                      fontSize: 20,
+                                    )
+                                )),
+                            ],
+                          ),
+                        ),
+                      );
                     }
                     if(snapshot.data!.docs.isEmpty){
                       EasyLoading.dismiss();

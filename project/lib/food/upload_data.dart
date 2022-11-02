@@ -506,7 +506,10 @@ class _UploadDataState extends State<UploadData> {
   }
 
   void createDatabase(String countid, String url) async {
-    await FirebaseFirestore.instance.collection("foods").add({
+    await FirebaseFirestore.instance
+    .collection("foods")
+    .doc(countid)
+    .set({
       "id": countid,
       "uid": FirebaseAuth.instance.currentUser!.uid,
       "email": FirebaseAuth.instance.currentUser!.email,
