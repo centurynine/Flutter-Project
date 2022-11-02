@@ -83,6 +83,8 @@ class _CommentPageState extends State<CommentPage> {
                       physics: const BouncingScrollPhysics(),
                       itemCount: (snapshot.data!).docs.length,
                       itemBuilder: (context, index) {
+                      Timestamp time = (snapshot.data!).docs[index]['date'] as Timestamp;
+                      DateTime date = time.toDate();
                       return Container(
                         child: Row(
                           children: [
@@ -115,9 +117,23 @@ class _CommentPageState extends State<CommentPage> {
                                                     ['comment_id']}');
                                         },)
                                       : SizedBox.shrink() ,
-                                    title: Text((snapshot.data!).docs[index]
-                                                    ['name']!),
-                                    subtitle: Text((snapshot.data!).docs[index]['descript']!),
+                                    title: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Text((snapshot.data!).docs[index]
+                                                        ['name']!),
+                                       Text(' เวลา  ${date.day}/${date.month}/${date.year} ${date.hour}:${date.minute}',
+                                        style: GoogleFonts.kanit(fontSize: 12, color: Colors.grey[600]),
+                                        
+                                        ),
+
+                                      ],
+                                    ),
+                                    subtitle: Text((snapshot.data!).docs[index]['descript']!,
+                                    style: GoogleFonts.kanit(fontSize: 14, color: Colors.grey[800]),
+                                    
+                                    ),
                                   ),
                                 ),
                               ),
