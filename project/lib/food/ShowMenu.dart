@@ -429,7 +429,10 @@ class _ShowMenuState extends State<ShowMenu> {
         .where('email', isEqualTo: FirebaseAuth.instance.currentUser?.email)
         .get();
       if(users.docs.isEmpty){
-        await FirebaseFirestore.instance.collection('users_like').add({
+        await FirebaseFirestore.instance
+        .collection('users_like')
+        .doc(FirebaseAuth.instance.currentUser?.email.toString())
+        .set({
           'email': FirebaseAuth.instance.currentUser?.email,
           '${widget.docs['id']}': true,
         });

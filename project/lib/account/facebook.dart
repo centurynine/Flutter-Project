@@ -292,7 +292,10 @@ class _FacebookLoginState extends State<FacebookLogin> {
 
   void createDatabase(String countID) async {
 
-    await FirebaseFirestore.instance.collection("users").add({
+    await FirebaseFirestore.instance
+    .collection("users")
+    .doc(userEmail.toString())
+    .set({
         "id": countID,
         "uid": auth.currentUser!.uid,
         "email": userEmail.toString(),

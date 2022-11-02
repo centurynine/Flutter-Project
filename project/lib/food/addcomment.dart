@@ -134,7 +134,9 @@ class _AddcommentState extends State<Addcomment> {
 
 
   void addcomment(String countID) async {
-    await FirebaseFirestore.instance.collection('comments').add({
+    await FirebaseFirestore.instance
+    .collection('comments')
+    .add({
       'comment_id': countID,
       'name': name,
       'email': FirebaseAuth.instance.currentUser!.email,

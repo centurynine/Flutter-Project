@@ -166,7 +166,7 @@ class _RegisterPageState extends State<RegisterPage> {
           password: password.text.trim(),
           );
            print(_user.user!.uid);
-           FirebaseAuth.instance.currentUser!.updateProfile(displayName: name.text.trim());
+           FirebaseAuth.instance.currentUser!.updateDisplayName(name.text.trim());
            countDocuments();
           _user.user!.sendEmailVerification();
         //  _signOut();
@@ -374,7 +374,10 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void uploadUser(String countID) async {
-          await FirebaseFirestore.instance.collection("users").add(
+          await FirebaseFirestore.instance.
+          collection("users")
+          .doc(email.text)
+          .set(
         {
           "id": countID,
           "uid": auth.currentUser!.uid,
@@ -386,9 +389,10 @@ class _RegisterPageState extends State<RegisterPage> {
           "avatar": 'https://firebasestorage.googleapis.com/v0/b/mainproject-25523.appspot.com/o/avatarnull%2Favatar.png?alt=media&token=14755271-9e58-4710-909c-b10f9c1917e9'
           }
     );
+    FirebaseAuth.instance.signOut();
     _signOut();
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => Homepage()));
+        context, MaterialPageRoute(builder: (context) => LoginPage()));
   }
 
      Future _signOut() async {
