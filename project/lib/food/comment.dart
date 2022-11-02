@@ -79,6 +79,7 @@ class _CommentPageState extends State<CommentPage> {
                           maxHeight: 300.0,
                     ),
                   child: ListView.builder(
+                     shrinkWrap : true,
                       physics: const BouncingScrollPhysics(),
                       itemCount: (snapshot.data!).docs.length,
                       itemBuilder: (context, index) {
