@@ -96,7 +96,8 @@ class _SearchPageState extends State<SearchPage> {
                       itemBuilder: (context, index) {
                         if ((snapshot.data!).docs[index]['title'] == '' ||
                             (snapshot.data!).docs[index]['uploadImageUrl'] ==
-                                '' ||(snapshot.data!).docs[index]['id'] == '' || (snapshot.data!).docs[index]['like'] == '') {
+                                '' ||(snapshot.data!).docs[index]['id'] == '' 
+                                || (snapshot.data!).docs[index]['like'] == '') {
                           return SizedBox.shrink();
                         } else {
                           return Card(

@@ -270,9 +270,13 @@ class _ShowMenuState extends State<ShowMenu> {
                           ),
                           Container(
                             alignment: Alignment.centerLeft,
-                            child: Text(
-                              '         รายละเอียดอาหาร',
-                              style: GoogleFonts.kanit(fontSize: 20),
+                            child: Row(
+                              children: [
+                                Text(
+                                  '         รายละเอียดอาหาร',
+                                  style: GoogleFonts.kanit(fontSize: 20),
+                                ),
+                              ],
                             ),
                           ),
                           Container(

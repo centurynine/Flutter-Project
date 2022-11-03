@@ -6,6 +6,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/food/ShowMenu.dart';
 import 'package:project/food/editpage.dart';
+import 'package:project/food/notfound.dart';
 import 'package:project/widget/drawer.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firbaseStorage;
 
@@ -99,6 +100,20 @@ class _SearchPageMyFoodState extends State<SearchPageMyFood> {
                   .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
                   .snapshots(),
           builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Text('');
+                      print('');
+                    }
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      print('Loading');
+                      return Text("",
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.kanit(fontSize: 20));
+                    }
+                    if (snapshot.data!.docs.isEmpty) {
+                      return Text('');
+                    }
+
             return (snapshot.connectionState == ConnectionState.waiting)
                 ? const Center(child: CircularProgressIndicator())
                 : ListView.builder(
@@ -106,7 +121,10 @@ class _SearchPageMyFoodState extends State<SearchPageMyFood> {
                       itemBuilder: (context, index) {
                         if ((snapshot.data!).docs[index]['title'] == '' ||
                             (snapshot.data!).docs[index]['uploadImageUrl'] ==
-                                '' ||(snapshot.data!).docs[index]['id'] == '' || (snapshot.data!).docs[index]['like'] == '') {
+                                '' ||(snapshot.data!).docs[index]['id'] == ''
+                                 || (snapshot.data!).docs[index]['like'] == '' ||
+                                 (snapshot.data!).docs[index]['email'] != FirebaseAuth.instance.currentUser!.email.toString()
+                                 ) {
                           return SizedBox.shrink();
                         } else {
                           return Card(
