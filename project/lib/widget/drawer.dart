@@ -117,7 +117,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       Container(
                         width: 50,
                         height: 100,
-                        margin: EdgeInsets.only(left: 25),
+                        margin: EdgeInsets.only(left: 10,right: 10),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10.0),
                           child: CircleAvatar(
@@ -132,31 +132,31 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                               child: Column(
                                 children: <Widget>[
                                   Container(
-                                    margin:
-                                        EdgeInsets.symmetric(horizontal: 30),
-                                    child: Text(
-                                      name.toString(),
-                                      style: GoogleFonts.kanit(
-                                        fontSize: 14,
-                                        color: Colors.white,
+                                    child: Center(
+                                      child: Text(
+                                        name.toString(),
+                                        style: GoogleFonts.kanit(
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                        ),
                                       ),
                                     ),
                                   ),
                                   Container(
-                                    margin:
-                                        EdgeInsets.symmetric(horizontal: 30),
-                                    child: Text(
-                                      userEmail.toString().length > 28
-                                          ? userEmail
-                                                  .toString()
-                                                  .substring(0, 20) +
-                                              '...'
-                                          : userEmail.toString(),
-                                      overflow: TextOverflow.fade,
-                                      //  userEmail.toString().substring(0, userEmail.toString().indexOf('@')),
-                                      style: GoogleFonts.kanit(
-                                        fontSize: 14,
-                                        color: Colors.white,
+                                    child: Center(
+                                      child: Text(
+                                        userEmail.toString().length > 28
+                                            ? userEmail
+                                                    .toString()
+                                                    .substring(0, 20) +
+                                                '...'
+                                            : userEmail.toString(),
+                                        overflow: TextOverflow.fade,
+                                        //  userEmail.toString().substring(0, userEmail.toString().indexOf('@')),
+                                        style: GoogleFonts.kanit(
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                        ),
                                       ),
                                     ),
                                   ),
