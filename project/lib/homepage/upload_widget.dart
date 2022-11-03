@@ -98,7 +98,14 @@ class _UploadwidgetState extends State<Uploadwidget> {
                     ),
                     Container(
                       margin: const EdgeInsets.only(top: 20,right: 80),
-                      child: ElevatedButton(onPressed: () {
+                      child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.red[400],
+                                onPrimary: Colors.white,
+                                shape:
+                                    RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                              ),
+                        onPressed: () {
                         Navigator.pushNamed(context, '/upload');                      },
                        child: Text('แชร์เลย!',
                         style: GoogleFonts.kanit(

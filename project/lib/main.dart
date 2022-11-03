@@ -46,8 +46,8 @@ class MyApp extends StatelessWidget {
         fontFamily: 'josefinSans',
         scaffoldBackgroundColor: Colors.white,
         textTheme: GoogleFonts.josefinSansTextTheme(),
-        appBarTheme: const AppBarTheme(
-          color: Colors.blue,
+        appBarTheme: AppBarTheme(
+          color: Colors.red[400],
           elevation: 0,
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,

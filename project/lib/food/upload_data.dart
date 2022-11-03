@@ -56,7 +56,7 @@ class _UploadDataState extends State<UploadData> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           title: Text(
-            'Upload Data',
+            'อัพโหลดรายการอาหาร',
             style: GoogleFonts.kanit(
               fontSize: 20,
               color: Colors.black,
@@ -75,27 +75,6 @@ class _UploadDataState extends State<UploadData> {
           key: _formstateUpload,
           child: ListView(
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 30.0),
-                child: SizedBox(
-                  height: 100,
-                  child: Image.network(
-                      "https://cdn-icons-png.flaticon.com/512/2276/2276931.png"),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 30.0),
-                child: Container(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    "    อัพโหลดรายการอาหาร",
-                    style: GoogleFonts.kanit(
-                      fontSize: 20,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ),
               Container(
                   margin: const EdgeInsets.only(left: 50.0, right: 50.0),
                   child: showImage()),
@@ -363,7 +342,7 @@ class _UploadDataState extends State<UploadData> {
   ElevatedButton submitButton() {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: Colors.blue,
+          primary: Colors.red[400],
           onPrimary: Colors.white,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),

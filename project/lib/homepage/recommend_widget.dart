@@ -129,7 +129,7 @@ class _RecommendgetState extends State<Recommendget> {
                 height: 120,
                 width: 120,
                 decoration: BoxDecoration(
-                  color: Colors.blue.withOpacity(0.2),
+                  color: Colors.red[400]!.withOpacity(0.2),
                   shape: BoxShape.circle,
                 ),
               )),
@@ -140,7 +140,7 @@ class _RecommendgetState extends State<Recommendget> {
                 height: 60,
                 width: 70,
                 decoration: BoxDecoration(
-                  color: Colors.blue.withOpacity(0.2),
+                  color: Colors.red[400]!.withOpacity(0.2),
                   shape: BoxShape.circle,
                 ),
               )),
@@ -204,6 +204,12 @@ class _RecommendgetState extends State<Recommendget> {
 
                           FirebaseAuth.instance.currentUser != null
                           ? ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                primary: Colors.red[400],
+                                onPrimary: Colors.white,
+                                shape:
+                                    RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                              ),
                               onPressed: () {
                                 Navigator.pushNamed(context, '/searchpage');
                               },
@@ -213,6 +219,12 @@ class _RecommendgetState extends State<Recommendget> {
                                     fontSize: 12, color: Colors.white),
                               ))
                           :ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.red[400],
+                                onPrimary: Colors.white,
+                                shape:
+                                    RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                              ),
                               onPressed: () {
                                 Navigator.pushNamed(context, '/login');
                               },

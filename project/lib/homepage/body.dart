@@ -10,6 +10,7 @@ import 'package:project/food/allfood.dart';
 import 'package:project/account/login.dart';
 import 'package:project/account/facebook.dart';
 import 'package:project/food/myfood.dart';
+import 'package:project/food/upload_data.dart';
 import 'package:project/homepage/recommend_widget.dart';
 import 'package:project/search/searchpage.dart';
 import 'package:project/homepage/upload_widget.dart';
@@ -174,79 +175,225 @@ class _BodyState extends State<Body> {
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      ElevatedButton(
-                        child: Text(
-                          'รายการอาหารทั้งหมด',
-                          style: GoogleFonts.kanit(
-                            fontSize: 17,
-                            color: Colors.white,
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => BodyAfterLogin()));
-                        },
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.red[400], backgroundColor: Colors.red[400],
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(22.0),
-                          ),
-                          fixedSize: const Size(180, 70),
-                          elevation: 15,
-                          shadowColor: Colors.white,
+                      Container(
+          decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(42)),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.pinkAccent.withOpacity(0.5),
+                  offset: const Offset(0, 20),
+                  blurRadius: 30,
+                  spreadRadius: -5,
+                ),
+              ],
+              ),
+                        width: 170,
+                        height: 250,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => BodyAfterLogin()));
+                          },
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.pinkAccent, 
+                            backgroundColor: Colors.pinkAccent,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16.0),
+                            ),
+                            fixedSize: const Size(180, 70),
+                            elevation: 15,
+                            shadowColor: Colors.white,
                      //     side: BorderSide(color: Colors.red, width: 3),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(top: 13),
+                                width: 170,
+                                height: 100,
+                                child: Image.network(
+                                  'https://cdn-icons-png.flaticon.com/512/1065/1065715.png',
+                                  fit: BoxFit.fitHeight
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 15.0),
+                                child: Text(
+                                  'All Food List',
+                                  style: GoogleFonts.kanit(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 19,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 4),
+                                child: Text(
+                                  'อาหารทั้งหมด',
+                                  style: GoogleFonts.kanit(
+                                    fontSize: 15,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 12.0,bottom: 3),
+                                child: Container(
+                                  child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            primary: Colors.white,
+                                            onPrimary: Colors.white,
+                                            shape:
+                                                RoundedRectangleBorder(borderRadius:
+                                                BorderRadius.circular(20.0)),
+                                          ),
+                                    onPressed: () {
+                                    Navigator.pushNamed(context, '/food');                      },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(2.0),
+                                    child: Row(
+                                      children: [
+                                        Text('   คลิกเลย!  ',
+                                          style: GoogleFonts.kanit(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16,
+                                            color: Colors.black87,
+                                          ),
+                                          
+                                        ),
+                                        Icon(Icons.arrow_forward_ios_rounded,
+                                          color: Colors.pinkAccent,
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                  ),
+                                ),
+                              )
+                                      ],
+                          ),
                         ),
                       ),
-                      ElevatedButton(
-                        child: Text(
-                          'รายการอาหารของฉัน',
-                          style: GoogleFonts.kanit(
-                            fontSize: 17,
-                            color: Colors.white,
+                      Column(
+                        children: [
+                          Container(
+                            width: 170,
+                            height: 190,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => MyFood()));
+                              },
+                               style: ElevatedButton.styleFrom(
+                                foregroundColor: Colors.blueGrey[900]?.withOpacity(0.4), 
+                                backgroundColor: Colors.blueGrey[900]?.withOpacity(0.8),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16.0),
+                                ),
+                                fixedSize: Size(180, 70),
+                                elevation: 15,
+                                shadowColor: Colors.white,
+
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.only(top: 13),
+                                    width: 170,
+                                    height: 70,
+                                    child: Image.network(
+                                      'https://cdn-icons-png.flaticon.com/512/3183/3183463.png',
+                                      fit: BoxFit.fitHeight
+                                    ),
+                                  ),
+                                  Text(
+                                    'My Food List',
+                                    style: GoogleFonts.kanit(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                   Text(
+                                    'อาหารของฉัน',
+                                    style: GoogleFonts.kanit(
+                                      fontSize: 17,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        ElevatedButton(
+                                          child: Row(
+                                            children: [
+                                              Text('ดูรายการ  ',
+                                                style: GoogleFonts.kanit(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15,
+                                                  color: Colors.black87,
+                                                ),
+                                                ),
+                                             Icon(Icons.arrow_forward_ios_rounded,
+                                          color: Colors.pinkAccent,
+                                        ),
+                                            ],
+                                          ),
+                                              style: ElevatedButton.styleFrom(
+                                                primary: Colors.white,
+                                                onPrimary: Colors.white,
+                                                shape:
+                                                    RoundedRectangleBorder(borderRadius:
+                                                    BorderRadius.circular(16.0)),
+                                              ),
+                                        onPressed: () {
+                                        Navigator.pushNamed(context, '/myfood');                      },
+                                  ),
+                                      ],
+                                    ),)
+                                ],
+                              ),
+                            ),
                           ),
-                        ),
-                        
-                        onPressed: () {
-                          Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => MyFood()));
-                        },
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.red[400], backgroundColor: Colors.red[400],
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(22.0),
+
+                          Container(
+                            padding: EdgeInsets.only(top: 10),
+                            width: 170,
+                            height: 60,
+                            child: ElevatedButton(
+                              child: Text(
+                                'อัพโหลดอาหาร',
+                                style: GoogleFonts.kanit(
+                                  fontSize: 19,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/upload');
+                              },
+                               style: ElevatedButton.styleFrom(
+                                foregroundColor: Colors.blueGrey.withOpacity(0.8), 
+                                backgroundColor: Colors.blueGrey.withOpacity(0.8),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16.0),
+                                ),
+                                fixedSize: Size(180, 70),
+                                elevation: 15,
+                                shadowColor: Colors.white,
+                              ),
+                            ),
                           ),
-                          fixedSize: Size(180, 70),
-                          elevation: 15,
-                          shadowColor: Colors.white,
-                          
-                        //  side: BorderSide(color: Colors.red, width: 3),
-                        ),
+                        ],
                       ),
                     ],
                   ),
                   SizedBox(height: 20),
-                  ElevatedButton(
-                        child: Text(
-                          'แชร์สูตรอาหาร',
-                          style: GoogleFonts.kanit(
-                            fontSize: 17,
-                            color: Colors.white,
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/upload');
-                        },
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.pinkAccent, backgroundColor: Colors.pinkAccent,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(22.0),
-                          ),
-                          fixedSize: Size(140, 70),
-                          elevation: 15,
-                          shadowColor: Colors.white,
-                          side: BorderSide(color: Colors.pinkAccent, width: 3),
-                        ),
-                      ),
                       SizedBox(height: 20),
-                      Uploadwidget()
+                      Uploadwidget(),
+          
               ],
               
             )

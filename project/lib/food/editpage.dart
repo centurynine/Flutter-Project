@@ -326,14 +326,14 @@ Future<File> urlToFile() async {
   ElevatedButton submitButton() {
     return ElevatedButton(
         child: Text(
-          'อัพโหลด',
+          'แก้ไขข้อมูล',
           style: GoogleFonts.kanit(
             fontSize: 18,
             color: Colors.white,
           ),
         ),
         style: ElevatedButton.styleFrom(
-          primary: Colors.blue,
+          primary: Colors.red[400],
           onPrimary: Colors.white,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
