@@ -205,22 +205,14 @@ class _UploadDataState extends State<UploadData> {
   }
 
   sendNotification() async {
-    const BigPictureStyleInformation bigPictureStyleInformation =
-      BigPictureStyleInformation(
-      DrawableResourceAndroidBitmap('food'),
-      largeIcon: DrawableResourceAndroidBitmap('bell'),
-      contentTitle: 'อัพโหลดรายการอาหารแล้ว',
-      htmlFormatContentTitle: true,
-      summaryText: 'รายการอาหารถูกอัพโหลดลงในระบบแล้ว',
-      htmlFormatSummaryText: true,
-    );
+    
     var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
       '10000',
       'FLUTTER_NOTIFICATION_CHANNEL',
       channelDescription: 'FLUTTER_NOTIFICATION_CHANNEL_DETAIL',
       importance: Importance.max,
       priority: Priority.high,
-      styleInformation: bigPictureStyleInformation,
+    //  styleInformation: bigPictureStyleInformation,
     );
 
     var iOSPlatformChannelSpecifics = const DarwinNotificationDetails();
