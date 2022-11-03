@@ -129,7 +129,7 @@ class _UploadDataState extends State<UploadData> {
   }
 
   Container selectType(BuildContext context) {
-    return Container(
+  return Container(
   height: 50,
   width: MediaQuery.of(context).size.width,
   margin: EdgeInsets.all(20),
@@ -157,10 +157,13 @@ class _UploadDataState extends State<UploadData> {
     },
     items: [
       'อาหารไทย',
-      'อาหารอีสาน',
       'อาหารฝรั่ง',
       'อาหารญี่ปุ่น',
       'อาหารเกาหลี',
+      'อาหารจีน',
+      'อาหารอินเดีย',
+      'ขนมหวาน',
+      'อาหารกินเล่น',
       'ไม่ระบุ'
     ]
         .map((value) => DropdownMenuItem(

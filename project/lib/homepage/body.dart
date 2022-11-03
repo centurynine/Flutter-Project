@@ -364,13 +364,6 @@ class _BodyState extends State<Body> {
                             width: 170,
                             height: 60,
                             child: ElevatedButton(
-                              child: Text(
-                                'อัพโหลดอาหาร',
-                                style: GoogleFonts.kanit(
-                                  fontSize: 19,
-                                  color: Colors.white,
-                                ),
-                              ),
                               onPressed: () {
                                 Navigator.pushNamed(context, '/upload');
                               },
@@ -384,6 +377,13 @@ class _BodyState extends State<Body> {
                                 elevation: 15,
                                 shadowColor: Colors.white,
                               ),
+                              child: Text(
+                                'อัพโหลดอาหาร',
+                                style: GoogleFonts.kanit(
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                ),
+                              ),
                             ),
                           ),
                         ],
@@ -393,9 +393,8 @@ class _BodyState extends State<Body> {
                   SizedBox(height: 20),
                       SizedBox(height: 20),
                       Uploadwidget(),
-          
               ],
-              
+
             )
             : Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
