@@ -97,10 +97,13 @@ class _ShowMenuState extends State<ShowMenu> {
     checkNameWhoCreated();
     checkLike();
     updateCountLike();
+    
   }
 
   @override
   Widget build(BuildContext context) {
+    Timestamp time = widget.docs['created_at'] as Timestamp;
+    DateTime date = time.toDate();
     return Scaffold(
         backgroundColor: Colors.white,
         drawer: const DrawerWidget(),
@@ -123,6 +126,7 @@ class _ShowMenuState extends State<ShowMenu> {
                       ),
                     ),
                     actions: [
+                      
                       FirebaseAuth.instance.currentUser?.email == widget.docs['email']
                       ? Container(
                         margin: const EdgeInsets.only(right: 10, top: 10),
@@ -346,14 +350,104 @@ class _ShowMenuState extends State<ShowMenu> {
                           ),
                             Container(
                             alignment: Alignment.centerLeft,
-                            child: Text(
-                              '         ถูกใจ : ${counted}',
-                              style: GoogleFonts.kanit(fontSize: 14),
+                            child:  Row(
+                              children: [
+                                Flexible(
+                                                child: Container(
+                                                  margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: Colors.grey
+                                                            .withOpacity(0.5),
+                                                        spreadRadius: 1,
+                                                        blurRadius: 1,
+                                                        offset: Offset(0,
+                                                            1), // changes position of shadow
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  child: Container(
+                                                    child: IntrinsicWidth(
+                                                      child: Row(
+                                                        children: [
+                                                          Text(' '),
+                                                          Icon(
+                                                            Icons.date_range,
+                                                            size: 15,
+                                                          ),
+                                                          Text(
+                                                            textAlign: TextAlign.center,
+                                                            '${date.day}/${date.month}/${date.year} ${date.hour}:${date.minute}   ',
+                                                            maxLines: 1,
+                                                            style: GoogleFonts.kanit(
+                                                                fontSize: 13),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                              ],
+                            ),
+                          ),
+                             Container(
+                            alignment: Alignment.centerLeft,
+                            child: Row(
+                              children: [
+                                Flexible(
+                                                    child: Container(
+                                                      margin: const EdgeInsets.symmetric(horizontal: 20),
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.white,
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                10),
+                                                        boxShadow: [
+                                                          BoxShadow(
+                                                            color: Colors.grey
+                                                                .withOpacity(0.5),
+                                                            spreadRadius: 1,
+                                                            blurRadius: 1,
+                                                            offset: Offset(0,
+                                                                1), // changes position of shadow
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      child: Container(
+                                                        child: IntrinsicWidth(
+                                                          child: Row(
+                                                            children: [
+                                                              Text(' '),
+                                                              Icon(
+                                                                Icons.favorite,
+                                                                size: 15,
+                                                              ),
+                                                              Text(
+                                                                textAlign: TextAlign.center,
+                                                                '${counted}   ',
+                                                                maxLines: 1,
+                                                                style: GoogleFonts.kanit(
+                                                                    fontSize: 13),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                              ],
                             ),
                           ),
                           const SizedBox(
                             height: 20,
                           ),
+                          
                           ClipRRect(
                             borderRadius: BorderRadius.circular(35.0),
                             child: Image.network(avatar.toString(),

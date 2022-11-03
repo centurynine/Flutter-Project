@@ -65,7 +65,7 @@ class _CommentPageState extends State<CommentPage> {
                       return Container(
                         child: Padding(
                           padding: const EdgeInsets.all(11.0),
-                          child: Text('ไม่มีคอมเม้นต์',
+                          child: Text('ไม่พบคอมเม้นต์',
                               textAlign: TextAlign.center,
                               style: GoogleFonts.kanit(fontSize: 18)),
                         ),
@@ -83,8 +83,6 @@ class _CommentPageState extends State<CommentPage> {
                       physics: const BouncingScrollPhysics(),
                       itemCount: (snapshot.data!).docs.length,
                       itemBuilder: (context, index) {
-                      Timestamp time = (snapshot.data!).docs[index]['date'] as Timestamp;
-                      DateTime date = time.toDate();
                       return Container(
                         child: Row(
                           children: [
@@ -122,12 +120,10 @@ class _CommentPageState extends State<CommentPage> {
                                       mainAxisAlignment: MainAxisAlignment.start,
                                       children: [
                                         Text((snapshot.data!).docs[index]
-                                                        ['name']!),
-                                       Text(' เวลา  ${date.day}/${date.month}/${date.year} ${date.hour}:${date.minute}',
-                                        style: GoogleFonts.kanit(fontSize: 12, color: Colors.grey[600]),
-                                        
+                                                        ['name']!
+                                      //  Text(' เวลา  ${date.day}/${date.month}/${date.year} ${date.hour}:${date.minute}',
+                                      //   style: GoogleFonts.kanit(fontSize: 12, color: Colors.grey[600]),
                                         ),
-
                                       ],
                                     ),
                                     subtitle: Text((snapshot.data!).docs[index]['descript']!,
@@ -190,13 +186,15 @@ class _CommentPageState extends State<CommentPage> {
         .get()
         .then((value) {
       if (value.docs.isEmpty) {
+        if(mounted){
         setState(() {
           isAdmin = false;
-        });
+        });}
       } else if ((value.docs.isNotEmpty)) {
+         if(mounted){
         setState(() {
           isAdmin = true;
-        });
+        });}
       }
     });
   }
