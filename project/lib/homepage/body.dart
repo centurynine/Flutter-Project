@@ -110,7 +110,7 @@ class _BodyState extends State<Body> {
              onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) => LoginPage()));
-                      },
+            },
             child: Container(
                 height: 56,
                 width: MediaQuery.of(context).size.width - 48,
