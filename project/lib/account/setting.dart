@@ -22,33 +22,31 @@ class _SettingState extends State<Setting> {
   String? avatar = 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
   String? loginWith;
 
-@override
-void initState() {
-  checkInfo();
-  super.initState();
-}
-
+  @override
+  void initState() {
+    checkInfo();
+    super.initState();
+  }
 
   void checkInfo() async {
-    if(FirebaseAuth.instance.currentUser != null){
-     await FirebaseFirestore.instance
-        .collection('users')
-        .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
-    //    .where('avatar')
-       .get()
-       .then((value) => value.docs.forEach((element) {
-        setState(() {
-          name = element.data()['name'];
-          avatar = element.data()['avatar'];
-          loginWith = element.data()['loginwith'];
-        }); }));
-        checkImageNull();
-        checkFbLogin();
-    }
-      else {
-      }
-      }
-        
+    if (FirebaseAuth.instance.currentUser != null) {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
+          //    .where('avatar')
+          .get()
+          .then((value) => value.docs.forEach((element) {
+                setState(() {
+                  name = element.data()['name'];
+                  avatar = element.data()['avatar'];
+                  loginWith = element.data()['loginwith'];
+                });
+              }));
+      checkImageNull();
+      checkFbLogin();
+    } else {}
+  }
+
   void checkImageNull() {
     if (avatar == null) {
       setState(() {
@@ -58,7 +56,7 @@ void initState() {
   }
 
   void checkFbLogin() async {
-    if(loginWith == 'Facebook'){
+    if (loginWith == 'Facebook') {
       setState(() {
         isFB = true;
       });
@@ -90,18 +88,19 @@ void initState() {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
-        
-       drawer:  DrawerWidget(),
+        drawer: DrawerWidget(),
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: Text('Setting',
-          style: GoogleFonts.kanit(
-            color: Colors.black87,
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-          ),
+          title: Text(
+            'Setting',
+            style: GoogleFonts.kanit(
+              color: Colors.black87,
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+            ),
           ),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios_new_outlined),
@@ -122,10 +121,10 @@ void initState() {
               // user card
               Stack(
                 children: [
-                  Column(
-                    children: [
+                  Column(children: [
                     BigUserCard(
-                      userProfilePic: const AssetImage("assets/images/grey.png"),
+                      userProfilePic:
+                          const AssetImage("assets/images/grey.png"),
                       cardRadius: 20,
                       cardColor: Colors.black54,
                       userName: name.toString(),
@@ -151,20 +150,17 @@ void initState() {
                         },
                       ),
                     ),
-                ]
-                ),
-                   Positioned(
-                    // top: 15,
-                    // left: 50,
-                    top: 15,
-                    left: 50,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(35.0),
-                      child: Image.network(avatar.toString(),
-                          width: 95, height: 95, fit: BoxFit.cover
-                      ),
-                    )
-                  ),
+                  ]),
+                  Positioned(
+                      // top: 15,
+                      // left: 50,
+                      top: 15,
+                      left: 50,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(35.0),
+                        child: Image.network(avatar.toString(),
+                            width: 95, height: 95, fit: BoxFit.cover),
+                      )),
                 ],
               ),
               const SizedBox(height: 20),
@@ -212,38 +208,39 @@ void initState() {
                     ),
                   ),
                   isFB == false
-                  ? SettingsItem(
-                    onTap: () {
-                      Navigator.pushNamed(context, '/changepassword');
-                    },
-                    icons: Icons.lock,
-                    iconStyle: IconStyle(
-                      withBackground: true,
-                      borderRadius: 50,
-                      backgroundColor: Colors.red[400],
-                    ),
-                    title: "เปลี่ยนรหัสผ่าน",
-                    titleStyle: GoogleFonts.kanit(
-                      fontSize: 18,
-                      color: Colors.black87,
-                    ),
-                  )
-                  : SettingsItem(
-                    trailing: Icon(Icons.lock),
-                    onTap: () {
-                      EasyLoading.showInfo('ไม่สามารถเปลี่ยนรหัสผ่านได้');
-                    },
-                    icons: Icons.lock,
-                    iconStyle: IconStyle(
-                      withBackground: true,
-                      borderRadius: 50,
-                      backgroundColor: Colors.red[400],
-                    ),
-                    title: "เปลี่ยนรหัสผ่าน",
-                    titleStyle: GoogleFonts.kanit(
-                      fontSize: 18,
-                      color: Colors.black87,
-                    ),)
+                      ? SettingsItem(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/changepassword');
+                          },
+                          icons: Icons.lock,
+                          iconStyle: IconStyle(
+                            withBackground: true,
+                            borderRadius: 50,
+                            backgroundColor: Colors.red[400],
+                          ),
+                          title: "เปลี่ยนรหัสผ่าน",
+                          titleStyle: GoogleFonts.kanit(
+                            fontSize: 18,
+                            color: Colors.black87,
+                          ),
+                        )
+                      : SettingsItem(
+                          trailing: Icon(Icons.lock),
+                          onTap: () {
+                            EasyLoading.showInfo('ไม่สามารถเปลี่ยนรหัสผ่านได้');
+                          },
+                          icons: Icons.lock,
+                          iconStyle: IconStyle(
+                            withBackground: true,
+                            borderRadius: 50,
+                            backgroundColor: Colors.red[400],
+                          ),
+                          title: "เปลี่ยนรหัสผ่าน",
+                          titleStyle: GoogleFonts.kanit(
+                            fontSize: 18,
+                            color: Colors.black87,
+                          ),
+                        )
                   // SettingsItem(
                   //   onTap: () {},
                   //   icons: Icons.settings,

@@ -49,6 +49,12 @@ dependencies:
   flutter_local_notifications: ^12.0.2
   getwidget: ^3.0.1
   uri_to_file: ^0.2.0
+  flutter_launcher_icons: ^0.10.0
+  flutter_automation: ^2.0.0
+
+flutter_icons: 
+  android: true 
+  image_path: "assets/appicon.png"
 
 dev_dependencies:
   flutter_test:
