@@ -98,7 +98,6 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.menu,
@@ -139,6 +138,7 @@ class _HomepageState extends State<Homepage> {
         ],
       ),
       body: ListView(
+        physics: const BouncingScrollPhysics(),
         children: [
         Container(
           child: const Body(),

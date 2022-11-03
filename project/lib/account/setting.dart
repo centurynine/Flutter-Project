@@ -159,15 +159,11 @@ class _SettingState extends State<Setting> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(35.0),
                         child: Image.network(avatar.toString(),
-                            width: 95, height: 95, fit: BoxFit.cover),
+                            width: 85, height: 85, fit: BoxFit.cover),
                       )),
                 ],
               ),
               const SizedBox(height: 20),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: []),
-              // You can add a settings title
               SettingsGroup(
                 settingsGroupTitle: "การตั้งค่า",
                 settingsGroupTitleStyle: GoogleFonts.kanit(

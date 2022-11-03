@@ -176,17 +176,7 @@ class _BodyState extends State<Body> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       Container(
-          decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(42)),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.pinkAccent.withOpacity(0.5),
-                  offset: const Offset(0, 20),
-                  blurRadius: 30,
-                  spreadRadius: -5,
-                ),
-              ],
-              ),
+
                         width: 170,
                         height: 250,
                         child: ElevatedButton(
@@ -320,7 +310,7 @@ class _BodyState extends State<Body> {
                                    Text(
                                     'อาหารของฉัน',
                                     style: GoogleFonts.kanit(
-                                      fontSize: 17,
+                                      fontSize: 15,
                                       color: Colors.white,
                                     ),
                                   ),

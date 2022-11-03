@@ -102,6 +102,7 @@ Future<File> urlToFile() async {
           autovalidateMode: AutovalidateMode.always,
           key: _formstateUpload,
           child: ListView(
+            physics: const BouncingScrollPhysics(),
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(top: 30.0),

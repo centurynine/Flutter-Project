@@ -74,6 +74,7 @@ class _UploadDataState extends State<UploadData> {
           autovalidateMode: AutovalidateMode.always,
           key: _formstateUpload,
           child: ListView(
+            physics: const BouncingScrollPhysics(),
             children: <Widget>[
               Container(
                   margin: const EdgeInsets.only(left: 50.0, right: 50.0),
